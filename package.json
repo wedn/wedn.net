@@ -1,0 +1,28 @@
+{
+  "name": "wedn.net",
+  "version": "0.1.0",
+  "description": "wedn.net site",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wedn/wedn.net.git"
+  },
+  "keywords": [
+    "iceStone",
+    "wedn",
+    "wedn.net",
+    "zce",
+    "汪磊",
+    "micua",
+    "micua.com"
+  ],
+  "author": "iceStone <ice@micua.com> (https://www.micua.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wedn/wedn.net/issues"
+  },
+  "homepage": "https://github.com/wedn/wedn.net#readme"
+}
