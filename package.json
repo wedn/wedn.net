@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "development": "babel-node .",
-    "watch": "nodemon --exec npm run development"
+    "watch": "nodemon --exec npm run development --ignore core/client/"
   },
   "repository": {
     "type": "git",

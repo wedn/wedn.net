@@ -1,10 +1,27 @@
 import Koa from 'koa'
 import Router from 'koa-router'
 
+import config from '../config'
 import middlewares from './middlewares'
 
 // Application instance
 const app = new Koa()
+
+// Application config
+app.name = config.name
+app.version = config.version
+app.keys = config.keys
+
+// Load middlewares
+app.use(middlewares(app, config))
+
+// Export bootstrap method
+export const bootstrap = () => {
+  return app.listen(config.server, err => {
+    if (err) throw err
+    console.log(`server running @ http://${config.server.host}:${config.server.port}`)
+  })
+}
 
 // /**
 //  * 错误处理
@@ -18,19 +35,3 @@ const app = new Koa()
 //     redirect: '/error.html'
 //   })
 // }
-
-// Export start method
-export const start = config => {
-  // Application config
-  app.name = config.name
-  app.version = config.version
-  app.keys = config.keys
-
-  // Load middlewares
-  app.use(middlewares(app, config))
-
-  return app.listen(config.server, err => {
-    if (err) throw err
-    console.log(`server running @ http://${config.server.host}:${config.server.port}`)
-  })
-}

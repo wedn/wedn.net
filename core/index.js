@@ -1,9 +1,3 @@
-// Import modules
-import { start } from './server'
-import pkg from '../package.json'
-import config from './config'
+import { bootstrap } from './server'
 
-// Node envionment
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
-
-start(Object.assign({ name: pkg.name, version: pkg.version }, config[process.env.NODE_ENV]))
+bootstrap()

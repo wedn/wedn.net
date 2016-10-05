@@ -1,6 +1,8 @@
 import path from 'path'
 import _ from 'lodash'
 
+import pkg from '../package.json'
+
 const defaults = {
   // ### Production
   production: {
@@ -27,7 +29,8 @@ const defaults = {
       connection: {
         filename: path.join(__dirname, '/content/data/wedn.db')
       },
-      debug: true
+      debug: false,
+      // useNullAsDefault: true
     },
 
     // #### Server
@@ -81,7 +84,8 @@ const defaults = {
       connection: {
         filename: path.join(__dirname, '/content/data/wedn-dev.db')
       },
-      debug: true
+      debug: true,
+      // useNullAsDefault: true
     },
 
     // #### Server
@@ -119,4 +123,7 @@ try {
   config = null
 }
 
-export default _.merge(defaults, config)
+// Node envionment
+const env = process.env.NODE_ENV || 'development'
+
+export default Object.assign({ name: pkg.name, version: pkg.version }, _.merge(defaults, config)[env])
