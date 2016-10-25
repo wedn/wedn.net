@@ -4,9 +4,11 @@ import Router from 'koa-router'
 export const router = new Router({ prefix: '/(wedn|wp-admin|ghost)' })
 
 /**
- * GET /
+ * GET /(wedn|wp-admin|ghost)/:path*
  */
-router.get('admin-alias', '*', ctx => {
+router.get('admin-alias', '/:path*', ctx => {
   ctx.status = 301
-  ctx.redirect(Router.url('admin'))
+  const to = `/${ Router.url('admin') }/${ ctx.params.path || '' }`
+  // ctx.body = to
+  ctx.redirect(to)
 })

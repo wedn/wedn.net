@@ -5,8 +5,8 @@
   "main": "core/index.js",
   "private": true,
   "scripts": {
-    "development": "babel-node .",
-    "watch": "nodemon --exec npm run development --ignore core/client/"
+    "dev": "nodemon --exec babel-node . --ignore core/client/",
+    "start": "babel-node ."
   },
   "repository": {
     "type": "git",

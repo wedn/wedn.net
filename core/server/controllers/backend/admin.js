@@ -4,9 +4,9 @@ import Router from 'koa-router'
 export const router = new Router({ prefix: '/admin' })
 
 /**
- * GET /
+ * GET /admin/
  */
-router.get('admin', '*', ctx => {
+router.get('admin', '/*', ctx => {
   // TODO:
   ctx.body = '管理后台'
 })
