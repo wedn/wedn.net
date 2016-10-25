@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --exec babel-node . --ignore core/client/",
+    "test": "babel-node core/test/parent.js",
     "start": "babel-node ."
   },
   "repository": {
@@ -38,11 +39,12 @@
     "koa-error": "^2.1.0",
     "koa-json": "^1.1.3",
     "koa-logger": "^2.0.0",
+    "koa-mount": "^2.0.0",
     "koa-router": "^7.0.1",
     "koa-session": "^3.3.1",
     "koa-static": "^3.0.0",
     "koa-views": "^5.1.2",
-    "lodash": "^4.16.3"
+    "lodash.merge": "^4.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

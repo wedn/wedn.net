@@ -1,5 +1,5 @@
 import path from 'path'
-import _ from 'lodash'
+import merge from 'lodash.merge'
 
 import pkg from '../package.json'
 
@@ -7,6 +7,7 @@ const defaults = {
   // ### Production
   production: {
     url: 'http://www.wedn.net/',
+    root: '/',
 
     // #### Email
     mail: {
@@ -62,6 +63,7 @@ const defaults = {
   // ### Development **(default)**
   development: {
     url: 'http://localhost:2080/',
+    root: '/',
 
     // #### Email
     mail: {
@@ -126,4 +128,4 @@ try {
 // Node envionment
 const env = process.env.NODE_ENV || 'development'
 
-export default Object.assign({ name: pkg.name, version: pkg.version }, _.merge(defaults, config)[env])
+export default Object.assign({ name: pkg.name, version: pkg.version }, merge(defaults, config)[env])
