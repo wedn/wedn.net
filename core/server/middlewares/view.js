@@ -1,3 +1,5 @@
+import path from 'path'
+
 import convert from 'koa-convert'
 import compose from 'koa-compose'
 import json from 'koa-json'
@@ -13,7 +15,7 @@ export default (options) => {
   })))
 
   // Template Engine
-  engines.push(views(options.paths.theme, {
+  engines.push(views(path.resolve(__dirname, '../views/'), {
     extension: 'hbs',
     map: {
       hbs: 'handlebars'
@@ -21,6 +23,15 @@ export default (options) => {
       // html: 'nunjucks',
     }
   }))
+
+  // engines.push(views(options.paths.theme, {
+  //   extension: 'hbs',
+  //   map: {
+  //     hbs: 'handlebars'
+  //     // jade: 'jade',
+  //     // html: 'nunjucks',
+  //   }
+  // }))
 
   // engines.push(convert(hbs.middleware({
   //   viewPath: path.join(__dirname, 'views')

@@ -49,11 +49,11 @@ const defaults = {
 
     // #### Paths
     paths: {
-      content: path.join(__dirname, '/content/'),
-      data: path.join(__dirname, '/content/data/'),
-      plugin: path.join(__dirname, '/content/plugins/'),
-      upload: path.join(__dirname, '/content/uploads/'),
-      theme: path.join(__dirname, '/content/themes/')
+      content: path.resolve(__dirname, '../content/'),
+      data: path.resolve(__dirname, '../content/data/'),
+      plugin: path.resolve(__dirname, '../content/plugins/'),
+      upload: path.resolve(__dirname, '../content/uploads/'),
+      theme: path.resolve(__dirname, '../content/themes/')
     },
 
     // #### Cookie keys (can not modify)
@@ -105,11 +105,11 @@ const defaults = {
 
     // #### Paths
     paths: {
-      content: path.join(__dirname, '/content/'),
-      data: path.join(__dirname, '/content/data/'),
-      plugin: path.join(__dirname, '/content/plugins/'),
-      upload: path.join(__dirname, '/content/uploads/'),
-      theme: path.join(__dirname, '/content/themes/')
+      content: path.resolve(__dirname, '../content/'),
+      data: path.resolve(__dirname, '../content/data/'),
+      plugin: path.resolve(__dirname, '../content/plugins/'),
+      upload: path.resolve(__dirname, '../content/uploads/'),
+      theme: path.resolve(__dirname, '../content/themes/')
     },
 
     // #### Cookie keys (can not modify)

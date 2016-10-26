@@ -1,4 +1,5 @@
 // Load all of the middlewares
+import path from 'path'
 import { Z_SYNC_FLUSH } from 'zlib'
 
 import convert from 'koa-convert'
@@ -21,10 +22,10 @@ export default (app, config) => {
   middlewares.push(header())
 
   // TODO：[Legacy middleware] 错误处理
-  // middlewares.push(convert(error({
-  //   engine: 'handlebars',
-  //   template: __dirname + '/../../shared/error.hbs'
-  // })))
+  middlewares.push(convert(error({
+    engine: 'handlebars',
+    template: path.resolve(__dirname, '../views/error.hbs')
+  })))
 
   // 开发模式时记录日志
   app.env === 'development' && middlewares.push(logger())
@@ -37,7 +38,8 @@ export default (app, config) => {
   }))
 
   // 静态文件请求处理
-  middlewares.push(statics(config.paths.content, { maxage: 7 * 24 * 60 * 60 * 1000 }))
+  // middlewares.push(statics(config.paths.content, { maxage: 7 * 24 * 60 * 60 * 1000 }))
+  middlewares.push(statics(path.resolve(__dirname, '../../shared/'), { maxage: 7 * 24 * 60 * 60 * 1000 }))
 
   // 请求体格式化处理
   middlewares.push(bodyParser())

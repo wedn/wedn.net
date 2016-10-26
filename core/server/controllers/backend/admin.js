@@ -6,7 +6,8 @@ export const router = new Router({ prefix: '/admin' })
 /**
  * GET /admin/
  */
-router.get('admin', '/*', ctx => {
+router.get('admin', '/*',async ctx => {
   // TODO:
-  ctx.body = '管理后台'
+  // ctx.body = '管理后台'
+  await ctx.render('admin')
 })
