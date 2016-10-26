@@ -5,6 +5,8 @@
   "main": "core/index.js",
   "private": true,
   "scripts": {
+    "preinstall": "git submodule init && git submodule update",
+    "postinstall": "cd core/client && npm install && cd ../..",
     "dev": "nodemon --exec babel-node . --ignore core/client/",
     "test": "babel-node core/test/parent.js",
     "start": "babel-node ."
@@ -33,7 +35,7 @@
     "handlebars": "^4.0.5",
     "koa": "^2.0.0-alpha.7",
     "koa-bodyparser": "^3.2.0",
-    "koa-compose": "^3.1.0",
+    "koa-compose": "^3.2.0",
     "koa-compress": "^2.0.0",
     "koa-convert": "^1.2.0",
     "koa-error": "^2.1.0",
