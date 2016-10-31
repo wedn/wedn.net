@@ -1,71 +1,19 @@
 import path from 'path'
 import merge from 'lodash.merge'
 
-import pkg from '../package.json'
-
 const defaults = {
-  // ### Production
-  production: {
-    url: 'http://www.wedn.net/',
-    root: '/',
-
-    // #### Email
-    mail: {
-      transport: 'SMTP',
-      options: {
-        'host': 'smtp.exmail.qq.com',
-        'port': 25,
-        'secure': false,
-        'name': 'Hello Micua',
-        'auth': {
-          'user': 't1@wedn.net',
-          'pass': '2014@itcast'
-        }
-      }
-    },
-
-    // #### Database
-    database: {
-      client: 'sqlite3',
-      connection: {
-        filename: path.join(__dirname, '/content/data/wedn.db')
-      },
-      debug: false,
-      // useNullAsDefault: true
-    },
-
-    // #### Server
-    // Can be host & port (default), or socket
-    server: {
-      host: '127.0.0.1',
-      port: '2080'
-    },
-
-    // #### Compress
-    compress: true,
-
-    // #### Storage
-    storage: {},
-
-    // #### Paths
-    paths: {
-      content: path.resolve(__dirname, '../content/'),
-      data: path.resolve(__dirname, '../content/data/'),
-      plugin: path.resolve(__dirname, '../content/plugins/'),
-      upload: path.resolve(__dirname, '../content/uploads/'),
-      theme: path.resolve(__dirname, '../content/themes/')
-    },
-
-    // #### Cookie keys (can not modify)
-    keys: ['wedn.net', 'www.wedn.net']
-  },
-
-  // ### Development **(default)**
+  // Development **(default)**
   development: {
     url: 'http://localhost:2080/',
-    root: '/',
 
-    // #### Email
+    // Server
+    // Can be host & port (default), or socket
+    server: {
+      port: '2080',
+      host: '127.0.0.1'
+    },
+
+    // Email
     mail: {
       transport: 'SMTP',
       options: {
@@ -80,39 +28,89 @@ const defaults = {
       }
     },
 
-    // #### Database
+    // Database
     database: {
       client: 'sqlite3',
       connection: {
-        filename: path.join(__dirname, '/content/data/wedn-dev.db')
+        filename: path.resolve(__dirname, '../content/data/wedn-dev.db')
       },
       debug: true,
       // useNullAsDefault: true
     },
 
-    // #### Server
-    // Can be host & port (default), or socket
-    server: {
-      host: '127.0.0.1',
-      port: '2080'
-    },
-
-    // #### Compress
+    // Compress
     compress: true,
 
-    // #### Storage
+    // Storage
     storage: {},
 
-    // #### Paths
+    // Paths
     paths: {
-      content: path.resolve(__dirname, '../content/'),
+      asset: path.resolve(__dirname, '../content/assets/'),
       data: path.resolve(__dirname, '../content/data/'),
       plugin: path.resolve(__dirname, '../content/plugins/'),
+      theme: path.resolve(__dirname, '../content/themes/'),
       upload: path.resolve(__dirname, '../content/uploads/'),
-      theme: path.resolve(__dirname, '../content/themes/')
+      view: path.resolve(__dirname, '../content/views/')
     },
 
-    // #### Cookie keys (can not modify)
+    // Cookie keys (can not modify)
+    keys: ['wedn.net', 'www.wedn.net']
+  },
+
+  // Production
+  production: {
+    url: 'http://localhost:2080/',
+
+    // Server
+    // Can be host & port (default), or socket
+    server: {
+      port: '2080',
+      host: '127.0.0.1'
+    },
+
+    // Email
+    mail: {
+      transport: 'SMTP',
+      options: {
+        'host': 'smtp.exmail.qq.com',
+        'port': 25,
+        'secure': false,
+        'name': 'Hello Micua',
+        'auth': {
+          'user': 't1@wedn.net',
+          'pass': '2014@itcast'
+        }
+      }
+    },
+
+    // Database
+    database: {
+      client: 'sqlite3',
+      connection: {
+        filename: path.resolve(__dirname, '../content/data/wedn.db')
+      },
+      debug: true,
+      // useNullAsDefault: true
+    },
+
+    // Compress
+    compress: true,
+
+    // Storage
+    storage: {},
+
+    // Paths
+    paths: {
+      asset: path.resolve(__dirname, '../content/assets/'),
+      data: path.resolve(__dirname, '../content/data/'),
+      plugin: path.resolve(__dirname, '../content/plugins/'),
+      theme: path.resolve(__dirname, '../content/themes/'),
+      upload: path.resolve(__dirname, '../content/uploads/'),
+      view: path.resolve(__dirname, '../content/views/')
+    },
+
+    // Cookie keys (can not modify)
     keys: ['wedn.net', 'www.wedn.net']
   }
 }
@@ -126,6 +124,6 @@ try {
 }
 
 // Node envionment
-const env = process.env.NODE_ENV || 'development'
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-export default Object.assign({ name: pkg.name, version: pkg.version }, merge(defaults, config)[env])
+export default merge(defaults, config)[process.env.NODE_ENV]

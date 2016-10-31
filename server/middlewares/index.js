@@ -6,11 +6,11 @@ import convert from 'koa-convert'
 import compose from 'koa-compose'
 import logger from 'koa-logger'
 import compress from 'koa-compress'
-import statics from 'koa-static'
 import bodyParser from 'koa-bodyparser'
 import session from 'koa-session'
 import error from 'koa-error'
 
+import serveStatic from './static'
 import view from './view'
 import route from './route'
 import header from './header'
@@ -18,14 +18,14 @@ import header from './header'
 export default (app, config) => {
   const middlewares = []
 
-  // 自定义响应头
-  middlewares.push(header())
-
   // TODO：[Legacy middleware] 错误处理
   middlewares.push(convert(error({
     engine: 'handlebars',
-    template: path.resolve(__dirname, '../views/error.hbs')
+    template: path.join(config.paths.view, 'error.hbs')
   })))
+
+  // 自定义响应头
+  middlewares.push(header())
 
   // 开发模式时记录日志
   app.env === 'development' && middlewares.push(logger())
@@ -37,9 +37,8 @@ export default (app, config) => {
     flush: Z_SYNC_FLUSH
   }))
 
-  // 静态文件请求处理
-  // middlewares.push(statics(config.paths.content, { maxage: 7 * 24 * 60 * 60 * 1000 }))
-  middlewares.push(statics(path.resolve(__dirname, '../../shared/'), { maxage: 7 * 24 * 60 * 60 * 1000 }))
+  // 静态资源
+  middlewares.push(serveStatic(config))
 
   // 请求体格式化处理
   middlewares.push(bodyParser())

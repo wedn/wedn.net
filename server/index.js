@@ -1,7 +1,6 @@
 import Koa from 'koa'
-import Router from 'koa-router'
 
-import config from '../config'
+import config from './config'
 import middlewares from './middlewares'
 
 // Application instance
@@ -16,13 +15,11 @@ app.keys = config.keys
 app.use(middlewares(app, config))
 
 // Export bootstrap method
-export const bootstrap = () => {
-  return app.listen(config.server, err => {
-    if (err) throw err
-    console.log(`server running @ ${config.url}`)
-    // console.log(`server running @ http://${config.server.host}:${config.server.port}`)
-  })
-}
+export default app.listen(config.server, err => {
+  if (err) throw err
+  console.log(`server running @ ${config.url}`)
+  // console.log(`server running @ http://${config.server.host}:${config.server.port}`)
+})
 
 // /**
 //  * 错误处理
