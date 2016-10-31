@@ -1,3 +1,5 @@
+content/assets
+content/views/admin.hbs
 dist
 node_modules
 *.DS_Store
