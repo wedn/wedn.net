@@ -1,8 +1,25 @@
+# Client distribution directory
 content/assets
 content/views/admin.hbs
+
+# Distribution directory
 dist
+
+# Dependency directories
 node_modules
-*.DS_Store
+
+# Optional npm cache directory
+.npm
+
+# OS temps
+.DS_Store
 Desktop.ini
-npm-debug.log*
 Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional REPL history
+.node_repl_history
