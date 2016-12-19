@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "lint": "gulp lint",
+    "test": "cross-env BABEL_ENV=server babel-node src/test",
     "client": "cross-env NODE_ENV=development gulp run:client",
     "server": "cross-env NODE_ENV=development gulp run:server",
     "dev": "cross-env NODE_ENV=development gulp run:all",
@@ -50,10 +51,11 @@
     "koa-session": "^3.4.0",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.0",
-    "lodash.merge": "^4.6.0"
+    "lodash.merge": "^4.6.0",
+    "sequelize": "^3.27.0",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-async-to-generator": "^6.16.0",

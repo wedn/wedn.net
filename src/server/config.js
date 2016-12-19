@@ -27,12 +27,9 @@ export default {
 
   // Database
   database: {
-    client: 'sqlite3',
-    connection: {
-      filename: path.resolve(__dirname, '../content/data/wedn-dev.db')
-    },
-    // useNullAsDefault: true,
-    debug: true
+    dialect: 'sqlite',
+    pool: { max: 5, min: 0, idle: 10000 },
+    storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db')
   },
 
   // Compress
