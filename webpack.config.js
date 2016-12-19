@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -10,7 +10,7 @@ const config = {
   paths: {
     root: __dirname,
     source: path.join(__dirname, 'src/client'),
-    static: path.join(__dirname, 'content/static'),
+    // static: path.join(__dirname, 'content/static'),
     output: path.join(__dirname, 'dist/client'),
     publicPath: '/admin/',
     assets: 'assets',
@@ -61,7 +61,7 @@ module.exports = {
     path: config.paths.output,
     publicPath: isProd ? config.paths.publicPath : '/',
     filename: isProd ? assetPath('js', '[name].js?v=[chunkhash:6]') : '[name].js',
-    chunkFilename: isProd ? assetPath('js', '[name].[chunkhash:6].js') : '[name].[chunkhash:6].js',
+    chunkFilename: isProd ? assetPath('js', '[name].[chunkhash:6].js') : '[name].[chunkhash:6].js'
   },
   module: {
     rules: [
@@ -71,7 +71,7 @@ module.exports = {
         loader: 'eslint-loader',
         exclude: /node_modules/,
         options: {
-          formatter: require("eslint-friendly-formatter")
+          formatter: require('eslint-friendly-formatter')
         }
       },
       {
@@ -79,7 +79,7 @@ module.exports = {
         enforce: 'pre',
         loader: 'eslint-loader',
         options: {
-          formatter: require("eslint-friendly-formatter")
+          formatter: require('eslint-friendly-formatter')
         }
       },
       {
@@ -152,7 +152,10 @@ module.exports = {
   devtool: '#eval-source-map', // 'eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(config.env) }
+      'process.env': {
+        NODE_ENV: JSON.stringify(config.env),
+        ADMIN_BASE: JSON.stringify(isProd ? config.paths.publicPath : '/')
+      }
     }),
     new HtmlWebpackPlugin({
       title: 'WEDN.NET',
@@ -166,10 +169,11 @@ module.exports = {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       } : false
-    }),
-    new CopyWebpackPlugin([
-      { from: config.paths.static, context: __dirname }
-    ])
+    })
+    // ,
+    // new CopyWebpackPlugin([
+    //   { from: config.paths.static, context: __dirname }
+    // ])
   ]
 }
 

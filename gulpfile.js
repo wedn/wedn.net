@@ -17,7 +17,7 @@ const plugins = loadPlugins()
  * Code lint
  */
 gulp.task('lint', () => {
-  return gulp.src(['gulpfile.js', 'src/**/*.js', 'src/**/*.vue'])
+  return gulp.src(['gulpfile.js', 'webpack.config.js', 'src/**/*.js', 'src/**/*.vue'])
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format('node_modules/eslint-friendly-formatter'))
     .pipe(plugins.eslint.failAfterError())
@@ -78,7 +78,7 @@ gulp.task('run:client', callback => {
 
   server.listen(webpackConfig.devServer.port, error => {
     if (error) throw new plugins.util.PluginError('run:client', error)
-    plugins.util.log('[run:client]', `@ http://localhost:${webpackConfig.devServer.port}/`)
+    plugins.util.log('[run:client]', `client running @ http://localhost:${webpackConfig.devServer.port}/`)
     // keep the server alive or continue?
     // callback()
   })
@@ -92,7 +92,11 @@ gulp.task('run:server', () => {
   plugins.nodemon({
     script: 'src/server',
     exec: './node_modules/.bin/babel-node',
-    watch: ['src/server']
+    watch: ['src/server'],
+    stdout: false
+  }).on('readable', function () {
+    // the `readable` event indicates that data is ready to pick up
+    this.stdout.on('data', d => plugins.util.log('[run:server]', d.toString().trim()))
   })
 })
 

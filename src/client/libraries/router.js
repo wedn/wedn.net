@@ -9,7 +9,7 @@ Vue.use(Router)
 // http://router.vuejs.org/en/api/options.html
 const router = new Router({
   mode: 'history',
-  base: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
+  base: process.env.ADMIN_BASE,
   routes: routes
 })
 
