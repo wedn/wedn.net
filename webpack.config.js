@@ -119,11 +119,11 @@ module.exports = {
     port: config.server.port,
     proxy: config.server.proxy,
     // outputPath: config.paths.output,
+    // publicPath: config.paths.publicPath,
     contentBase: config.paths.output,
     historyApiFallback: true,
-    // // no default console
-    // noInfo: true,
-    // quiet: true,
+    // no default console
+    quiet: true,
     inline: true,
     hot: true
   },

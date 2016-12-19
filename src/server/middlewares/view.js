@@ -1,4 +1,4 @@
-// import path from 'path'
+import path from 'path'
 import convert from 'koa-convert'
 import compose from 'koa-compose'
 import json from 'koa-json'
@@ -14,7 +14,7 @@ export default (options) => {
   })))
 
   // Template Engine
-  engines.push(views(options.paths.view, {
+  engines.push(views(path.join(__dirname, '../views/'), {
     extension: 'hbs',
     map: {
       hbs: 'handlebars'

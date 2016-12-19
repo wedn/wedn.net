@@ -101,7 +101,7 @@ module.exports = [
       { name: 'count', type: 'integer', nullable: false, default: 0 },
       { name: 'created', type: 'dateTime', nullable: false },
       { name: 'modified', type: 'dateTime', nullable: false },
-      { name: 'parent_id', type: 'integer', nullable: false, references: 'terms.id' },
+      { name: 'parent_id', type: 'integer', nullable: false, references: 'terms.id' }
     ],
     unique: ['slug', 'taxonomy']
   },
@@ -132,7 +132,7 @@ module.exports = [
     columns: [
       { name: 'id', type: 'increments', nullable: false, primary: true },
       { name: 'key', type: 'string', length: 60, nullable: false, unique: true },
-      { name: 'value', type: 'text', length: 'medium' },
+      { name: 'value', type: 'text', length: 'medium' }
     ]
   }
 ]

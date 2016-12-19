@@ -14,10 +14,10 @@ module.exports = {
     // notfound: path.join(__dirname, 'dist/404.html')
   },
   server: {
-    port: process.env.PORT || 2080,
+    port: process.env.PORT || 1080,
     proxy: {
-      '/v2': {
-        target: 'https://api.douban.com/',
+      '/api': {
+        target: 'http://localhost:2080/',
         changeOrigin: true,
         secure: false
       }
