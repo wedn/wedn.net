@@ -40,7 +40,7 @@ gulp.task('build:client', callback => {
   process.env.BABEL_ENV = 'client'
   webpack(webpackConfig, (error, stats) => {
     if (error) throw new plugins.util.PluginError('webpack', error)
-    plugins.util.log('[webpack]', stats.toString({ colors: true }))
+    // plugins.util.log('[webpack]', stats.toString({ colors: true }))
     callback()
   })
 })

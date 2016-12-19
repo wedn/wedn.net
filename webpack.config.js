@@ -5,7 +5,29 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // options
-const config = require('./config')
+const config = {
+  env: process.env.NODE_ENV || 'development',
+  paths: {
+    root: __dirname,
+    source: path.join(__dirname, 'src/client'),
+    static: path.join(__dirname, 'content/static'),
+    output: path.join(__dirname, 'dist/client'),
+    publicPath: '/admin/',
+    assets: 'assets',
+    index: path.join(__dirname, 'dist/client/index.html')
+  },
+  server: {
+    port: process.env.PORT || 1080,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:2080/',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
+  sourceMap: { js: true, css: true }
+}
 
 const isProd = config.env === 'production'
 
@@ -37,7 +59,7 @@ module.exports = {
   },
   output: {
     path: config.paths.output,
-    publicPath: config.paths.publicPath,
+    publicPath: isProd ? config.paths.publicPath : '/',
     filename: isProd ? assetPath('js', '[name].js?v=[chunkhash:6]') : '[name].js',
     chunkFilename: isProd ? assetPath('js', '[name].[chunkhash:6].js') : '[name].[chunkhash:6].js',
   },
@@ -136,7 +158,14 @@ module.exports = {
       title: 'WEDN.NET',
       filename: isProd ? config.paths.index : 'index.html',
       template: path.join(config.paths.source, 'index.ejs'),
-      inject: false
+      inject: false,
+      minify: isProd ? {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      } : false
     }),
     new CopyWebpackPlugin([
       { from: config.paths.static, context: __dirname }
@@ -148,15 +177,6 @@ if (isProd) {
   module.exports.devtool = 'source-map'
   module.exports.plugins = (module.exports.plugins || []).concat([
     new ExtractTextPlugin(assetPath('css', '[name].css?v=[hash:6]')),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      comments: false,
-      sourceMap: true
-    }),
-    new webpack.LoaderOptionsPlugin({
-      debug: false,
-      minimize: true
-    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: m => m.resource && /\.js$/.test(m.resource) && m.resource.includes('node_modules')
@@ -165,16 +185,15 @@ if (isProd) {
       name: 'manifest',
       chunks: ['vendor']
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: true },
+      comments: false,
+      sourceMap: true
+    }),
+    new webpack.LoaderOptionsPlugin({
+      debug: false,
+      minimize: true
+    }),
     new webpack.BannerPlugin('Copyright (c) WEDN.NET')
   ])
-
-  // just for gh-pages
-  if (config.paths.notfound) {
-    module.exports.plugins.push(new HtmlWebpackPlugin({
-      title: 'WEDN.NET',
-      filename: config.paths.notfound,
-      template: path.join(config.paths.source, 'index.ejs'),
-      inject: false
-    }))
-  }
 }
