@@ -94,7 +94,8 @@ gulp.task('run:server', () => {
     exec: './node_modules/.bin/babel-node',
     watch: ['src/server'],
     stdout: false
-  }).on('readable', function () {
+  })
+  .on('readable', function () {
     // the `readable` event indicates that data is ready to pick up
     this.stdout.on('data', d => plugins.util.log('[run:server]', d.toString().trim()))
   })

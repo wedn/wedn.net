@@ -8,7 +8,5 @@ export const router = new Router({ prefix: '/(wedn|wp-admin|ghost)' })
  */
 router.get('admin-alias', '/:path*', ctx => {
   ctx.status = 301
-  const to = `/${Router.url('admin')}/${ctx.params.path || ''}`
-  // ctx.body = to
-  ctx.redirect(to)
+  ctx.redirect(`/${Router.url('admin')}/${ctx.params.path || ''}`)
 })

@@ -21,7 +21,7 @@ export default (app, config) => {
   // TODO：[Legacy middleware] 错误处理
   middlewares.push(convert(error({
     engine: 'handlebars',
-    template: path.join(__dirname, '../views/', 'error.hbs')
+    template: path.join(__dirname, '../views/shared/', 'error.hbs')
   })))
 
   // 自定义响应头
