@@ -39,8 +39,14 @@ $ npm run dev
 [MIT](./LICENSE) &copy; [汪磊](http://github.com/zce)
 
 
-## npm 
+## NPM 
 
 ```bash
 npm i -S glob handlebars koa@next koa-bodyparser@next koa-compose@next koa-compress@next koa-convert koa-error koa-json@next koa-logger@next koa-mount@next koa-router@next koa-session koa-static@next koa-views@next lodash.merge
 ```
+
+## Links
+
+- https://github.com/xiongwilee/koa-grace
+- https://github.com/shellscape/koa-webpack
+- https://github.com/leecade/koa-webpack-middleware

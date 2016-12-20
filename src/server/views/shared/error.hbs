@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Error - {{status}} - {{env}}</title>
+    <meta charset="utf-8">
+    <meta content="env" content="{{ env }}">
+    <title>Error - {{ status }}</title>
+    <style>
+      body {
+        background-color: #e6e6e6;
+      }
+
+      #error {
+        max-width: 800px;
+        margin: 100px auto;
+        padding: 20px 40px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+      }
+
+      h1 {
+        color: #303030;
+      }
+
+      h3 {
+        color: #515151;
+      }
+
+      p,
+      pre {
+        color: #757575;
+      }
+    </style>
   </head>
   <body>
     <div id="error">
-      <h1>Error</h1>
+      <h1>{{ status }} Error</h1>
       <p>Looks like something broke!</p>
-    {{#if env}}
-      <h2>Message:</h2>
-      <pre>
-        <code>
-{{error}}
-        </code>
-      </pre>
-      <h2>Stack:</h2>
-      <pre>
-        <code>
-{{stack}}
-        </code>
-      </pre>
-    {{/if}}
+      {{#if env}}
+      <h3>Message:</h3>
+      <pre><code>{{ error }}</code></pre>
+      <h3>Stack:</h3>
+      <pre><code>{{ stack }}</code></pre>
+      {{/if}}
     </div>
   </body>
 </html>
