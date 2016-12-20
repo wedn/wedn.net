@@ -7,10 +7,6 @@ import views from 'koa-views'
 export default (options) => {
   const engines = []
 
-  // const operators = {
-
-  // }
-
   // JSON Format
   engines.push(convert(json({
     pretty: false,
@@ -28,29 +24,40 @@ export default (options) => {
     options: {
       helpers: {
         when (p1, operator, p2, options) {
+          /* eslint-disable eqeqeq */
           let op = 'inverse'
-          // switch (operator) {
-          //   case '==':
-          //     op = (p1 == p2) ? 'fn' : 'inverse'
-          //   case '===':
-          //     op = (p1 === p2) ? 'fn' : 'inverse'
-          //   case '!=':
-          //     op = (p1 != p2) ? 'fn' : 'inverse'
-          //   case '!==':
-          //     op = (p1 !== p2) ? 'fn' : 'inverse'
-          //   case '<':
-          //     op = (p1 < p2) ? 'fn' : 'inverse'
-          //   case '<=':
-          //     op = (p1 <= p2) ? 'fn' : 'inverse'
-          //   case '>':
-          //     op = (p1 > p2) ? 'fn' : 'inverse'
-          //   case '>=':
-          //     op = (p1 >= p2) ? 'fn' : 'inverse'
-          //   case '&&':
-          //     op = (p1 && p2) ? 'fn' : 'inverse'
-          //   case '||':
-          //     op = (p1 || p2) ? 'fn' : 'inverse'
-          // }
+          switch (operator) {
+            case '==':
+              op = (p1 == p2) ? 'fn' : 'inverse'
+              break
+            case '===':
+              op = (p1 === p2) ? 'fn' : 'inverse'
+              break
+            case '!=':
+              op = (p1 != p2) ? 'fn' : 'inverse'
+              break
+            case '!==':
+              op = (p1 !== p2) ? 'fn' : 'inverse'
+              break
+            case '<':
+              op = (p1 < p2) ? 'fn' : 'inverse'
+              break
+            case '<=':
+              op = (p1 <= p2) ? 'fn' : 'inverse'
+              break
+            case '>':
+              op = (p1 > p2) ? 'fn' : 'inverse'
+              break
+            case '>=':
+              op = (p1 >= p2) ? 'fn' : 'inverse'
+              break
+            case '&&':
+              op = (p1 && p2) ? 'fn' : 'inverse'
+              break
+            case '||':
+              op = (p1 || p2) ? 'fn' : 'inverse'
+              break
+          }
           options[op](this)
         }
       },
