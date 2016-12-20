@@ -29,7 +29,7 @@
           <div class="line"></div>
         </div>
         <div class="submit">
-          {{#when message '&&' !isRegister}}<p class="error">{{ message }}</p>{{/when}}
+          {{#when message '&&' isLogin}}<p class="error">{{ message }}</p>{{/when}}
           <button type="submit"><span>Go</span></button>
         </div>
         <div class="footer"><a href="#">Forgot your password?</a></div>
