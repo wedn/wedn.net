@@ -39,7 +39,6 @@ import { User } from '../server/models'
 //   })
 // })
 
-
 User.findAll()
   .then(res => {
     res.forEach(item => {

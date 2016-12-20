@@ -1,4 +1,5 @@
 import Router from 'koa-router'
+import { User } from '../../models'
 
 export const router = new Router({ prefix: '/account' })
 
@@ -14,13 +15,13 @@ router.get('/', ctx => {
  * GET /account/login/
  */
 router.get('login', '/login', async ctx => {
-  await ctx.render('account/index', { title: 'Login'  })
+  await ctx.render('account/index', { title: 'Login' })
 })
 
 /**
  * POST /account/login
  */
-router.post('login', '/login', async ctx => {
+router.post('login_post', '/login', async ctx => {
   ctx.body = ctx.request.body
 })
 
@@ -32,7 +33,14 @@ router.get('register', '/register', async ctx => {
 })
 
 /**
- * GET /account/logout/
+ * POST /account/register
+ */
+router.post('register_post', '/register', async ctx => {
+  ctx.body = ctx.request.body
+})
+
+/**
+ * GET /account/logout
  */
 router.get('logout', '/logout', async ctx => {
   await ctx.render('account/index')

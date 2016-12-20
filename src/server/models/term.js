@@ -1,34 +1,32 @@
-import { db, Sequelize, tableName, fieldName } from './db'
+import db from './db'
 
 export const Term = db.define('term', {
-  slug: { field: fieldName('slug'), type: Sequelize.STRING(100), unique: 'term', allowNull: false },
-  name: { field: fieldName('name'), type: Sequelize.STRING(100), allowNull: false },
-  taxonomy: { field: fieldName('taxonomy'), type: Sequelize.STRING(20), unique: 'term', allowNull: false },
-  description: { field: fieldName('description'), type: Sequelize.STRING(500), allowNull: false },
-  count: { field: fieldName('count'), type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
-  parentId: { field: fieldName('parentId'), type: Sequelize.INTEGER, allowNull: false }
+  slug: { field: db.utils.fieldName('slug'), type: db.Sequelize.STRING(100), unique: 'term', allowNull: false },
+  name: { field: db.utils.fieldName('name'), type: db.Sequelize.STRING(100), allowNull: false },
+  taxonomy: { field: db.utils.fieldName('taxonomy'), type: db.Sequelize.STRING(20), unique: 'term', allowNull: false },
+  description: { field: db.utils.fieldName('description'), type: db.Sequelize.STRING(500), allowNull: false },
+  count: { field: db.utils.fieldName('count'), type: db.Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
+  parentId: { field: db.utils.fieldName('parentId'), type: db.Sequelize.INTEGER, allowNull: false }
 }, {
   underscored: true,
-  tableName: tableName('terms')
+  tableName: db.utils.tableName('terms')
 })
 
 export const TermMeta = db.define('termMeta', {
-  key: { field: fieldName('key'), type: Sequelize.STRING(60), unique: 'term', allowNull: false },
-  value: { field: fieldName('value'), type: Sequelize.TEXT('tiny'), allowNull: false, defaultValue: '' },
-  termId: { field: fieldName('term_id'), type: Sequelize.INTEGER, unique: 'term', allowNull: false }
+  key: { field: db.utils.fieldName('key'), type: db.Sequelize.STRING(60), unique: 'term', allowNull: false },
+  value: { field: db.utils.fieldName('value'), type: db.Sequelize.TEXT('tiny'), allowNull: false, defaultValue: '' },
+  termId: { field: db.utils.fieldName('term_id'), type: db.Sequelize.INTEGER, unique: 'term', allowNull: false }
 }, {
   timestamps: false,
-  underscored: true,
-  tableName: tableName('term_meta')
+  tableName: db.utils.tableName('term_meta')
 })
 
 export const TermRelation = db.define('termRelation', {
-  postId: { field: fieldName('post_id'), type: Sequelize.INTEGER, unique: 'term', allowNull: false },
-  termId: { field: fieldName('term_id'), type: Sequelize.INTEGER, unique: 'term', allowNull: false }
+  postId: { field: db.utils.fieldName('post_id'), type: db.Sequelize.INTEGER, unique: 'term', allowNull: false },
+  termId: { field: db.utils.fieldName('term_id'), type: db.Sequelize.INTEGER, unique: 'term', allowNull: false }
 }, {
   timestamps: false,
-  underscored: true,
-  tableName: tableName('term_relations')
+  tableName: db.utils.tableName('term_relations')
 })
 
 Term.sync({ force: false })

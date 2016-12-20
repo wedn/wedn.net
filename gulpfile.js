@@ -92,13 +92,14 @@ gulp.task('run:server', () => {
   plugins.nodemon({
     script: 'src/server',
     exec: './node_modules/.bin/babel-node',
-    watch: ['src/server'],
-    stdout: false
+    watch: ['src/server']
+    // stdout: false
   })
-  .on('readable', function () {
-    // the `readable` event indicates that data is ready to pick up
-    this.stdout.on('data', d => plugins.util.log('[run:server]', d.toString().trim()))
-  })
+  // .on('readable', function () {
+  //   // the `readable` event indicates that data is ready to pick up
+  //   this.stdout.on('data', d => plugins.util.log('[run:server]', d.toString().trim()))
+  //   this.stdout.on('error', d => plugins.util.log('[run:server]', d.toString().trim()))
+  // })
 })
 
 /**
