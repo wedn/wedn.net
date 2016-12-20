@@ -10,22 +10,25 @@ import bodyParser from 'koa-bodyparser'
 import session from 'koa-session'
 import error from 'koa-error'
 
-import serveStatic from './static'
-import view from './view'
-import route from './route'
+import url from './url'
 import header from './header'
+import serveStatic from './static'
+import route from './route'
+import view from './view'
 
 export default (app, config) => {
   const middlewares = []
+
+  // URL friendly
+  middlewares.push(url())
+  // 自定义响应头
+  middlewares.push(header())
 
   // TODO：[Legacy middleware] 错误处理
   middlewares.push(convert(error({
     engine: 'handlebars',
     template: path.join(__dirname, '../views/shared/', 'error.hbs')
   })))
-
-  // 自定义响应头
-  middlewares.push(header())
 
   // 开发模式时记录日志
   app.env === 'development' && middlewares.push(logger())

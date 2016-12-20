@@ -7,37 +7,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Page Title */
-.page-title {
+.header {
   padding: 50px 0;
   text-align: center;
   letter-spacing: 2px;
 }
-.page-title h1 {
+.header h1 {
   margin: 0 0 20px;
   font-size: 48px;
   font-weight: 300;
 }
-.page-title p {
+.header p {
   font-size: 12px;
 }
-/*.page-title p .fa {
+.header p i {
   color: #ed2553;
-}*/
-.page-title p a {
+}
+.header p a {
   color: #ed2553;
   font-weight: 600;
   text-decoration: none;
 }
 
-/* Container */
 .container {
   position: relative;
   max-width: 460px;
   width: 100%;
   margin: 0 auto 100px;
 }
-.container.active .card:first-child {
+.container.active .card:nth-child(1) {
   background: #f2f2f2;
   margin: 0 15px;
 }
@@ -45,7 +43,7 @@ body {
   background: #fafafa;
   margin: 0 10px;
 }
-.container.active .card.alt {
+.container.active .card:nth-child(3) {
   top: 20px;
   right: 0;
   width: 100%;
@@ -55,7 +53,7 @@ body {
   padding: 60px 0 40px;
   overflow: hidden;
 }
-.container.active .card.alt .toggle {
+.container.active .card.alt .open {
   position: absolute;
   top: 40px;
   right: -70px;
@@ -67,12 +65,12 @@ body {
   transition: transform .3s ease;
   transition: transform .3s ease, -webkit-transform .3s ease;
 }
-.container.active .card.alt .toggle:before {
+.container.active .card.alt .open:before {
   content: '';
 }
 .container.active .card.alt .title,
-.container.active .card.alt .input-wrapper,
-.container.active .card.alt .button-wrapper {
+.container.active .card.alt .field,
+.container.active .card.alt .submit {
   left: 0;
   opacity: 1;
   visibility: visible;
@@ -83,24 +81,23 @@ body {
   -webkit-transition-delay: .3s;
           transition-delay: .3s;
 }
-.container.active .card.alt .input-wrapper {
+.container.active .card.alt .field {
   -webkit-transition-delay: .4s;
           transition-delay: .4s;
 }
-.container.active .card.alt .input-wrapper:nth-child(2) {
+.container.active .card.alt .field:nth-child(2) {
   -webkit-transition-delay: .5s;
           transition-delay: .5s;
 }
-.container.active .card.alt .input-wrapper:nth-child(3) {
+.container.active .card.alt .field:nth-child(3) {
   -webkit-transition-delay: .6s;
           transition-delay: .6s;
 }
-.container.active .card.alt .button-wrapper {
+.container.active .card.alt .submit {
   -webkit-transition-delay: .7s;
           transition-delay: .7s;
 }
 
-/* Card */
 .card {
   position: relative;
   background: #ffffff;
@@ -110,11 +107,6 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   -webkit-transition: .3s ease;
   transition: .3s ease;
-  /* Title */
-  /* Inputs */
-  /* Button */
-  /* Footer */
-  /* Alt Card */
 }
 .card:first-child {
   background: #fafafa;
@@ -135,11 +127,11 @@ body {
   line-height: 45px;
   text-transform: uppercase;
 }
-.card .input-wrapper {
+.card .field {
   position: relative;
   margin: 0 60px 50px;
 }
-.card .input-wrapper input {
+.card .field input {
   outline: none;
   z-index: 1;
   position: relative;
@@ -151,21 +143,21 @@ body {
   font-size: 24px;
   font-weight: 400;
 }
-.card .input-wrapper input:focus ~ label {
+.card .field input:focus ~ label {
   color: #9d9d9d;
   -webkit-transform: translate(-12%, -50%) scale(0.75);
           transform: translate(-12%, -50%) scale(0.75);
 }
-.card .input-wrapper input:focus ~ .line:before,
-.card .input-wrapper input:focus ~ .line:after {
+.card .field input:focus ~ .line:before,
+.card .field input:focus ~ .line:after {
   width: 50%;
 }
-.card .input-wrapper input:valid ~ label {
+.card .field input:valid ~ label {
   color: #9d9d9d;
   -webkit-transform: translate(-12%, -50%) scale(0.75);
           transform: translate(-12%, -50%) scale(0.75);
 }
-.card .input-wrapper label {
+.card .field label {
   position: absolute;
   top: 0;
   left: 0;
@@ -176,7 +168,7 @@ body {
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
 }
-.card .input-wrapper .line {
+.card .field .line {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -184,8 +176,8 @@ body {
   width: 100%;
   height: 1px;
 }
-.card .input-wrapper .line:before,
-.card .input-wrapper .line:after {
+.card .field .line:before,
+.card .field .line:after {
   content: '';
   position: absolute;
   background: #ed2553;
@@ -194,17 +186,17 @@ body {
   -webkit-transition: .2s ease;
   transition: .2s ease;
 }
-.card .input-wrapper .line:before {
+.card .field .line:before {
   left: 50%;
 }
-.card .input-wrapper .line:after {
+.card .field .line:after {
   right: 50%;
 }
-.card .button-wrapper {
+.card .submit {
   margin: 0 60px;
   text-align: center;
 }
-.card .button-wrapper button {
+.card .submit button {
   outline: 0;
   cursor: pointer;
   position: relative;
@@ -221,14 +213,14 @@ body {
   -webkit-transition: .3s ease;
   transition: .3s ease;
 }
-.card .button-wrapper button span {
+.card .submit button span {
   position: relative;
   z-index: 1;
   color: #ddd;
   -webkit-transition: .3s ease;
   transition: .3s ease;
 }
-.card .button-wrapper button:before {
+.card .submit button:before {
   content: '';
   position: absolute;
   top: 50%;
@@ -243,22 +235,22 @@ body {
   -webkit-transition: .3s ease;
   transition: .3s ease;
 }
-.card .button-wrapper button:hover,
-.card .button-wrapper button:active,
-.card .button-wrapper button:focus {
+.card .submit button:hover,
+.card .submit button:active,
+.card .submit button:focus {
   border-color: #ed2553;
 }
-.card .button-wrapper button:hover span,
-.card .button-wrapper button:active span,
-.card .button-wrapper button:focus span {
+.card .submit button:hover span,
+.card .submit button:active span,
+.card .submit button:focus span {
   color: #ed2553;
 }
-.card .button-wrapper button:active span,
-.card .button-wrapper button:focus span {
+.card .submit button:active span,
+.card .submit button:focus span {
   color: #ffffff;
 }
-.card .button-wrapper button:active:before,
-.card .button-wrapper button:focus:before {
+.card .submit button:active:before,
+.card .submit button:focus:before {
   opacity: 1;
   -webkit-transform: scale(10);
   transform: scale(10);
@@ -292,12 +284,8 @@ body {
   padding: 0;
   -webkit-transition: .3s ease;
   transition: .3s ease;
-  /* Toggle */
-  /* Title */
-  /* Input */
-  /* Button */
 }
-.card.alt .toggle {
+.card.alt .open {
   display: inline-block;
   position: relative;
   background: #ed2553;
@@ -311,7 +299,7 @@ body {
   text-align: center;
   cursor: pointer;
 }
-.card.alt .toggle:before {
+.card.alt .open:before {
   content: '\f040';
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -323,8 +311,8 @@ body {
           transform: translate(0, 0);
 }
 .card.alt .title,
-.card.alt .input-wrapper,
-.card.alt .button-wrapper {
+.card.alt .field,
+.card.alt .submit {
   left: 100px;
   opacity: 0;
   visibility: hidden;
@@ -348,51 +336,37 @@ body {
 .card.alt .title .close:before {
   content: '\00d7';
 }
-.card.alt .input-wrapper input {
+.card.alt .field input {
   color: #ffffff;
 }
-.card.alt .input-wrapper input:focus ~ label {
+.card.alt .field input:focus ~ label {
   color: #ffffff;
 }
-.card.alt .input-wrapper input:focus ~ .line:before,
-.card.alt .input-wrapper input:focus ~ .line:after {
+.card.alt .field input:focus ~ .line:before,
+.card.alt .field input:focus ~ .line:after {
   background: #ffffff;
 }
-.card.alt .input-wrapper input:valid ~ label {
+.card.alt .field input:valid ~ label {
   color: #ffffff;
 }
-.card.alt .input-wrapper label {
+.card.alt .field label {
   color: rgba(255, 255, 255, 0.8);
 }
-.card.alt .input-wrapper .line {
+.card.alt .field .line {
   background: rgba(255, 255, 255, 0.8);
 }
-.card.alt .button-wrapper button {
+.card.alt .submit button {
   width: 100%;
   background: #ffffff;
   border-color: #ffffff;
 }
-.card.alt .button-wrapper button span {
+.card.alt .submit button span {
   color: #ed2553;
 }
-.card.alt .button-wrapper button:hover {
+.card.alt .submit button:hover {
   background: rgba(255, 255, 255, 0.9);
 }
-.card.alt .button-wrapper button:active:before,
-.card.alt .button-wrapper button:focus:before {
+.card.alt .submit button:active:before,
+.card.alt .submit button:focus:before {
   display: none;
-}
-
-/* Keyframes */
-@-webkit-keyframes buttonFadeInUp {
-  0% {
-    bottom: 30px;
-    opacity: 0;
-  }
-}
-@keyframes buttonFadeInUp {
-  0% {
-    bottom: 30px;
-    opacity: 0;
-  }
 }

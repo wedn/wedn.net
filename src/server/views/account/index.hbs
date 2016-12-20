@@ -3,68 +3,63 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="/css/login.css">
+  <title>{{ title }} « Account « WEDN.NET</title>
+  <link rel="stylesheet" href="/css/account.css">
   <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
-  <div class="page-title">
+  <header class="header">
     <h1>WEDN.NET</h1>
     <p><i class='fa fa-code'></i> by <a href="https://github.com/zce">zce</a></p>
-  </div>
-
-  <div class="container{{#if isRegister}} active{{/if}}">
+  </header>
+  <main class="container{{#if isRegister}} active{{/if}}">
     <div class="card"></div>
-
     <div class="card">
       <h1 class="title">Login</h1>
       <form action="login" method="post" autocomplete="off">
-        <div class="input-wrapper">
+        <div class="field">
           <input id="login_username" name="username" type="text" required/>
           <label for="login_username">Username</label>
           <div class="line"></div>
         </div>
-        <div class="input-wrapper">
-          <input id="login_password" name="password" type="text" required/>
+        <div class="field">
+          <input id="login_password" name="password" type="password" required/>
           <label for="login_password">Password</label>
           <div class="line"></div>
         </div>
-        <div class="button-wrapper">
+        <div class="submit">
           <button type="submit"><span>Go</span></button>
         </div>
         <div class="footer"><a href="#">Forgot your password?</a></div>
       </form>
     </div>
-
     <div class="card alt">
-      <i class="toggle"></i>
+      <i class="open"></i>
       <h1 class="title">Register<i class="close"></i></h1>
       <form action="register" method="post" autocomplete="off">
-        <div class="input-wrapper">
+        <div class="field">
           <input id="reg_username" name="username" type="text" required/>
           <label for="reg_username">Username</label>
           <div class="line"></div>
         </div>
-        <div class="input-wrapper">
+        <div class="field">
           <input id="reg_password" name="password" type="password" required/>
           <label for="reg_password">Password</label>
           <div class="line"></div>
         </div>
-        <div class="input-wrapper">
+        <div class="field">
           <input id="reg_comfirm" name="comfirm" type="password" required/>
           <label for="reg_comfirm">Repeat Password</label>
           <div class="line"></div>
         </div>
-        <div class="button-wrapper">
+        <div class="submit">
           <button type="submit"><span>Next</span></button>
         </div>
       </form>
     </div>
-  </div>
-
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/js/login.js"></script>
+  </main>
+  <script src="/js/account.js"></script>
 </body>
 
 </html>
