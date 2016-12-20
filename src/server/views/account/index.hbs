@@ -29,6 +29,7 @@
           <div class="line"></div>
         </div>
         <div class="submit">
+          {{#when message '&&' !isRegister}}<p class="error">{{ message }}</p>{{/when}}
           <button type="submit"><span>Go</span></button>
         </div>
         <div class="footer"><a href="#">Forgot your password?</a></div>
@@ -44,17 +45,18 @@
           <div class="line"></div>
         </div>
         <div class="field">
+          <input id="reg_email" name="email" type="text" required/>
+          <label for="reg_email">Email</label>
+          <div class="line"></div>
+        </div>
+        <div class="field">
           <input id="reg_password" name="password" type="password" required/>
           <label for="reg_password">Password</label>
           <div class="line"></div>
         </div>
-        <div class="field">
-          <input id="reg_comfirm" name="comfirm" type="password" required/>
-          <label for="reg_comfirm">Repeat Password</label>
-          <div class="line"></div>
-        </div>
         <div class="submit">
-          <button type="submit"><span>Next</span></button>
+          {{#when message '&&' isRegister}}<p class="error">{{ message }}</p>{{/when}}
+          <button type="submit"><span>Join</span></button>
         </div>
       </form>
     </div>

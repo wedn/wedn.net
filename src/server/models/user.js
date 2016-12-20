@@ -2,6 +2,10 @@ import db from './db'
 
 const { slug, username, key } = db.validate
 
+/**
+ * User Model
+ * @type {Model}
+ */
 export const User = db.define('user', {
   slug: {
     field: db.utils.fieldName('slug'),
@@ -58,10 +62,21 @@ export const User = db.define('user', {
 }, {
   underscored: true,
   tableName: db.utils.tableName('users'),
-  classMethods: {},
+  classMethods: {
+    async getByUsername (username) {
+      return await User.findOne({ where: { username } })
+    },
+    async getByEmail (email) {
+      return await User.findOne({ where: { email } })
+    }
+  },
   instanceMethods: {}
 })
 
+/**
+ * UserMeta Model
+ * @type {Model}
+ */
 export const UserMeta = db.define('userMeta', {
   key: {
     field: db.utils.fieldName('key'),
@@ -84,7 +99,9 @@ export const UserMeta = db.define('userMeta', {
   }
 }, {
   timestamps: false,
-  tableName: db.utils.tableName('user_meta')
+  tableName: db.utils.tableName('user_meta'),
+  classMethods: {},
+  instanceMethods: {}
 })
 
 User.sync({ force: false })

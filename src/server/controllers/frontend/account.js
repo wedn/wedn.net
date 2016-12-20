@@ -15,7 +15,8 @@ router.get('/', ctx => {
  * GET /account/login/
  */
 router.get('login', '/login', async ctx => {
-  await ctx.render('account/index', { title: 'Login' })
+  ctx.state.title = 'Login'
+  await ctx.render('account/index')
 })
 
 /**
@@ -29,13 +30,41 @@ router.post('login_post', '/login', async ctx => {
  * GET /account/register/
  */
 router.get('register', '/register', async ctx => {
-  await ctx.render('account/index', { title: 'Register', isRegister: true })
+  ctx.state.title = 'Register'
+  ctx.state.isRegister = true
+  await ctx.render('account/index')
 })
 
 /**
  * POST /account/register
  */
 router.post('register_post', '/register', async ctx => {
+  // 0. 接收表单
+  const { username, email, password } = ctx.request.body
+
+  ctx.state.title = 'Register'
+  ctx.state.isRegister = true
+
+  // 1. 合法化校验
+  if (!(username && email && password)) {
+    ctx.state.message = 'Input'
+    return await ctx.render('account/index')
+  }
+
+  // Username exist
+  if (await User.getByUsername(username)) {
+    ctx.state.message = 'Username exist'
+    return await ctx.render('account/index')
+  }
+
+  // Email exist
+  if (await User.getByEmail(email)) {
+    ctx.state.message = 'Email exist'
+    return await ctx.render('account/index')
+  }
+
+  // 2. 持久化
+  // 3. 响应客户端
   ctx.body = ctx.request.body
 })
 

@@ -7,6 +7,10 @@ import views from 'koa-views'
 export default (options) => {
   const engines = []
 
+  // const operators = {
+
+  // }
+
   // JSON Format
   engines.push(convert(json({
     pretty: false,
@@ -20,6 +24,37 @@ export default (options) => {
       hbs: 'handlebars'
       // jade: 'jade',
       // html: 'nunjucks',
+    },
+    options: {
+      helpers: {
+        when (p1, operator, p2, options) {
+          let op = 'inverse'
+          // switch (operator) {
+          //   case '==':
+          //     op = (p1 == p2) ? 'fn' : 'inverse'
+          //   case '===':
+          //     op = (p1 === p2) ? 'fn' : 'inverse'
+          //   case '!=':
+          //     op = (p1 != p2) ? 'fn' : 'inverse'
+          //   case '!==':
+          //     op = (p1 !== p2) ? 'fn' : 'inverse'
+          //   case '<':
+          //     op = (p1 < p2) ? 'fn' : 'inverse'
+          //   case '<=':
+          //     op = (p1 <= p2) ? 'fn' : 'inverse'
+          //   case '>':
+          //     op = (p1 > p2) ? 'fn' : 'inverse'
+          //   case '>=':
+          //     op = (p1 >= p2) ? 'fn' : 'inverse'
+          //   case '&&':
+          //     op = (p1 && p2) ? 'fn' : 'inverse'
+          //   case '||':
+          //     op = (p1 || p2) ? 'fn' : 'inverse'
+          // }
+          options[op](this)
+        }
+      },
+      partials: {}
     }
   }))
 
@@ -36,9 +71,10 @@ export default (options) => {
   //   viewPath: path.join(__dirname, 'views')
   // })))
 
-  // 模板引擎render方法适配
+  // // 模板引擎render方法适配
   // engines.push(async (ctx, next) => {
-  //   ctx.render = ctx.render.bind(ctx)
+  //   // ctx.render = ctx.render.bind(ctx)
+  //   ctx.state = operators
   //   await next()
   // })
 
