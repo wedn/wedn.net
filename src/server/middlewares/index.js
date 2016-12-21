@@ -25,10 +25,10 @@ export default (app, config) => {
   middlewares.push(header())
 
   // TODO：[Legacy middleware] 错误处理
-  middlewares.push(convert(error({
-    engine: 'handlebars',
-    template: path.join(__dirname, '../views/shared/', 'error.hbs')
-  })))
+  // middlewares.push(convert(error({
+  //   engine: 'xtemplate',
+  //   template: path.join(__dirname, '../views/shared/', 'error.xtpl')
+  // })))
 
   // 开发模式时记录日志
   app.env === 'development' && middlewares.push(logger())

@@ -37,7 +37,6 @@
   "homepage": "https://github.com/wedn/wedn.net#readme",
   "dependencies": {
     "glob": "^7.1.1",
-    "handlebars": "^4.0.6",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.2.0",
     "koa-compose": "^3.2.1",
@@ -51,11 +50,13 @@
     "koa-session": "^3.4.0",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.0",
+    "koa-xtpl": "^2.0.0-alpha.4",
     "lodash.merge": "^4.6.0",
     "sequelize": "^3.27.0",
     "sqlite3": "^3.1.8"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
