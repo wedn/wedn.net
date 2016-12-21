@@ -31,7 +31,6 @@ router.post('login_post', '/login', async ctx => {
  */
 router.get('register', '/register', async ctx => {
   ctx.state.title = 'Register'
-  ctx.state.isRegister = true
   await ctx.render('account/index')
 })
 
@@ -43,7 +42,6 @@ router.post('register_post', '/register', async ctx => {
   const { username, email, password } = ctx.request.body
 
   ctx.state.title = 'Register'
-  ctx.state.isRegister = true
 
   // 1. 合法化校验
   if (!(username && email && password)) {

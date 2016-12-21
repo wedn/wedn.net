@@ -13,7 +13,7 @@
     <h1>WEDN.NET</h1>
     <p><i class='fa fa-code'></i> by <a href="https://github.com/zce">zce</a></p>
   </header>
-  <main class="container{{#if (isRegister)}} active{{/if}}">
+  <main class="container{{#if (title === 'Register')}} active{{/if}}">
     <div class="card"></div>
     <div class="card">
       <h1 class="title">Login</h1>
@@ -29,7 +29,7 @@
           <div class="line"></div>
         </div>
         <div class="submit">
-          {{#if (message && isLogin)}}<p class="error">{{ message }}</p>{{/if}}
+          {{#if (message && title !== 'Register')}}<p class="error">{{ message }}</p>{{/if}}
           <button type="submit"><span>Go</span></button>
         </div>
         <div class="footer"><a href="#">Forgot your password?</a></div>
@@ -55,7 +55,7 @@
           <div class="line"></div>
         </div>
         <div class="submit">
-          {{#if (message && isLogin)}}<p class="error">{{ message }}</p>{{/if}}
+          {{#if (message && title === 'Register')}}<p class="error">{{ message }}</p>{{/if}}
           <button type="submit"><span>Join</span></button>
         </div>
       </form>
