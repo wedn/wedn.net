@@ -6,7 +6,7 @@ export default {
   // Server
   // Can be host & port (default), or socket
   server: {
-    port: '2080',
+    port: process.env.PORT || '2080',
     host: '127.0.0.1'
   },
 
