@@ -26,7 +26,16 @@ export default {
   },
 
   // Database
+  // database: {
+  //   database: 'wedn',
+  //   username: 'root',
+  //   password: 'wanglei',
+  //   dialect: 'mysql',
+  //   pool: { max: 5, min: 0, idle: 10000 },
+  //   logging: false
+  // },
   database: {
+    database: 'wedn',
     dialect: 'sqlite',
     pool: { max: 5, min: 0, idle: 10000 },
     storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db'),
