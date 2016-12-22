@@ -1,3 +1,15 @@
+import test from 'ava'
+
+test('foo', t => {
+  t.pass()
+})
+
+test('bar', async t => {
+  const bar = Promise.resolve('bar')
+
+  t.is(await bar, 'bar')
+})
+
 // import './db'
 // import User from '../server/models/user'
 
@@ -20,7 +32,7 @@
 
 // console.log(User.sync({ force: false }))
 
-import { User } from '../server/models'
+// import { User } from '../server/models'
 
 // User.sync().then(user => {
 //   // console.log(111111111111111111)
@@ -39,9 +51,9 @@ import { User } from '../server/models'
 //   })
 // })
 
-User.findAll()
-  .then(res => {
-    res.forEach(item => {
-      console.log(item.username)
-    })
-  })
+// User.findAll()
+//   .then(res => {
+//     res.forEach(item => {
+//       console.log(item.username)
+//     })
+//   })

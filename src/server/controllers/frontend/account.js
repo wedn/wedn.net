@@ -38,30 +38,32 @@ router.get('register', '/register', async ctx => {
  * POST /account/register
  */
 router.post('register_post', '/register', async ctx => {
-  // 0. 接收表单
+  // ## 0. 接收表单
   const { username, email, password } = ctx.request.body
 
   ctx.state.title = 'Register'
 
-  // 1. 合法化校验
+  // ## 1. 合法化校验
   if (!(username && email && password)) {
     ctx.state.message = 'Input'
     return await ctx.render('account/index')
   }
 
-  // Username exist
+  // ### 1.1. 用户名是否存在
   if (await User.getByUsername(username)) {
     ctx.state.message = 'Username exist'
     return await ctx.render('account/index')
   }
 
-  // Email exist
+  // ### 1.2. 邮箱是否存在
   if (await User.getByEmail(email)) {
     ctx.state.message = 'Email exist'
     return await ctx.render('account/index')
   }
 
-  // 2. 持久化
+  // ## 2. 持久化
+
+
   // 3. 响应客户端
   ctx.body = ctx.request.body
 })

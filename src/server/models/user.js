@@ -63,12 +63,54 @@ export const User = db.define('user', {
   underscored: true,
   tableName: db.utils.tableName('users'),
   classMethods: {
+    /**
+     * 根据用户名获取用户对象
+     * @param  {String} username 用户名
+     * @return {User}            用户对象
+     */
     async getByUsername (username) {
       return await User.findOne({ where: { username } })
     },
+
+    /**
+     * 根据用户邮箱获取用户对象
+     * @param  {String} email 用户邮箱
+     * @return {User}         用户对象
+     */
     async getByEmail (email) {
       return await User.findOne({ where: { email } })
-    }
+    },
+
+    /**
+     * 添加一个新用户
+     * @param {String or Object} username   用户名（Required） or 用户对象
+     * @param {String}           email      邮箱（Required）
+     * @param {String}           password   密码（Required）
+     * @param {String}           nickname   昵称（Optional）
+     * @param {String}           slug       别名（Optional）
+     * @param {String}           mobile     手机（Optional）
+     * @param {String}           role       角色（Optional）
+     * @param {String}           status     状态（Optional）
+     */
+    async add (username, email, password, nickname, slug, mobile = '', role = '', status = '') {
+      // ## 1. 参数处理
+      let temp = {}
+      if (typeof username === 'object') {
+        // 以对象方式传入
+        Object.assign(temp, username)
+      } else {
+        // 单个数据传入
+        temp.username = username
+        temp.email = email
+        temp.password = password
+        temp.nickname = nickname || username
+        temp.slug = slug || username
+        temp.mobile = mobile
+        temp.role = role
+        temp.status = status
+      }
+      return await User.create(temp)
+    },
   },
   instanceMethods: {}
 })
