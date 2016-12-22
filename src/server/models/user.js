@@ -146,7 +146,6 @@ export const User = db.define('user', {
      * @return {Boolean}          是否匹配
      */
     async comparePassword (password) {
-      console.log(password, this.password)
       return compare(password, this.password)
     }
   }

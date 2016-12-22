@@ -1,5 +1,5 @@
-  // 静态文件请求处理
-  // middlewares.push(statics(config.paths.content, { maxage: 7 * 24 * 60 * 60 * 1000 }))
+// 静态文件请求处理
+// middlewares.push(statics(config.paths.content, { maxage: 7 * 24 * 60 * 60 * 1000 }))
 import path from 'path'
 import compose from 'koa-compose'
 import mount from 'koa-mount'

@@ -1,59 +1,49 @@
 // Load all of the middlewares
-// import path from 'path'
-import { Z_SYNC_FLUSH } from 'zlib'
-
-import convert from 'koa-convert'
 import compose from 'koa-compose'
-import logger from 'koa-logger'
-import compress from 'koa-compress'
-import bodyParser from 'koa-bodyparser'
-import session from 'koa-session'
-// import error from 'koa-error'
 
-import url from './url'
+import logger from './logger'
 import header from './header'
-import serveStatic from './static'
-import route from './route'
+import error from './error'
+import compress from './compress'
+import staticServe from './static'
+import url from './url'
+import body from './body'
+import session from './session'
+import router from './router'
 import view from './view'
 
-export default (app, config) => {
+export default config => {
   const middlewares = []
 
-  // URL friendly
-  middlewares.push(url())
-  // 自定义响应头
-  middlewares.push(header())
-
-  // TODO：[Legacy middleware] 错误处理
-  // middlewares.push(convert(error({
-  //   engine: 'xtemplate',
-  //   template: path.join(__dirname, '../views/shared/', 'error.xtpl')
-  // })))
-
   // 开发模式时记录日志
-  app.env === 'development' && middlewares.push(logger())
+  middlewares.push(logger(config))
+
+  // 自定义响应头
+  middlewares.push(header(config))
+
+  // 错误处理
+  middlewares.push(error(config))
 
   // 压缩响应流处理
-  config.compress && middlewares.push(compress({
-    filter: type => !/image/i.test(type),
-    threshold: 1024 * 50,
-    flush: Z_SYNC_FLUSH
-  }))
+  middlewares.push(compress(config))
 
   // 静态资源
-  middlewares.push(serveStatic(config))
+  middlewares.push(staticServe(config))
+
+  // URL friendly
+  middlewares.push(url(config))
 
   // 请求体格式化处理
-  middlewares.push(bodyParser())
+  middlewares.push(body(config))
 
-  // TODO：[Legacy middleware] 会话支持
-  middlewares.push(convert(session(app)))
+  // 会话支持
+  middlewares.push(session(config))
 
   // 视图模板引擎
   middlewares.push(view(config))
 
   // 自动化路由
-  middlewares.push(route())
+  middlewares.push(router())
 
   // 转换部分Generator Function Middlewares
   // middlewares.forEach(m => console.log(m.constructor))

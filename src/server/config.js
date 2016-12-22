@@ -1,6 +1,6 @@
 import path from 'path'
 
-export default {
+const config = {
   url: 'http://localhost:2080/',
 
   // Server
@@ -59,8 +59,32 @@ export default {
 
   // Cookie keys (can not modify when application running)
   keys: ['wedn.net', 'www.wedn.net'],
+
+  // Session
+  session: {
+    key: 'wedn:zce', /** (string) cookie key (default is koa:sess) */
+    maxAge: 86400000, /** (number) maxAge in ms (default is 1 days) */
+    overwrite: true, /** (boolean) can overwrite or not (default true) */
+    httpOnly: true, /** (boolean) httpOnly or not (default true) */
+    signed: true, /** (boolean) signed or not (default true) */
+  },
+
+  // Salt rounds
   salt_rounds: 8,
+
+  set app (app) {
+    this._app = app
+    this._app.name = this.name
+    this._app.version = this.version
+    this._app.keys = this.keys
+  },
+
+  get app () {
+    return this._app
+  }
 }
+
+export default config
 
 // import path from 'path'
 // import merge from 'lodash.merge'
