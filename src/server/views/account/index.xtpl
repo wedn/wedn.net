@@ -14,7 +14,6 @@
     <p><i class='fa fa-code'></i> by <a href="https://github.com/zce">zce</a></p>
   </header>
   <main class="container{{#if (title === 'Register')}} active{{/if}}">
-    <div class="card"></div>
     <div class="card">
       <h1 class="title">Login</h1>
       <form action="login" method="post" autocomplete="off">
@@ -36,7 +35,7 @@
       </form>
     </div>
     <div class="card alt">
-      <i class="open"></i>
+      <i class="open" title="Register"></i>
       <h1 class="title">Register<i class="close"></i></h1>
       <form action="register" method="post" autocomplete="off">
         <div class="field">
