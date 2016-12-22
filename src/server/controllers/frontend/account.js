@@ -1,5 +1,6 @@
 import Router from 'koa-router'
 import { User } from '../../models'
+import { isUsername, isPassword } from '../../libraries/validator'
 
 export const router = new Router({ prefix: '/account' })
 
@@ -69,7 +70,7 @@ router.post('login_post', '/login', async ctx => {
   }
 
   // ## 2. 持久化
-  const user = await User.getByUsernameOrEmail(username)
+  const user = await User.getByUnique(username)
   // ## 3. 客户端响应
   if (!user || !await user.comparePassword(password)) {
     ctx.state.message = 'Error: Username or Password error! '

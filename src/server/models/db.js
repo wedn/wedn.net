@@ -19,7 +19,7 @@ db.validate = {
     if (!isUsername(input)) throw new Error(`Username '${input}' format error`)
   },
   isPassword: input => {
-    if (!input.length === 60) throw new Error(`Password '${input}' format error`)
+    if (input.length !== 60) throw new Error(`Password '${input}' format error`)
   },
   isEmail: input => {
     if (!isEmail(input)) throw new Error(`Email '${input}' format error`)
@@ -29,7 +29,7 @@ db.validate = {
   },
   isKey: input => {
     if (!isKey(input)) throw new Error(`Key '${input}' format error`)
-  },
+  }
 }
 
 export default db

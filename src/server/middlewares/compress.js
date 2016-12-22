@@ -5,10 +5,8 @@ import compress from 'koa-compress'
 export default config =>
   config.compress
   ? compress({
-      filter: type => !/image/i.test(type),
-      threshold: 1024 * 50,
-      flush: Z_SYNC_FLUSH
-    })
+    filter: type => !/image/i.test(type),
+    threshold: 1024 * 50,
+    flush: Z_SYNC_FLUSH
+  })
   : (ctx, next) => next()
-
-
