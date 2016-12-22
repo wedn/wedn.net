@@ -63,7 +63,6 @@ router.post('register_post', '/register', async ctx => {
 
   // ## 2. 持久化
 
-
   // 3. 响应客户端
   ctx.body = ctx.request.body
 })

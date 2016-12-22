@@ -1,37 +1,14 @@
 import test from 'ava'
+import db from '../../server/models/db'
 
-test('foo', t => {
-  t.pass()
+test('utils', t => {
+  t.is(db.utils.tableName('wedn'), 'w_wedn')
+  t.is(db.utils.fieldName('wedn'), 'wedn')
 })
 
-test('bar', async t => {
-  const bar = Promise.resolve('bar')
-
-  t.is(await bar, 'bar')
+test('validate', t => {
+  t.truthy(db.validate.slug)
+  t.truthy(db.validate.username)
+  t.truthy(db.validate.key)
+  t.truthy(db.validate.mobile)
 })
-
-// import Sequelize from 'sequelize'
-
-// import config from '../server/config'
-
-// const sequelize = new Sequelize(config.database)
-
-// const User = sequelize.define('user', {
-//   firstName: {
-//     type: Sequelize.STRING,
-//     field: 'first_name'
-//   },
-//   lastName: {
-//     type: Sequelize.STRING
-//   }
-// }, {
-//   freezeTableName: true
-// })
-
-// User.sync({ force: true }).then(() => {
-//   // Table created
-//   return User.create({
-//     firstName: 'John',
-//     lastName: 'Hancock'
-//   })
-// })

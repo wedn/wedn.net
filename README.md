@@ -1,11 +1,20 @@
 # wedn.net
 
-> wedn.net site
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][dependency-image]][dependency-url]
+[![devDependency Status][devdependency-image]][devdependency-url]
+[![Code Style][style-image]][style-url]
 
-[![Build Status](https://travis-ci.org/wedn/wedn.net.svg?branch=master)](https://travis-ci.org/wedn/wedn.net)
-[![Dependency Status](https://david-dm.org/wedn/wedn.net.svg)](https://david-dm.org/wedn/wedn.net)
-[![devDependency Status](https://david-dm.org/wedn/wedn.net/dev-status.svg)](https://david-dm.org/wedn/wedn.net#info=devDependencies)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[travis-image]: https://travis-ci.org/wedn/wedn.net.svg?branch=master
+[travis-url]: https://travis-ci.org/wedn/wedn.net
+[dependency-image]: https://david-dm.org/wedn/wedn.net/status.svg
+[dependency-url]: https://david-dm.org/wedn/wedn.net
+[devdependency-image]: https://david-dm.org/wedn/wedn.net/dev-status.svg
+[devdependency-url]: https://david-dm.org/wedn/wedn.net?type=dev
+[style-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[style-url]: http://standardjs.com/
+
+> wedn.net site
 
 ## Clone it
 
@@ -36,7 +45,7 @@ $ npm run dev
 
 ## License
 
-[MIT](./LICENSE) &copy; [汪磊](http://github.com/zce)
+[MIT](LICENSE) &copy; [汪磊](http://github.com/zce) & [WEDN.NET](http://wedn.net)
 
 
 ## NPM 

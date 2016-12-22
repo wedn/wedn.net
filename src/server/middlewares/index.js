@@ -1,5 +1,5 @@
 // Load all of the middlewares
-import path from 'path'
+// import path from 'path'
 import { Z_SYNC_FLUSH } from 'zlib'
 
 import convert from 'koa-convert'
@@ -8,7 +8,7 @@ import logger from 'koa-logger'
 import compress from 'koa-compress'
 import bodyParser from 'koa-bodyparser'
 import session from 'koa-session'
-import error from 'koa-error'
+// import error from 'koa-error'
 
 import url from './url'
 import header from './header'

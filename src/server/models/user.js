@@ -1,6 +1,6 @@
 import db from './db'
 
-const { slug, username, key } = db.validate
+const { slug, username, key, mobile } = db.validate
 
 /**
  * User Model
@@ -41,16 +41,16 @@ export const User = db.define('user', {
   mobile: {
     field: db.utils.fieldName('mobile'),
     type: db.Sequelize.STRING(20),
-    unique: true,
     allowNull: false,
-    validate: { isNumeric: true }
+    validate: { is: mobile },
+    defaultValue: ''
   },
   status: {
     field: db.utils.fieldName('status'),
     type: db.Sequelize.STRING(20),
     allowNull: false,
     defaultValue: 'unactivated',
-    comment: 'email-unactivated / mobile-unactivated / activated / forbidden'
+    comment: 'unactivated / mobile-unactivated / activated / forbidden'
   },
   role: {
     field: db.utils.fieldName('role'),
@@ -65,8 +65,8 @@ export const User = db.define('user', {
   classMethods: {
     /**
      * 根据用户名获取用户对象
-     * @param  {String} username 用户名
-     * @return {User}            用户对象
+     * @param  {String}   username 用户名
+     * @return {Instance}          用户对象
      */
     async getByUsername (username) {
       return User.findOne({ where: { username } })
@@ -74,8 +74,8 @@ export const User = db.define('user', {
 
     /**
      * 根据用户邮箱获取用户对象
-     * @param  {String} email 用户邮箱
-     * @return {User}         用户对象
+     * @param  {String}   email 用户邮箱
+     * @return {Instance}       用户对象
      */
     async getByEmail (email) {
       return User.findOne({ where: { email } })
@@ -91,26 +91,30 @@ export const User = db.define('user', {
      * @param {String}           mobile     手机（Optional）
      * @param {String}           role       角色（Optional）
      * @param {String}           status     状态（Optional）
+     * @return {Instance}                   新增的用户对象
      */
-    async add (username, email, password, nickname, slug, mobile = '', role = '', status = '') {
+    async add (username, email, password, nickname, slug, mobile, role, status) {
       // ## 1. 参数处理
       let temp = {}
       if (typeof username === 'object') {
         // 以对象方式传入
         Object.assign(temp, username)
+        temp.slug = temp.slug || temp.username
+        temp.nickname = temp.nickname || temp.username
       } else {
         // 单个数据传入
         temp.username = username
         temp.email = email
         temp.password = password
-        temp.nickname = nickname || username
         temp.slug = slug || username
+        temp.nickname = nickname || username
         temp.mobile = mobile
         temp.role = role
         temp.status = status
       }
+      // 创建这个元素
       return User.create(temp)
-    },
+    }
   },
   instanceMethods: {}
 })
