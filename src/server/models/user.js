@@ -164,7 +164,8 @@ export const User = db.define('user', {
       const user = User.build(temp)
 
       // ### 2.2. 格式校验
-      await user.validate()
+      const err = await user.validate()
+      if (err) throw err
 
       // // ## 3. 保存这个对象到数据库
       // try {
