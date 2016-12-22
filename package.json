@@ -7,6 +7,7 @@
   "scripts": {
     "lint": "gulp lint",
     "test": "ava",
+    "test:demo": "npm run test -- --match demo",
     "test:watch": "npm run test -- --watch",
     "client": "cross-env NODE_ENV=development gulp run:client",
     "server": "cross-env NODE_ENV=development gulp run:server",
@@ -37,6 +38,7 @@
   },
   "homepage": "https://github.com/wedn/wedn.net#readme",
   "dependencies": {
+    "bcrypt": "^1.0.1",
     "glob": "^7.1.1",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.2.0",
@@ -53,7 +55,8 @@
     "koa-views": "^5.2.0",
     "koa-xtpl": "^2.0.0-alpha.4",
     "lodash.merge": "^4.6.0",
-    "sequelize": "^3.27.0"
+    "sequelize": "^3.27.0",
+    "validator": "^6.2.0"
   },
   "optionalDependencies": {
     "mysql": "^2.12.0",
@@ -109,8 +112,14 @@
   "ava": {
     "tap": false,
     "failFast": true,
-    "files": ["src/test/**/*.js"],
-    "source": ["src/**/*.js"],
-    "require": ["babel-register"]
+    "files": [
+      "src/test/**/*.js"
+    ],
+    "source": [
+      "src/**/*.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   }
 }

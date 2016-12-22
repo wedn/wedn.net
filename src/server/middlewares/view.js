@@ -13,6 +13,18 @@ export default (options) => {
     param: 'pretty'
   })))
 
+  // Global Template Data
+  engines.push((ctx, next) => {
+    ctx.state = {
+      request: ctx.request,
+      response: ctx.response,
+      cookie: ctx.cookie,
+      session: ctx.session,
+      context: ctx
+    }
+    return next()
+  })
+
   // Template Engine
   engines.push(xtpl({
     root: path.join(__dirname, '../views/')

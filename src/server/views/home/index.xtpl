@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Creative - Start Bootstrap Theme</title>
+  <title>{{ title }} « WEDN.NET</title>
 
   <!-- Bootstrap Core CSS -->
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,27 +38,22 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav_menu">
           <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
         </button>
-        <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+        <a class="navbar-brand page-scroll" href="#page-top">WEDN.NET</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="nav_menu">
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a class="page-scroll" href="#about">About</a>
-          </li>
-          <li>
-            <a class="page-scroll" href="#services">Services</a>
-          </li>
-          <li>
-            <a class="page-scroll" href="#portfolio">Portfolio</a>
-          </li>
-          <li>
-            <a class="page-scroll" href="#contact">Contact</a>
-          </li>
+          <li><a class="page-scroll" href="/about">About</a></li>
+          <li><a class="page-scroll" href="/services">Services</a></li>
+          <li><a class="page-scroll" href="/portfolio">Portfolio</a></li>
+          <li><a class="page-scroll" href="/contact">Contact</a></li>
+          {{#if (session.user)}}
+            <li><a class="page-scroll" href="/account/logout">Logout</a></li>
+          {{/if}}
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -72,7 +67,11 @@
         <h1 id="homeHeading">Your Favorite Source of Free Bootstrap Themes</h1>
         <hr>
         <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-        <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+        {{#if (session.user)}}
+          <a href="/account/logout" class="btn btn-primary btn-xl page-scroll">Welcome {{ session.user.nickname }}</a>
+        {{else}}
+          <a href="/account/login" class="btn btn-primary btn-xl page-scroll">Getting started</a>
+        {{/if}}
       </div>
     </div>
   </header>

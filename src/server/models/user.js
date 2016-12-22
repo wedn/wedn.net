@@ -1,4 +1,6 @@
 import db from './db'
+import { isEmail } from '../libraries/validator'
+import { hash, compare } from '../libraries/encrypt'
 
 const { slug, username, key, mobile } = db.validate
 
@@ -23,7 +25,7 @@ export const User = db.define('user', {
   },
   password: {
     field: db.utils.fieldName('password'),
-    type: db.Sequelize.STRING(60),
+    type: db.Sequelize.STRING(80),
     allowNull: false
   },
   nickname: {
@@ -64,6 +66,15 @@ export const User = db.define('user', {
   tableName: db.utils.tableName('users'),
   classMethods: {
     /**
+     * 根据别名获取用户对象
+     * @param  {String}   slug  别名
+     * @return {Instance}       用户对象
+     */
+    async getBySlug (slug) {
+      return User.findOne({ where: { slug } })
+    },
+
+    /**
      * 根据用户名获取用户对象
      * @param  {String}   username 用户名
      * @return {Instance}          用户对象
@@ -79,6 +90,16 @@ export const User = db.define('user', {
      */
     async getByEmail (email) {
       return User.findOne({ where: { email } })
+    },
+
+    /**
+     * 根据用户名或用户邮箱获取用户对象
+     * @param  {String}   usernameOrEmail 用户名或用户邮箱
+     * @return {Instance}                 用户对象
+     */
+    async getByUsernameOrEmail (usernameOrEmail) {
+      const getMethod = isEmail(usernameOrEmail) ? 'getByEmail' : 'getByUsername'
+      return this[getMethod](usernameOrEmail)
     },
 
     /**
@@ -112,11 +133,23 @@ export const User = db.define('user', {
         temp.role = role
         temp.status = status
       }
-      // 创建这个元素
+      // 加密
+      temp.password = await hash(temp.password)
+      // ## 2. 创建这个对象到数据库
       return User.create(temp)
     }
   },
-  instanceMethods: {}
+  instanceMethods: {
+    /**
+     * 用当前用户对象的加密密码与一个明文密码比对是否匹配
+     * @param  {String}  password 明文密码
+     * @return {Boolean}          是否匹配
+     */
+    async comparePassword (password) {
+      console.log(password, this.password)
+      return compare(password, this.password)
+    }
+  }
 })
 
 /**

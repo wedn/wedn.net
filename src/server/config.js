@@ -57,8 +57,9 @@ export default {
     upload: path.resolve(__dirname, '../../content/uploads/')
   },
 
-  // Cookie keys (can not modify)
-  keys: ['wedn.net', 'www.wedn.net']
+  // Cookie keys (can not modify when application running)
+  keys: ['wedn.net', 'www.wedn.net'],
+  salt_rounds: 8,
 }
 
 // import path from 'path'
