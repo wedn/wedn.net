@@ -1,6 +1,5 @@
 import Router from 'koa-router'
 import { User } from '../../models'
-import { isEmail, isUsername, isPassword } from '../../libraries/validator'
 
 export const router = new Router({ prefix: '/account' })
 
@@ -103,36 +102,6 @@ router.post('register_post', '/register', async ctx => {
   // ## 1. 合法化校验
   if (!(username && email && password)) {
     ctx.state.message = 'Error: Please complete the form! '
-    return await ctx.render('account/index')
-  }
-
-  // ### 1.1. 用户名格式是否正确
-  if (!isUsername(username)) {
-    ctx.state.message = 'Error: Username format error! '
-    return await ctx.render('account/index')
-  }
-
-  // ### 1.2. 邮箱格式是否正确
-  if (!isEmail(email)) {
-    ctx.state.message = 'Error: Email format error! '
-    return await ctx.render('account/index')
-  }
-
-  // ### 1.3. 密码格式是否正确
-  if (!isPassword(password)) {
-    ctx.state.message = 'Error: Password format error! '
-    return await ctx.render('account/index')
-  }
-
-  // ### 1.4. 用户名是否存在
-  if (await User.getByUsername(username)) {
-    ctx.state.message = 'Error: Username already exists! '
-    return await ctx.render('account/index')
-  }
-
-  // ### 1.5. 邮箱是否存在
-  if (await User.getByEmail(email)) {
-    ctx.state.message = 'Error: Email already exists! '
     return await ctx.render('account/index')
   }
 

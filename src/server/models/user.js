@@ -1,8 +1,8 @@
 import db from './db'
-import { isEmail } from '../libraries/validator'
+import validator from '../libraries/validator'
 import { hash, compare } from '../libraries/encrypt'
 
-const { slug, username, key, mobile } = db.validate
+const { isSlug, isUsername, isPassword, isEmail, isMobile, isKey } = db.validate
 
 /**
  * User Model
@@ -14,19 +14,20 @@ export const User = db.define('user', {
     type: db.Sequelize.STRING(100),
     unique: true,
     allowNull: false,
-    validate: { is: slug }
+    validate: { isSlug }
   },
   username: {
     field: db.utils.fieldName('username'),
     type: db.Sequelize.STRING(60),
     unique: true,
     allowNull: false,
-    validate: { is: username }
+    validate: { isUsername }
   },
   password: {
     field: db.utils.fieldName('password'),
     type: db.Sequelize.STRING(80),
-    allowNull: false
+    allowNull: false,
+    validate: { isPassword }
   },
   nickname: {
     field: db.utils.fieldName('nickname'),
@@ -38,13 +39,13 @@ export const User = db.define('user', {
     type: db.Sequelize.STRING(100),
     unique: true,
     allowNull: false,
-    validate: { isEmail: true }
+    validate: { isEmail }
   },
   mobile: {
     field: db.utils.fieldName('mobile'),
     type: db.Sequelize.STRING(20),
     allowNull: false,
-    validate: { is: mobile },
+    validate: { isMobile },
     defaultValue: ''
   },
   status: {
@@ -133,10 +134,38 @@ export const User = db.define('user', {
         temp.role = role
         temp.status = status
       }
-      // 加密
+
+      // ## 2. 校验
+      if (!validator.isUsername(temp.username)) {
+        // 用户名格式不正确
+        throw new Error('Error: Username format error!')
+      }
+
+      if (!validator.isEmail(temp.email)) {
+        // 邮箱格式不正确
+        throw new Error('Error: Email format error!')
+      }
+
+      if (!validator.isPassword(temp.password)) {
+        // 密码格式不正确
+        throw new Error('Error: Password format error!')
+      }
+
+      if (await this.getByUsername(temp.username)) {
+        // 用户名存在
+        throw new Error('Error: Username already exists!')
+      }
+
+      if (await this.getByEmail(temp.email)) {
+        // 邮箱存在
+        throw new Error('Error: Email already exists!')
+      }
+
+      // ## 3. 密码加密
       temp.password = await hash(temp.password)
-      // ## 2. 创建这个对象到数据库
-      return User.create(temp)
+
+      // ## 4. 创建这个对象到数据库
+      return this.create(temp)
     }
   },
   instanceMethods: {
@@ -161,7 +190,7 @@ export const UserMeta = db.define('userMeta', {
     type: db.Sequelize.STRING(60),
     unique: 'user',
     allowNull: false,
-    validate: { is: key }
+    validate: { isKey }
   },
   value: {
     field: db.utils.fieldName('value'),

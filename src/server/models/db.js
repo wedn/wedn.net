@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize'
 
 import config from '../config'
+import { isKey, isSlug, isUsername, isEmail, isMobile } from '../libraries/validator'
 
 const db = new Sequelize(config.database)
 
@@ -9,11 +10,26 @@ db.utils = {
   fieldName: name => name
 }
 
+// 自定义验证
 db.validate = {
-  slug: /^[a-z0-9-]+$/i,
-  username: /^[a-z0-9_-]{3,16}$/i,
-  key: /^[a-z][a-z0-9_]+$/i,
-  mobile: input => input === '' || /^[0-9]+$/.test(input)
+  isSlug: input => {
+    if (!isSlug(input)) throw new Error(`Slug '${input}' format error`)
+  },
+  isUsername: input => {
+    if (!isUsername(input)) throw new Error(`Username '${input}' format error`)
+  },
+  isPassword: input => {
+    if (!input.length === 60) throw new Error(`Password '${input}' format error`)
+  },
+  isEmail: input => {
+    if (!isEmail(input)) throw new Error(`Email '${input}' format error`)
+  },
+  isMobile: input => {
+    if (!(input === '' || isMobile(input))) throw new Error(`Mobile '${input}' format error`)
+  },
+  isKey: input => {
+    if (!isKey(input)) throw new Error(`Key '${input}' format error`)
+  },
 }
 
 export default db

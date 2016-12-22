@@ -2,7 +2,7 @@ import test from 'ava'
 import db from '../../server/models/db'
 import { Comment, CommentMeta, Option, Post, PostMeta, Term, TermMeta, TermRelation, User, UserMeta } from '../../server/models'
 
-test('index', t => {
+test('models.index', t => {
   t.truthy(Comment instanceof db.Model)
   t.truthy(CommentMeta instanceof db.Model)
   t.truthy(Option instanceof db.Model)
