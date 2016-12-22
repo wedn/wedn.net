@@ -55,5 +55,5 @@ test('models.user.add2', async t => {
 })
 
 test.after(async t => {
-  // await Promise.all(users.map(user => user.destroy()))
+  await Promise.all(users.map(user => user.destroy()))
 })

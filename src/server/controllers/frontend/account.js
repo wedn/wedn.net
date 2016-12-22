@@ -53,19 +53,19 @@ router.post('login_post', '/login', async ctx => {
 
   // ## 1. 合法化校验
   if (!(username && password)) {
-    ctx.state.message = 'Error: Please complete the form! '
+    ctx.state.message = 'Please complete the form! '
     return await ctx.render('account/index')
   }
 
   // ### 1.1. 用户名格式是否正确
   if (!isUsername(username)) {
-    ctx.state.message = 'Error: Username or Password error! '
+    ctx.state.message = 'Username or Password error! '
     return await ctx.render('account/index')
   }
 
   // ### 1.2. 密码格式是否正确
   if (!isPassword(password)) {
-    ctx.state.message = 'Error: Username or Password error! '
+    ctx.state.message = 'Username or Password error! '
     return await ctx.render('account/index')
   }
 
@@ -73,7 +73,7 @@ router.post('login_post', '/login', async ctx => {
   const user = await User.getByUnique(username)
   // ## 3. 客户端响应
   if (!user || !await user.comparePassword(password)) {
-    ctx.state.message = 'Error: Username or Password error! '
+    ctx.state.message = 'Username or Password error! '
     return await ctx.render('account/index')
   }
   // 存在
@@ -102,7 +102,7 @@ router.post('register_post', '/register', async ctx => {
 
   // ## 1. 合法化校验
   if (!(username && email && password)) {
-    ctx.state.message = 'Error: Please complete the form! '
+    ctx.state.message = 'Please complete the form! '
     return await ctx.render('account/index')
   }
 

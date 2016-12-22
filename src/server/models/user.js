@@ -202,7 +202,7 @@ export const User = db.define('user', {
       // ## 3. 保存这个对象到数据库
       return user.save()
 
-      // =============== 以下为手动操作 ===============
+      // =============== 以下为手动校验操作 ===============
 
       // // ## 2. 校验
       // if (!validator.isUsername(temp.username)) {
