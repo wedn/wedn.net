@@ -133,7 +133,7 @@ export const UserMeta = db.define('userMeta', {
   },
   value: {
     field: db.utils.fieldName('value'),
-    type: db.Sequelize.TEXT('tiny'),
+    type: db.Sequelize.STRING(2000),
     allowNull: false,
     defaultValue: ''
   },
