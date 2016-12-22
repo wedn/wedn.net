@@ -69,7 +69,7 @@ export const User = db.define('user', {
      * @return {User}            用户对象
      */
     async getByUsername (username) {
-      return await User.findOne({ where: { username } })
+      return User.findOne({ where: { username } })
     },
 
     /**
@@ -78,7 +78,7 @@ export const User = db.define('user', {
      * @return {User}         用户对象
      */
     async getByEmail (email) {
-      return await User.findOne({ where: { email } })
+      return User.findOne({ where: { email } })
     },
 
     /**
@@ -109,7 +109,7 @@ export const User = db.define('user', {
         temp.role = role
         temp.status = status
       }
-      return await User.create(temp)
+      return User.create(temp)
     },
   },
   instanceMethods: {}
