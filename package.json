@@ -7,6 +7,7 @@
   "scripts": {
     "lint": "gulp lint",
     "test": "ava",
+    "test:watch": "npm run test -- --watch",
     "client": "cross-env NODE_ENV=development gulp run:client",
     "server": "cross-env NODE_ENV=development gulp run:server",
     "dev": "cross-env NODE_ENV=development gulp run:all",
