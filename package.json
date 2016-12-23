@@ -51,7 +51,6 @@
     "koa-router": "^7.0.1",
     "koa-session": "^3.4.0",
     "koa-static": "^3.0.0",
-    "koa-views": "^5.2.0",
     "koa-xtpl": "^2.0.0-alpha.5",
     "lodash.merge": "^4.6.0",
     "sequelize": "^3.27.0",
