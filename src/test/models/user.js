@@ -4,7 +4,7 @@ import { User } from '../../server/models'
 const users = []
 
 test.before(async t => {
-  const user = await User.add('zce-demo', 'demo@wedn.net', '12345689', 'Stone', 'zce-demo', '13241087977', 'administrator', 'activated')
+  const user = await User.add('zce-demo', 'demo@wedn.net', '2345689', 'Stone', 'zce-demo', '13241087977', 'administrator', 'activated')
   users.push(user)
 })
 
@@ -55,9 +55,8 @@ test('models.user.add2', async t => {
 })
 
 test('models.user.demo', async t => {
-  const user = await User.getByUsername('zce-demo')
-  user.set('slug', 'world')
-  console.log(user)
+  // const user = await User.getByUsername('zce-demo')
+  // user.set('slug', 'world')
 })
 
 test.after(async t => {
