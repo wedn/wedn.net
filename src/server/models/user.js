@@ -171,8 +171,8 @@ export const User = db.define('user', {
       // 单独校验加密前密码的长度
       if (!validator.isPassword(temp.password)) {
         // 密码格式不正确
-        // throw new Error(`Password '${temp.password}' format error!`)
-        throw new Error('Password format error!')
+        // throw new db.ValidationError(`Password '${temp.password}' format error!`)
+        throw new db.ValidationError('Validation error: Password format error!')
       }
 
       // 密码加密
@@ -181,9 +181,8 @@ export const User = db.define('user', {
       // ## 4. 创建这个对象到数据库
       // TODO: 异常抛出信息问题（消息）
       return this.create(temp).catch(e => {
-        console.log(e.name)
-        if (e.name !== 'SequelizeUniqueConstraintError') throw e
-        throw new Error(`${e.message}: ${e.errors[0].message}`)
+        if (!(e instanceof db.UniqueConstraintError)) throw e
+        throw new db.ValidationError(`${e.message}: ${e.errors[0].message}`)
       })
     }
   },

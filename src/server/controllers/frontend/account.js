@@ -43,6 +43,7 @@ router.get('login', '/login', async ctx => {
 
 /**
  * POST /account/login
+ * TODO: 错误提示消息问题
  */
 router.post('login_post', '/login', async ctx => {
   // ## 0. 接收表单
@@ -57,11 +58,12 @@ router.post('login_post', '/login', async ctx => {
     return await ctx.render('account/index')
   }
 
-  // ### 1.1. 用户名格式是否正确
-  if (!isUsername(username)) {
-    ctx.state.message = 'Username or Password error! '
-    return await ctx.render('account/index')
-  }
+  // 不需要校验用户名格式：有可能是邮箱或手机
+  // // ### 1.1. 用户名格式是否正确
+  // if (!isUsername(username)) {
+  //   ctx.state.message = 'Username or Password error! '
+  //   return await ctx.render('account/index')
+  // }
 
   // ### 1.2. 密码格式是否正确
   if (!isPassword(password)) {
@@ -92,6 +94,7 @@ router.get('register', '/register', async ctx => {
 
 /**
  * POST /account/register
+ * TODO: 错误提示消息问题
  */
 router.post('register_post', '/register', async ctx => {
   // ## 0. 接收表单
