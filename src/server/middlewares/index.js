@@ -5,7 +5,7 @@ import logger from './logger'
 import header from './header'
 import error from './error'
 import compress from './compress'
-import staticServe from './static'
+import serve from './static'
 import url from './url'
 import body from './body'
 import session from './session'
@@ -28,7 +28,7 @@ export default config => {
   middlewares.push(compress(config))
 
   // 静态资源
-  middlewares.push(staticServe(config))
+  middlewares.push(serve(config))
 
   // URL friendly
   middlewares.push(url(config))

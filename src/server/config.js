@@ -2,6 +2,7 @@ import path from 'path'
 
 const config = {
   url: 'http://localhost:2080/',
+  root: '/',
 
   // Server
   // Can be host & port (default), or socket

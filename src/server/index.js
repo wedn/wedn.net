@@ -1,24 +1,11 @@
-import Koa from 'koa'
+import bootstrap from './app'
 
-import config from './config'
-import middlewares from './middlewares'
+// import Koa from 'koa'
 
-// Application instance
-const app = new Koa()
+// const app = new Koa()
 
-// Application config
-config.app = app
+// app.listen(1080, err => err || console.log(`server running @ 1080`))
 
-// Load middlewares
-app.use(middlewares(config))
+// bootstrap
+bootstrap()
 
-// Test response
-// app.use(ctx => {
-//   // throw new Error(12)
-// })
-
-export default app.listen(config.server, err => {
-  if (err) throw err
-  console.log(`server running @ ${config.url}`)
-  // console.log(`server running @ http://${config.server.host}:${config.server.port}`)
-})

@@ -5,7 +5,7 @@ import db from './db'
 
 // import Comment from './comment'
 // import CommentMeta from './comment-meta'
-// import Option from './option'
+import Option from './option'
 // import Post from './post'
 // import PostMeta from './post-meta'
 // import Term from './term'
@@ -31,4 +31,4 @@ User.Meta = UserMeta
 
 // # Export
 // export { Comment, CommentMeta, Option, Post, PostMeta, Term, TermMeta, TermRelation, User, UserMeta }
-export { db, User }
+export { db, Option, User }
