@@ -1,9 +1,9 @@
 import path from 'path'
 import http from 'http'
-import { xTemplate } from 'koa-xtpl'
+import xtpl from 'node-xtemplate'
 
 const render = (name, data) => new Promise(function (resolve, reject) {
-  xTemplate.render(name, data, {}, (err, result) => {
+  xtpl.render(name, data, {}, (err, result) => {
     if (err) return reject(err)
     resolve(result)
   })
