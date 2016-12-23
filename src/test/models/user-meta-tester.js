@@ -1,5 +1,5 @@
 import test from 'ava'
-import { db, User } from '../../server/models'
+import { User } from '../../server/models'
 
 // C
 test.before(async t => {

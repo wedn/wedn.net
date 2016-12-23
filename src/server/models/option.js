@@ -49,5 +49,5 @@ export default db.define('Option', {
       return cached
     }
   },
-  instanceMethods: {},
+  instanceMethods: {}
 }))

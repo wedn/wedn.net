@@ -16,7 +16,7 @@ import UserMeta from './user-meta'
 
 // # Relations
 // Post.belongsToMany(TermMeta, { through: TermRelation })
-User.hasMany(UserMeta, { targetKey:'id', foreignKey:'user_id', as: 'Meta', constraints: false })
+User.hasMany(UserMeta, { targetKey: 'id', foreignKey: 'user_id', as: 'Meta', constraints: false })
 
 // # Sync to database
 
