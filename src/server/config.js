@@ -31,15 +31,15 @@ const config = {
   //   username: 'root',
   //   password: 'wanglei',
   //   dialect: 'mysql',
-  //   pool: { max: 5, min: 0, idle: 10000 },
-  //   logging: false
+  //   logging: false,
+  //   pool: { max: 5, min: 0, idle: 10000 }
   // },
   database: {
     database: 'wedn',
     dialect: 'sqlite',
+    // logging: false,
     pool: { max: 5, min: 0, idle: 10000 },
-    storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db'),
-    logging: false
+    storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db')
   },
 
   // Compress

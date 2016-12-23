@@ -61,40 +61,40 @@ test('models.user.add2', async t => {
   users.push(user)
 })
 
-// ================== getter & setter (meta) ==========================
-
-test('models.user.meta.1', async t => {
-  try {
-    const user = await User.getByMobile('13241087977')
-    await user.setMeta('hello', 'world')
-    await user.setMeta('hello', 'world2')
-    await user.setMeta('hello2', 'world')
-    const res = await user.getMeta()
-    t.not(Object.keys(res).length, 0)
-  } catch (e) {
-    console.log(e)
-  }
-})
-
-test('models.user.meta.2', async t => {
-  try {
-    const user = await User.getByMobile('13241087977')
-    await user.setMeta({
-      hello: 'world',
-      demo: 'aaaa'
-    })
-    const res = await user.getMeta()
-    t.not(Object.keys(res).length, 0)
-  } catch (e) {
-    console.log(e)
-  }
-})
-
 // ================== after ==========================
 
 test.after(async t => {
   await Promise.all(users.map(user => user.destroy()))
 })
+
+// ================== getter & setter (meta) ==========================
+
+// test('models.user.meta.1', async t => {
+//   try {
+//     const user = await User.getByMobile('13241087977')
+//     await user.setMeta('hello', 'world')
+//     await user.setMeta('hello', 'world2')
+//     await user.setMeta('hello2', 'world')
+//     const res = await user.getMeta()
+//     t.not(Object.keys(res).length, 0)
+//   } catch (e) {
+//     console.log(e)
+//   }
+// })
+
+// test('models.user.meta.2', async t => {
+//   try {
+//     const user = await User.getByMobile('13241087977')
+//     await user.setMeta({
+//       hello: 'world',
+//       demo: 'aaaa'
+//     })
+//     const res = await user.getMeta()
+//     t.not(Object.keys(res).length, 0)
+//   } catch (e) {
+//     console.log(e)
+//   }
+// })
 
 // ================== meta ==========================
 

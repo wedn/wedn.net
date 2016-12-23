@@ -7,6 +7,7 @@
   + http://itbilu.com/nodejs/npm/N1yrA4HQW.html
   + http://blog.gfdsa.net/2014/04/06/database/sequelize1/
   + http://www.haleywang.com/archives/1401.html
+  + https://github.com/itbilu/sequlize_model_relation_demo
 - Test framework => [AVA](https://github.com/avajs/ava-docs)
   + With Babel
 

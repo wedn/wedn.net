@@ -1,4 +1,8 @@
+// http://itbilu.com/nodejs/npm/EJarwPD8W.html
 // # Import Models
+
+import db from './db'
+
 // import Comment from './comment'
 // import CommentMeta from './comment-meta'
 // import Option from './option'
@@ -12,20 +16,19 @@ import UserMeta from './user-meta'
 
 // # Relations
 // Post.belongsToMany(TermMeta, { through: TermRelation })
-// User.hasMany(UserMeta, { as: 'Meta' })
+User.hasMany(UserMeta, { targetKey:'id', foreignKey:'user_id', as: 'Meta', constraints: false })
 
 // # Sync to database
-// Comment.sync({ force: false })
-// CommentMeta.sync({ force: false })
-// Option.sync({ force: false })
-// Post.sync({ force: false })
-// PostMeta.sync({ force: false })
-// Term.sync({ force: false })
-// TermMeta.sync({ force: false })
-// TermRelation.sync({ force: false })
-User.sync({ force: false })
-UserMeta.sync({ force: false })
+
+db.sync({ force: false })
+
+// # Meta Alias
+// Comment.Meta = CommentMeta
+// Post.Meta = PostMeta
+// Term.Meta = TermMeta
+// Term.Relation = TermRelation
+User.Meta = UserMeta
 
 // # Export
 // export { Comment, CommentMeta, Option, Post, PostMeta, Term, TermMeta, TermRelation, User, UserMeta }
-export { User, UserMeta }
+export { db, User }
