@@ -40,10 +40,12 @@ export default db.define('Option', {
   tableName: db.utils.tableName('options'),
   classMethods: {
     async load () {
-      let cached = cache.get('option_cache')
+      let cached = await cache.get('option_cache')
       if (cached) return cached
-      cached = await this.findAll({ where: { enabled: true } })
-      cache.set('option_cache', cached)
+      const options = await this.findAll({ where: { enabled: true } })
+      cached = {}
+      options.forEach(item => { cached[item.key] = item.value })
+      await cache.set('option_cache', cached)
       return cached
     }
   },

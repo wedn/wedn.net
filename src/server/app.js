@@ -6,11 +6,11 @@ import middlewares from './middlewares'
 import { Option } from './models'
 
 export default async parent => {
-  // Load db option
-  await Option.load()
-
   // Application instance
   const app = new Koa()
+
+  // Load db option
+  app.options = app.context.options = await Option.load()
 
   // Application config
   config.app = app

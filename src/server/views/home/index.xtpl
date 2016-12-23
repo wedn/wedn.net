@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="{{options.site_lang}}">
 
 <head>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="{{options.site_description}}">
+  <meta name="author" content="{{options.site_author}}">
 
-  <title>{{ title }} « WEDN.NET</title>
+  <title>{{title}} « {{options.site_name}}</title>
 
   <!-- Bootstrap Core CSS -->
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -41,18 +41,18 @@
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav_menu">
           <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
         </button>
-        <a class="navbar-brand page-scroll" href="#page-top">WEDN.NET</a>
+        <a class="navbar-brand page-scroll" href="#page-top">{{options.site_name}}</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="nav_menu">
         <ul class="nav navbar-nav navbar-right">
-          <li><a class="page-scroll" href="/about">About</a></li>
-          <li><a class="page-scroll" href="/services">Services</a></li>
-          <li><a class="page-scroll" href="/portfolio">Portfolio</a></li>
-          <li><a class="page-scroll" href="/contact">Contact</a></li>
+          <li><a class="page-scroll" href="{{url('/about')}}">About</a></li>
+          <li><a class="page-scroll" href="{{url('/services')}}">Services</a></li>
+          <li><a class="page-scroll" href="{{url('/portfolio')}}">Portfolio</a></li>
+          <li><a class="page-scroll" href="{{url('/contact')}}">Contact</a></li>
           {{#if (session.user)}}
-            <li><a class="page-scroll" href="/account/logout">Logout</a></li>
+            <li><a class="page-scroll" href="{{url('/account/logout')}}">Logout</a></li>
           {{/if}}
         </ul>
       </div>
@@ -68,9 +68,9 @@
         <hr>
         <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
         {{#if (session.user)}}
-          <a href="/account/logout" class="btn btn-primary btn-xl page-scroll">Welcome {{ session.user.nickname }}</a>
+          <a href="{{url('/account/logout')}}" class="btn btn-primary btn-xl page-scroll">Welcome {{session.user.nickname}}</a>
         {{else}}
-          <a href="/account/login" class="btn btn-primary btn-xl page-scroll">Getting started</a>
+          <a href="{{url('/account/login')}}" class="btn btn-primary btn-xl page-scroll">Getting started</a>
         {{/if}}
       </div>
     </div>

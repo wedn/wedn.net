@@ -53,7 +53,7 @@
     "koa-session": "^3.4.0",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.0",
-    "koa-xtpl": "^2.0.0-alpha.4",
+    "koa-xtpl": "^2.0.0-alpha.5",
     "lodash.merge": "^4.6.0",
     "sequelize": "^3.27.0",
     "validator": "^6.2.0"
