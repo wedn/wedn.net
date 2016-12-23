@@ -193,6 +193,51 @@ export default db.define('user', {
      */
     async comparePassword (password) {
       return compare(password, this.password)
+    },
+
+    /**
+     * 获取当前用户元数据
+     * @param  {String}  key 元数据键
+     * @return {String}      元数据对象
+     */
+    async getMeta (key) {
+      if (!key) {
+        const meta = await db.models.userMeta.findAll({ where: { userId: this.id } })
+        const res = {}
+        meta.forEach(i => { res[i.key] = i.value })
+        return res
+      }
+      const meta = await db.models.userMeta.findOne({ where: { key, userId: this.id } })
+      return meta.value
+    },
+
+    /**
+     * 设置当前用户元数据
+     * @param  {String}  key    元数据键
+     * @param  {String}  value  元数据值
+     * @return {String}         元数据对象
+     */
+    async setMeta (key, value) {
+      const single = async (key, value) => {
+        const res = await db.models.userMeta.findOrInitialize({
+          where: { key, userId: this.id },
+          defaults: { key, value, userId: this.id }
+        })
+        const [user, initialized] = res
+        if (!initialized) {
+          user.value = value
+        }
+        return user.save()
+      }
+
+      if (typeof key === 'string') {
+        return single(key, value)
+      }
+      if (typeof key === 'object') {
+        for (const k in key) {
+          await single(k, key[k])
+        }
+      }
     }
   }
 }))

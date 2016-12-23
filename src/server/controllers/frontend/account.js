@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 import { User } from '../../models'
-import { isUsername, isPassword } from '../../libraries/validator'
+import { isPassword } from '../../libraries/validator'
 
 export const router = new Router({ prefix: '/account' })
 

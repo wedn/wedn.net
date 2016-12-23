@@ -12,7 +12,7 @@ import UserMeta from './user-meta'
 
 // # Relations
 // Post.belongsToMany(TermMeta, { through: TermRelation })
-User.hasMany(UserMeta, { as: 'Meta' })
+// User.hasMany(UserMeta, { as: 'Meta' })
 
 // # Sync to database
 // Comment.sync({ force: false })
@@ -27,4 +27,5 @@ User.sync({ force: false })
 UserMeta.sync({ force: false })
 
 // # Export
-export { /*Comment, CommentMeta, Option, Post, PostMeta, Term, TermMeta, TermRelation, */User, UserMeta }
+// export { Comment, CommentMeta, Option, Post, PostMeta, Term, TermMeta, TermRelation, User, UserMeta }
+export { User, UserMeta }
