@@ -31,7 +31,7 @@ export default db.define('Option', {
     type: db.Sequelize.BOOLEAN,
     unique: false,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: true,
     comment: 'option enabled',
     validate: {}
   }
