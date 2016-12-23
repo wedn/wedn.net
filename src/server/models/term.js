@@ -39,6 +39,7 @@ export const Term = db.define('term', {
     allowNull: false
   }
 }, {
+  timestamps: true,
   underscored: true,
   tableName: db.utils.tableName('terms'),
   classMethods: {},
@@ -70,6 +71,7 @@ export const TermMeta = db.define('termMeta', {
   }
 }, {
   timestamps: false,
+  underscored: true,
   tableName: db.utils.tableName('term_meta'),
   classMethods: {},
   instanceMethods: {}
@@ -94,11 +96,8 @@ export const TermRelation = db.define('termRelation', {
   }
 }, {
   timestamps: false,
+  underscored: true,
   tableName: db.utils.tableName('term_relations'),
   classMethods: {},
   instanceMethods: {}
 })
-
-Term.sync({ force: false })
-TermMeta.sync({ force: false })
-TermRelation.sync({ force: false })

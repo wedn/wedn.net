@@ -2,13 +2,13 @@ import db from './db'
 import validator from '../libraries/validator'
 import { hash, compare } from '../libraries/encrypt'
 
-const { slug, username, password, nickname, email, mobile, key } = db.validate
+const { slug, username, password, nickname, email, mobile } = db.validate
 
 /**
  * User Model
  * @type {Model}
  */
-export const User = db.define('user', {
+export default db.define('user', {
   slug: {
     field: db.utils.fieldName('slug'),
     type: db.Sequelize.STRING(160),
@@ -81,8 +81,7 @@ export const User = db.define('user', {
     comment: 'user role: administrator / editor / author / contributor / subscriber',
     validate: {}
   }
-}, {
-  underscored: true,
+}, db.utils.tableOptions({
   tableName: db.utils.tableName('users'),
   classMethods: {
     /**
@@ -91,7 +90,7 @@ export const User = db.define('user', {
      * @return {Instance}       用户对象
      */
     async getBySlug (slug) {
-      return User.findOne({ where: { slug } })
+      return this.findOne({ where: { slug } })
     },
 
     /**
@@ -100,7 +99,7 @@ export const User = db.define('user', {
      * @return {Instance}          用户对象
      */
     async getByUsername (username) {
-      return User.findOne({ where: { username } })
+      return this.findOne({ where: { username } })
     },
 
     /**
@@ -109,7 +108,7 @@ export const User = db.define('user', {
      * @return {Instance}       用户对象
      */
     async getByEmail (email) {
-      return User.findOne({ where: { email } })
+      return this.findOne({ where: { email } })
     },
 
     /**
@@ -118,7 +117,7 @@ export const User = db.define('user', {
      * @return {Instance}       用户对象
      */
     async getByMobile (mobile) {
-      return User.findOne({ where: { mobile } })
+      return this.findOne({ where: { mobile } })
     },
 
     /**
@@ -196,43 +195,15 @@ export const User = db.define('user', {
       return compare(password, this.password)
     }
   }
-})
+}))
 
-/**
- * UserMeta Model
- * @type {Model}
- */
-export const UserMeta = db.define('userMeta', {
-  key: {
-    field: db.utils.fieldName('key'),
-    type: db.Sequelize.STRING(60),
-    unique: 'user',
-    allowNull: false,
-    validate: { key }
-  },
-  value: {
-    field: db.utils.fieldName('value'),
-    type: db.Sequelize.STRING(2000),
-    allowNull: false,
-    defaultValue: ''
-  },
-  userId: {
-    field: db.utils.fieldName('user_id'),
-    type: db.Sequelize.INTEGER,
-    unique: 'user',
-    allowNull: false
-  }
-}, {
-  timestamps: false,
-  tableName: db.utils.tableName('user_meta'),
-  classMethods: {},
-  instanceMethods: {}
-})
-
-User.sync({ force: false })
-UserMeta.sync({ force: false })
-
+//
+//
+//
+//
+//
 // ===================== 以下为尝试代码（参考） =====================
+
 // Sequelize可以简单一点
 // /**
 //  * 添加一个新用户

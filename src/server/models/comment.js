@@ -88,7 +88,3 @@ export const CommentMeta = db.define('commentMeta', {
   classMethods: {},
   instanceMethods: {}
 })
-
-Comment.sync({ force: false })
-CommentMeta.sync({ force: false })
-

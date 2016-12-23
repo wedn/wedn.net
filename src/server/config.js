@@ -39,7 +39,7 @@ const config = {
     dialect: 'sqlite',
     pool: { max: 5, min: 0, idle: 10000 },
     storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db'),
-    logging: false
+    // logging: false
   },
 
   // Compress

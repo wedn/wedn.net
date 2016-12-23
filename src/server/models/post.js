@@ -104,6 +104,3 @@ export const PostMeta = db.define('postMeta', {
   classMethods: {},
   instanceMethods: {}
 })
-
-Post.sync({ force: false })
-PostMeta.sync({ force: false })

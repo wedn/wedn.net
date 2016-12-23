@@ -30,5 +30,3 @@ export const Option = db.define('option', {
   classMethods: {},
   instanceMethods: {}
 })
-
-Option.sync({ force: false })

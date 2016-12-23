@@ -113,7 +113,7 @@
     "tap": false,
     "failFast": true,
     "files": [
-      "src/test/**/*.js"
+      "src/test/**/*-tester.js"
     ],
     "source": [
       "src/**/*.js"

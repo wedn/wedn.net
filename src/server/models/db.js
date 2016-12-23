@@ -5,9 +5,22 @@ import { isKey, isSlug, isUsername, isNickname, isEmail, isMobile } from '../lib
 
 const db = new Sequelize(config.database)
 
+const defaultTableOptions = {
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: 'updated',
+  underscored: true,
+  freezeTableName: true,
+  paranoid: false,
+  classMethods: {},
+  instanceMethods: {}
+}
+
+// 工具函数
 db.utils = {
   tableName: name => `w_${name}`,
-  fieldName: name => name
+  fieldName: name => name,
+  tableOptions: options => Object.assign({}, defaultTableOptions, options)
 }
 
 // 自定义验证
