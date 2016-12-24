@@ -45,7 +45,7 @@ export default db.define('Option', {
       const options = await this.findAll({ where: { enabled: true } })
       cached = {}
       options.forEach(item => { cached[item.key] = item.value })
-      await cache.set('option_cache', cached)
+      Object.keys(cached).length && await cache.set('option_cache', cached)
       return cached
     }
   },

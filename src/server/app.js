@@ -7,16 +7,20 @@ import { db, init } from './models'
 
 export default async parent => {
   // ## Sync to database
+  // db.afterBulkSync(() => {})
   await db.sync({ force: false })
 
+  // ## Load db option
+  let options = await db.models.Option.load()
+
   // ## Init data
-  await init(db)
+  Object.keys(options).length || await init(db)
+  options = await db.models.Option.load()
 
   // ## Application instance
   const app = new Koa()
 
-  // ## Load db option
-  app.options = app.context.options = await db.models.Option.load()
+  app.options = app.context.options = options
 
   // ## Application config
   config.app = app
