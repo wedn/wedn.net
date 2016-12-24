@@ -95,7 +95,6 @@
     "nodemon": "^1.11.0",
     "normalize.css": "^5.0.0",
     "nprogress": "^0.2.0",
-    "sequelize-cli": "^2.5.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue": "^2.1.6",
