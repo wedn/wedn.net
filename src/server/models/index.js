@@ -1,6 +1,9 @@
-// # Import Models
-// http://itbilu.com/nodejs/npm/EJarwPD8W.html
+/**
+ * Must execute sync in portal
+ * http://itbilu.com/nodejs/npm/EJarwPD8W.html
+ */
 
+// # Import Models
 import db from './db'
 import { hash, compare } from '../libraries/encrypt'
 
@@ -17,15 +20,15 @@ import UserMeta from './user-meta'
 
 // # Relations
 Comment.hasMany(CommentMeta, {
-  targetKey: 'id',
   foreignKey: 'comment_id',
+  targetKey: 'id',
   as: 'Meta',
   constraints: false
 })
 
 Post.hasMany(PostMeta, {
-  targetKey: 'id',
   foreignKey: 'post_id',
+  targetKey: 'id',
   as: 'Meta',
   constraints: false
 })
@@ -33,25 +36,32 @@ Post.hasMany(PostMeta, {
 Post.belongsToMany(Term, {
   through: TermRelation,
   foreignKey: 'post_id',
-  as: 'Relation',
-  constraints: false
-})
-Term.belongsToMany(Post, {
-  through: TermRelation,
-  foreignKey: 'term_id',
+  otherKey: 'term_id',
   as: 'Relation',
   constraints: false
 })
 
-const Meta = User.hasMany(UserMeta, {
+Term.belongsToMany(Post, {
+  through: TermRelation,
+  foreignKey: 'term_id',
+  otherKey: 'post_id',
+  as: 'Relation',
+  constraints: false
+})
+
+Term.hasMany(TermMeta, {
+  foreignKey: 'term_id',
   targetKey: 'id',
-  foreignKey: 'user_id',
   as: 'Meta',
   constraints: false
 })
 
-// # Sync to database
-db.sync({ force: false })
+User.hasMany(UserMeta, {
+  foreignKey: 'user_id',
+  targetKey: 'id',
+  as: 'Meta',
+  constraints: false
+})
 
 // # Meta Alias
 Comment.Meta = CommentMeta

@@ -3,27 +3,32 @@ import mount from 'koa-mount'
 
 import config from './config'
 import middlewares from './middlewares'
-import { Option } from './models'
+import { db, Option } from './models'
 
 export default async parent => {
-  // Application instance
+  // ## Sync to database
+  await db.sync({ force: false })
+
+  // ## Application instance
   const app = new Koa()
 
-  // Load db option
+  // ## Load db option
   app.options = app.context.options = await Option.load()
 
-  // Application config
+  // ## Application config
   config.app = app
 
-  // Load middlewares
+  // ## Load middlewares
   app.use(middlewares(config))
 
-  // Test response
+  // // ## Test response
   // app.use(ctx => {
   //   // throw new Error(12)
   // })
 
+  // ## Mount to parent
   if (parent) return parent.use(mount(config.root, app))
 
+  // ## Listen
   app.listen(config.server, err => err || console.log(`server running @ ${config.url}`))
 }
