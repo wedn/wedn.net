@@ -32,7 +32,7 @@ const config = {
   //   username: 'root',
   //   password: 'wanglei',
   //   dialect: 'mysql',
-  //   logging: false,
+  //   // logging: false,
   //   pool: { max: 5, min: 0, idle: 10000 }
   // },
   database: {

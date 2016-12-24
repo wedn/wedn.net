@@ -15,8 +15,39 @@ import User from './user'
 import UserMeta from './user-meta'
 
 // # Relations
-// Post.belongsToMany(TermMeta, { through: TermRelation })
-User.hasMany(UserMeta, { targetKey: 'id', foreignKey: 'user_id', as: 'Meta', constraints: false })
+Comment.hasMany(CommentMeta, {
+  targetKey: 'id',
+  foreignKey: 'comment_id',
+  as: 'Meta',
+  constraints: false
+})
+
+Post.hasMany(PostMeta, {
+  targetKey: 'id',
+  foreignKey: 'post_id',
+  as: 'Meta',
+  constraints: false
+})
+
+Post.belongsToMany(Term, {
+  through: TermRelation,
+  foreignKey: 'post_id',
+  as: 'Relation',
+  constraints: false
+})
+Term.belongsToMany(Post, {
+  through: TermRelation,
+  foreignKey: 'term_id',
+  as: 'Relation',
+  constraints: false
+})
+
+User.hasMany(UserMeta, {
+  targetKey: 'id',
+  foreignKey: 'user_id',
+  as: 'Meta',
+  constraints: false
+})
 
 // # Sync to database
 db.sync({ force: false })
