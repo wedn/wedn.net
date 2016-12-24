@@ -1,6 +1,6 @@
 import { hash } from '../libraries/encrypt'
 
-export default async init (db) {
+export default async function init (db) {
   await db.models.Option.bulkCreate([
     { key: 'site_name', value: 'WEDN.NET' },
     { key: 'site_description', value: 'make IT better' },

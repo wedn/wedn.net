@@ -3,17 +3,20 @@ import mount from 'koa-mount'
 
 import config from './config'
 import middlewares from './middlewares'
-import { db, Option } from './models'
+import { db, init } from './models'
 
 export default async parent => {
   // ## Sync to database
   await db.sync({ force: false })
 
+  // ## Init data
+  await init(db)
+
   // ## Application instance
   const app = new Koa()
 
   // ## Load db option
-  app.options = app.context.options = await Option.load()
+  app.options = app.context.options = await db.models.Option.load()
 
   // ## Application config
   config.app = app

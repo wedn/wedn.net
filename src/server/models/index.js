@@ -6,7 +6,7 @@
 
 // # Import Models
 import db from './db'
-import { hash, compare } from '../libraries/encrypt'
+import init from './init'
 
 import Comment from './comment'
 import CommentMeta from './comment-meta'
@@ -72,4 +72,4 @@ Term.Relation = TermRelation
 User.Meta = UserMeta
 
 // # Export
-export { db, Comment, Option, Post, Term, User }
+export { db, init, Comment, Option, Post, Term, User }
