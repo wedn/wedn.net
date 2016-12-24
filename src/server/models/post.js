@@ -4,7 +4,7 @@ import db from './db'
  * Post Model
  * @type {Model}
  */
-export const Post = db.define('post', {
+export default db.define('Post', {
   slug: {
     field: db.utils.fieldName('slug'),
     type: db.Sequelize.STRING(100),
@@ -68,39 +68,8 @@ export const Post = db.define('post', {
     type: db.Sequelize.INTEGER,
     allowNull: false
   }
-}, {
-  underscored: true,
+}, db.utils.tableOptions({
   tableName: db.utils.tableName('posts'),
   classMethods: {},
   instanceMethods: {}
-})
-
-/**
- * PostMeta Model
- * @type {Model}
- */
-export const PostMeta = db.define('postMeta', {
-  key: {
-    field: db.utils.fieldName('key'),
-    type: db.Sequelize.STRING(60),
-    unique: 'post',
-    allowNull: false
-  },
-  value: {
-    field: db.utils.fieldName('value'),
-    type: db.Sequelize.STRING(2000),
-    allowNull: false,
-    defaultValue: ''
-  },
-  postId: {
-    field: db.utils.fieldName('post_id'),
-    type: db.Sequelize.INTEGER,
-    unique: 'post',
-    allowNull: false
-  }
-}, {
-  timestamps: false,
-  tableName: db.utils.tableName('post_meta'),
-  classMethods: {},
-  instanceMethods: {}
-})
+}))

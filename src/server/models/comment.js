@@ -4,7 +4,7 @@ import db from './db'
  * Comment Model
  * @type {Model}
  */
-export const Comment = db.define('comment', {
+export default db.define('Comment', {
   author: {
     field: db.utils.fieldName('author'),
     type: db.Sequelize.STRING(60),
@@ -52,39 +52,8 @@ export const Comment = db.define('comment', {
     type: db.Sequelize.INTEGER,
     allowNull: false
   }
-}, {
-  underscored: true,
+}, db.utils.tableOptions({
   tableName: db.utils.tableName('comments'),
   classMethods: {},
   instanceMethods: {}
-})
-
-/**
- * CommentMeta Model
- * @type {Model}
- */
-export const CommentMeta = db.define('commentMeta', {
-  key: {
-    field: db.utils.fieldName('key'),
-    type: db.Sequelize.STRING(60),
-    unique: 'comment',
-    allowNull: false
-  },
-  value: {
-    field: db.utils.fieldName('value'),
-    type: db.Sequelize.STRING(2000),
-    allowNull: false,
-    defaultValue: ''
-  },
-  commentId: {
-    field: db.utils.fieldName('comment_id'),
-    type: db.Sequelize.INTEGER,
-    unique: 'comment',
-    allowNull: false
-  }
-}, {
-  timestamps: false,
-  tableName: db.utils.tableName('comment_meta'),
-  classMethods: {},
-  instanceMethods: {}
-})
+}))

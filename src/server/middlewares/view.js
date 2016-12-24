@@ -30,6 +30,7 @@ export default config => {
   // Template Engine
   engines.push(xtpl({
     root: path.join(__dirname, '../views/'),
+    extname: 'html',
     commands: {
       url (scope, option, buffer) {
         const pathname = path.posix.join(config.root, ...option.params)
