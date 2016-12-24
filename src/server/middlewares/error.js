@@ -1,54 +1,65 @@
 import path from 'path'
 import http from 'http'
+
 import xtpl from 'node-xtemplate'
 
-const render = (name, data) => new Promise(function (resolve, reject) {
-  xtpl.render(name, data, {}, (err, result) => {
-    if (err) return reject(err)
-    resolve(result)
-  })
-})
+// const timeout = async ctx => {
+//   try {
+//     ctx && !ctx.body && ctx.throw(408)
+//   } catch (error) {
+//     await handleError(error, ctx)
+//   }
+// }
+
+const handleError = async (error, ctx) => {
+  const isDev = ctx.app.env === 'development'
+  ctx.status = error.status || 500
+
+  // application
+  ctx.app.emit('error', error, ctx)
+
+  // accepted types
+  switch (ctx.accepts('html', 'text', 'json')) {
+    case 'text':
+      ctx.type = 'text/plain'
+      if (isDev) {
+        ctx.body = error.message
+      } else if (error.expose) {
+        ctx.body = error.message
+      } else {
+        throw error
+      }
+      break
+
+    case 'json':
+      ctx.type = 'application/json'
+      if (isDev) {
+        ctx.body = { status: ctx.status, error: error.message }
+      } else if (error.expose) {
+        ctx.body = { status: ctx.status, error: error.message }
+      } else {
+        ctx.body = { status: ctx.status, error: http.STATUS_CODES[ctx.status] }
+      }
+      break
+
+    case 'html':
+      const name = [404, 500].includes(error.status) ? error.status : 'error'
+      ctx.type = 'text/html'
+      ctx.body = await xtpl.render(path.join(__dirname, '../views/shared', name + '.html'), {
+        ctx: ctx, env: ctx.app.env, request: ctx.request, response: ctx.response, status: ctx.status, error: error.message, stack: error.stack, code: error.code
+      })
+      break
+  }
+}
 
 export default config => async (ctx, next) => {
   try {
+    // // timeout
+    // const timer = setTimeout(timeout.bind(ctx), 5)
+    // clearTimeout(timer)
     await next()
-    if (ctx.response.status === 404 && !ctx.response.body) ctx.throw(404)
-  } catch (err) {
-    ctx.status = err.status || 500
-
-    const app = ctx.app
-    // application
-    app.emit('error', err, ctx)
-
-    // accepted types
-    switch (ctx.accepts('html', 'text', 'json')) {
-      case 'text':
-        ctx.type = 'text/plain'
-        if (app.env === 'development') ctx.body = err.message
-        else if (err.expose) ctx.body = err.message
-        else throw err
-        break
-
-      case 'json':
-        ctx.type = 'application/json'
-        if (app.env === 'development') ctx.body = { error: err.message }
-        else if (err.expose) ctx.body = { error: err.message }
-        else ctx.body = { error: http.STATUS_CODES[ctx.status] }
-        break
-
-      case 'html':
-        ctx.type = 'text/html'
-        ctx.body = await render(path.join(__dirname, '../views/shared', 'error.xtpl'), {
-          ctx: ctx,
-          env: app.env,
-          request: ctx.request,
-          response: ctx.response,
-          status: ctx.status,
-          error: err.message,
-          stack: err.stack,
-          code: err.code
-        })
-        break
-    }
+    ctx.status === 404 && !ctx.body && ctx.throw(404)
+  } catch (error) {
+    await handleError(error, ctx)
   }
 }
