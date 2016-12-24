@@ -2,6 +2,7 @@
 // http://itbilu.com/nodejs/npm/EJarwPD8W.html
 
 import db from './db'
+import { hash, compare } from '../libraries/encrypt'
 
 import Comment from './comment'
 import CommentMeta from './comment-meta'
@@ -42,7 +43,7 @@ Term.belongsToMany(Post, {
   constraints: false
 })
 
-User.hasMany(UserMeta, {
+const Meta = User.hasMany(UserMeta, {
   targetKey: 'id',
   foreignKey: 'user_id',
   as: 'Meta',

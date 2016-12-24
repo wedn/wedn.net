@@ -6,7 +6,7 @@ const { key } = db.validate
  * UserMeta Model
  * @type {Model}
  */
-export default db.define('userMeta', {
+export default db.define('UserMeta', {
   key: {
     field: db.utils.fieldName('key'),
     type: db.Sequelize.STRING(60),
