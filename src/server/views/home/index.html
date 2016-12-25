@@ -15,23 +15,25 @@
 
 <body>
   <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-    <a class="navbar-brand" href="{{url('/')}}">{{options.site_name}}</a>
-    <ul class="nav navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{url('/')}}">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/about')}}">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/contact')}}">Contact</a>
-      </li>
-      {{#if (session.user)}}
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/account/logout')}}">Logout</a>
-      </li>
-      {{/if}}
-    </ul>
+    <div class="container">
+      <a class="navbar-brand" href="{{url('/')}}">{{options.site_name}}</a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url('/')}}">Home<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/about')}}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/contact')}}">Contact</a>
+        </li>
+        {{#if (session.user)}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/account/logout')}}">Logout</a>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
   </nav>
   <div class="landing container">
     <h1>Bootstrap starter template</h1>
