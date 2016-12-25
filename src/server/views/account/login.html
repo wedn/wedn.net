@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{options.site_lang}}">
+
+<head>
+  <meta charset="{{options.site_charset}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="{{options.site_description}}">
+  <meta name="author" content="{{options.site_author}}">
+  <title>Sign in « Account « {{options.site_name}}</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{{options.site_favicon}}">
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/vendor/animate/animate.css">
+  <link rel="stylesheet" href="/css/account.css">
+</head>
+
+<body>
+  <header class="header">
+    <h1><a class="title" href="/">WEDN.NET</a></h1>
+  </header>
+  <main class="container">
+    {{#if (error)}}
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <span>{{error}}</span>
+    </div>
+    {{/if}}
+    <form class="form-account{{error && ' shake animated'}}" action method="post" autocomplete="off">
+      <h2 class="heading">Sign in</h2>
+      <label for="username" class="sr-only">Username or Email</label>
+      <input type="text" id="username" name="username" class="form-control top" placeholder="Username / Email" required value="{{model.username}}" autofocus>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" id="password" name="password" class="form-control bottom" placeholder="Password" required value="{{model.password}}">
+      <div class="checkbox">
+        <label><input type="checkbox" value="remember-me"> Remember me</label>
+        <a class="float-xs-right" href="/account/reset">Forgot password?</a>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+    <div class="footer">
+      New to WEDN.NET? <a href="/account/register">Create an account.</a>
+    </div>
+  </main>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/tether/js/tether.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script></script>
+</body>
+
+</html>

@@ -36,9 +36,8 @@ router.get('/', ctx => {
  * GET /account/login
  */
 router.get('login', '/login', async ctx => {
-  ctx.state.title = 'Login'
-  // ctx.state.model = { username: '', password: '' }
-  await ctx.render('account/index')
+  ctx.state.model = { username: '', password: '' }
+  await ctx.render('account/login')
 })
 
 /**
@@ -49,34 +48,33 @@ router.post('login_post', '/login', async ctx => {
   // ## 0. 接收表单
   const { username, password } = ctx.request.body
 
-  ctx.state.title = 'Login'
   ctx.state.model = { username, password }
 
   // ## 1. 合法化校验
   if (!(username && password)) {
-    ctx.state.message = 'Please complete the form! '
-    return await ctx.render('account/index')
+    ctx.state.error = 'Please complete the form! '
+    return await ctx.render('account/login')
   }
 
   // 不需要校验用户名格式：有可能是邮箱或手机
   // // ### 1.1. 用户名格式是否正确
   // if (!isUsername(username)) {
-  //   ctx.state.message = 'Username or Password error! '
+  //   ctx.state.error = 'Username or Password error! '
   //   return await ctx.render('account/index')
   // }
 
   // ### 1.2. 密码格式是否正确
   if (!isPassword(password)) {
-    ctx.state.message = 'Username or Password error! '
-    return await ctx.render('account/index')
+    ctx.state.error = 'Username or Password error! '
+    return await ctx.render('account/login')
   }
 
   // ## 2. 持久化
   const user = await User.getByUnique(username)
   // ## 3. 客户端响应
   if (!user || !await user.comparePassword(password)) {
-    ctx.state.message = 'Username or Password error! '
-    return await ctx.render('account/index')
+    ctx.state.error = 'Username or Password error! '
+    return await ctx.render('account/login')
   }
   // 存在
   ctx.session.user = user
@@ -87,9 +85,8 @@ router.post('login_post', '/login', async ctx => {
  * GET /account/register
  */
 router.get('register', '/register', async ctx => {
-  ctx.state.title = 'Register'
-  // ctx.state.model = { username: 'zce', email: 'ice@wedn.net', password: '5love100' }
-  await ctx.render('account/index')
+  ctx.state.model = { username: '', email: '', password: '' }
+  await ctx.render('account/register')
 })
 
 /**
@@ -100,26 +97,24 @@ router.post('register_post', '/register', async ctx => {
   // ## 0. 接收表单
   const { username, email, password } = ctx.request.body
 
-  ctx.state.title = 'Register'
   ctx.state.model = { username, email, password }
 
   // ## 1. 合法化校验
   if (!(username && email && password)) {
-    ctx.state.message = 'Please complete the form! '
-    return await ctx.render('account/index')
+    ctx.state.error = 'Please complete the form! '
+    return await ctx.render('account/register')
   }
 
   try {
     // ## 2. 持久化
     const user = await User.add(username, email, password)
-
     // ### 2.1. Session
     ctx.session.user = user
-
     // 3. 响应客户端
     ctx.redirect('/')
   } catch (e) {
-    ctx.state.message = e.message
-    return await ctx.render('account/index')
+    ctx.state.error = e.message
+    // 3. 响应客户端
+    return await ctx.render('account/register')
   }
 })
