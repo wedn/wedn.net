@@ -22,6 +22,15 @@ const config = {
     filename: path.resolve(__dirname, '../../content/logs/wedn.net.log')
   },
 
+  // ## Paths
+  paths: {
+    data: path.resolve(__dirname, '../../content/data/'),
+    plugin: path.resolve(__dirname, '../../content/plugins/'),
+    static: path.resolve(__dirname, '../../content/static/'),
+    theme: path.resolve(__dirname, '../../content/themes/'),
+    upload: path.resolve(__dirname, '../../content/uploads/')
+  },
+
   // // ## Database
   // database: {
   //   database: 'wedn',
@@ -39,19 +48,13 @@ const config = {
     storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db')
   },
 
-  // ## Compress
-  compress: true,
-
   // ## Storage
   storage: {},
 
-  // ## Paths
-  paths: {
-    data: path.resolve(__dirname, '../../content/data/'),
-    plugin: path.resolve(__dirname, '../../content/plugins/'),
-    static: path.resolve(__dirname, '../../content/static/'),
-    theme: path.resolve(__dirname, '../../content/themes/'),
-    upload: path.resolve(__dirname, '../../content/uploads/')
+  // ## Compress
+  compress: {
+    filter: /text/i,
+    threshold: 50 * 1024
   },
 
   // ## Cookie keys
@@ -77,14 +80,9 @@ const config = {
 
   // ## getter & setter
   // set app (app) {
-  //   this._app = app
-  //   this._app.name = this.name
-  //   this._app.version = this.version
-  //   this._app.keys = this.cookie.keys
   // },
 
   // get app () {
-  //   return this._app
   // }
 }
 

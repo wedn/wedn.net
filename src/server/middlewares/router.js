@@ -1,3 +1,6 @@
+/**
+ * 动态路由解析
+ */
 import glob from 'glob'
 import compose from 'koa-compose'
 

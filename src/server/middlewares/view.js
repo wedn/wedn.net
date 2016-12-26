@@ -1,3 +1,7 @@
+/**
+ * 视图引擎配置
+ * TODO：[Legacy middleware]
+ */
 import url from 'url'
 import path from 'path'
 import convert from 'koa-convert'

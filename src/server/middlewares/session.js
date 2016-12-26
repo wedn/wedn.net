@@ -1,4 +1,7 @@
-// TODO：[Legacy middleware]
+/**
+ * 会话支持
+ * TODO：[Legacy middleware]
+ */
 import convert from 'koa-convert'
 import session from 'koa-session'
 

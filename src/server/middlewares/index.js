@@ -1,6 +1,8 @@
-// Load all of the middlewares
+/**
+ * 整合常用中间件
+ */
 import compose from 'koa-compose'
-
+// Load all of the middlewares
 import logger from './logger'
 import header from './header'
 import error from './error'
@@ -48,7 +50,7 @@ export default app => {
   // 自动化路由
   middlewares.push(router())
 
-  // 转换部分Generator Function Middlewares
+  // // 转换部分Generator Function Middlewares
   // middlewares.forEach(m => console.log(m.constructor))
   // return compose(middlewares.map(convert))
   return compose(middlewares)

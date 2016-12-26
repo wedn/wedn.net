@@ -1,3 +1,6 @@
+/**
+ * 错误处理
+ */
 import path from 'path'
 import http from 'http'
 
@@ -6,10 +9,8 @@ import xtpl from 'node-xtemplate'
 const handleError = async (error, ctx) => {
   const isDev = ctx.app.env === 'development'
   ctx.status = error.status || 500
-
   // application
   ctx.app.emit('error', error, ctx)
-
   // accepted types
   switch (ctx.accepts('html', 'text', 'json')) {
     case 'text':
@@ -22,7 +23,6 @@ const handleError = async (error, ctx) => {
         throw error
       }
       break
-
     case 'json':
       ctx.type = 'application/json'
       if (isDev) {
@@ -33,7 +33,6 @@ const handleError = async (error, ctx) => {
         ctx.body = { status: ctx.status, error: http.STATUS_CODES[ctx.status] }
       }
       break
-
     case 'html':
       const name = [404, 500].includes(error.status) ? error.status : 'error'
       ctx.type = 'text/html'
@@ -46,9 +45,6 @@ const handleError = async (error, ctx) => {
 
 export default app => async (ctx, next) => {
   try {
-    // // timeout
-    // const timer = setTimeout(timeout.bind(ctx), 5)
-    // clearTimeout(timer)
     await next()
     ctx.status === 404 && !ctx.body && ctx.throw(404)
   } catch (error) {

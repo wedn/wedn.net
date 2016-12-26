@@ -1,3 +1,6 @@
+/**
+ * 请求响应标头
+ */
 export default app => async (ctx, next) => {
   const start = new Date()
   await next()
