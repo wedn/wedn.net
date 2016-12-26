@@ -1,11 +1,17 @@
 import path from 'path'
+import pkg from '../../package.json'
 
 const config = {
-  url: 'http://localhost:2080/',
+  // ## App info
+  name: pkg.name,
+  version: pkg.version,
+  description: pkg.description,
+
+  // ## Root
   root: '/',
 
-  // Server
-  // Can be host & port (default), or socket
+  // ## Server
+  // > Can be host & port (default), or socket
   server: {
     port: process.env.PORT || '2080',
     host: '127.0.0.1'
@@ -16,19 +22,7 @@ const config = {
     filename: path.resolve(__dirname, '../../content/logs/wedn.net.log')
   },
 
-  // Email
-  mail: {
-    'host': 'smtp.exmail.qq.com',
-    'port': 465,
-    'secure': true,
-    'name': 'WEDN.NET',
-    'auth': {
-      'user': 't1@wedn.net',
-      'pass': '2014@itcast'
-    }
-  },
-
-  // Database
+  // // ## Database
   // database: {
   //   database: 'wedn',
   //   username: 'root',
@@ -45,13 +39,13 @@ const config = {
     storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db')
   },
 
-  // Compress
+  // ## Compress
   compress: true,
 
-  // Storage
+  // ## Storage
   storage: {},
 
-  // Paths
+  // ## Paths
   paths: {
     data: path.resolve(__dirname, '../../content/data/'),
     plugin: path.resolve(__dirname, '../../content/plugins/'),
@@ -60,12 +54,13 @@ const config = {
     upload: path.resolve(__dirname, '../../content/uploads/')
   },
 
-  // Cookie keys (can not modify when application running)
+  // ## Cookie keys
+  // > can not modify when application running
   cookie: {
     keys: ['wedn.net', 'www.wedn.net']
   },
 
-  // Session
+  // ## Session
   session: {
     key: 'wedn:zce',    // (string) cookie key (default is koa:sess)
     maxAge: 86400000,   // (number) maxAge in ms (default is 1 days)
@@ -74,22 +69,23 @@ const config = {
     signed: true        // (boolean) signed or not (default true)
   },
 
-  // Encrypt
+  // ## Encrypt
   encrypt: {
     key: 'wedn.net',  // encrypt key
     salt_rounds: 8    // Salt rounds
-  },
-
-  set app (app) {
-    this._app = app
-    this._app.name = this.name
-    this._app.version = this.version
-    this._app.keys = this.cookie.keys
-  },
-
-  get app () {
-    return this._app
   }
+
+  // ## getter & setter
+  // set app (app) {
+  //   this._app = app
+  //   this._app.name = this.name
+  //   this._app.version = this.version
+  //   this._app.keys = this.cookie.keys
+  // },
+
+  // get app () {
+  //   return this._app
+  // }
 }
 
 export default config

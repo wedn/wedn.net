@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 
 import config from '../config'
-import { isKey, isSlug, isUsername, isNickname, isEmail, isMobile } from '../libraries/validator'
+import validator from '../libraries/validator'
 
 const db = new Sequelize(config.database)
 
@@ -28,25 +28,25 @@ db.utils = {
 // 自定义验证
 db.validate = {
   key: input => {
-    if (!isKey(input)) throw new Error(`Key '${input}' format error`)
+    if (!validator.isKey(input)) throw new Error(`Key '${input}' format error`)
   },
   slug: input => {
-    if (!isSlug(input)) throw new Error(`Slug '${input}' format error`)
+    if (!validator.isSlug(input)) throw new Error(`Slug '${input}' format error`)
   },
   username: input => {
-    if (!isUsername(input)) throw new Error(`Username '${input}' format error`)
+    if (!validator.isUsername(input)) throw new Error(`Username '${input}' format error`)
   },
   password: input => {
     if (input.length !== 60) throw new Error(`Password '${input}' format error`)
   },
   nickname: input => {
-    if (!isNickname(input)) throw new Error(`Nickname '${input}' format error`)
+    if (!validator.isNickname(input)) throw new Error(`Nickname '${input}' format error`)
   },
   email: input => {
-    if (!isEmail(input)) throw new Error(`Email '${input}' format error`)
+    if (!validator.isEmail(input)) throw new Error(`Email '${input}' format error`)
   },
   mobile: input => {
-    if (!isMobile(input)) throw new Error(`Mobile '${input}' format error`)
+    if (!validator.isMobile(input)) throw new Error(`Mobile '${input}' format error`)
   }
 }
 

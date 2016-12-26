@@ -1,6 +1,6 @@
 import db from './db'
 import validator from '../libraries/validator'
-import { hash, compare } from '../libraries/encryptor'
+import encryptor from '../libraries/encryptor'
 
 const { slug, username, password, nickname, email, mobile } = db.validate
 
@@ -175,7 +175,7 @@ export default db.define('User', {
       }
 
       // 密码加密
-      temp.password = await hash(temp.password)
+      temp.password = await encryptor.hash(temp.password)
 
       // ## 4. 创建这个对象到数据库
       // TODO: 异常抛出信息问题（消息）
@@ -192,7 +192,7 @@ export default db.define('User', {
      * @return {Boolean}          是否匹配
      */
     async comparePassword (password) {
-      return compare(password, this.password)
+      return encryptor.compare(password, this.password)
     }
   }
 }))

@@ -1,3 +1,3 @@
 import bodyParser from 'koa-bodyparser'
 
-export default config => bodyParser()
+export default app => bodyParser()

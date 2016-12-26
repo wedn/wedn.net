@@ -7,4 +7,4 @@ const routes = glob
   .map(item => item && item.router && item.router.routes())
   .filter(item => typeof item === 'function')
 
-export default () => compose(routes)
+export default app => compose(routes)

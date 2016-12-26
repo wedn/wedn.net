@@ -9,38 +9,41 @@ import serve from './static'
 import url from './url'
 import body from './body'
 import session from './session'
-import router from './router'
 import view from './view'
+import router from './router'
 
-export default config => {
+export default app => {
+  // options
+  app.context.options = app.config.options
+
   const middlewares = []
 
   // 开发模式时记录日志
-  middlewares.push(logger(config))
+  middlewares.push(logger(app))
 
   // 自定义响应头
-  middlewares.push(header(config))
+  middlewares.push(header(app))
 
   // 错误处理
-  middlewares.push(error(config))
+  middlewares.push(error(app))
 
   // 压缩响应流处理
-  middlewares.push(compress(config))
+  middlewares.push(compress(app))
 
   // 静态资源
-  middlewares.push(serve(config))
+  middlewares.push(serve(app))
 
   // URL friendly
-  middlewares.push(url(config))
+  middlewares.push(url(app))
 
   // 请求体格式化处理
-  middlewares.push(body(config))
+  middlewares.push(body(app))
 
   // 会话支持
-  middlewares.push(session(config))
+  middlewares.push(session(app))
 
   // 视图模板引擎
-  middlewares.push(view(config))
+  middlewares.push(view(app))
 
   // 自动化路由
   middlewares.push(router())

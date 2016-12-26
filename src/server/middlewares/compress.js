@@ -2,8 +2,8 @@
 import { Z_SYNC_FLUSH } from 'zlib'
 import compress from 'koa-compress'
 
-export default config =>
-  config.compress
+export default app =>
+  app.config.compress
   ? compress({
     filter: type => !/image/i.test(type),
     threshold: 1024 * 50,

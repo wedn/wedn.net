@@ -1,11 +1,12 @@
-/* eslint no-eval: 0 */
 import nodemailer from 'nodemailer'
 
-import config from '../config'
+let transporter, config
 
-const transporter = nodemailer.createTransport(config.mail)
+function sendMessage (message) {
+  if (!transporter) {
+    return Promise.reject(new Error('Please use `mailer.config(options)`'))
+  }
 
-const sendMail = message => {
   if (!(message && message.subject && message.html && message.from && message.to)) {
     return Promise.reject(new Error('邮件信息不完整'))
   }
@@ -31,10 +32,36 @@ const sendMail = message => {
     })
 }
 
-export const send = (subject, html, to, cc, attachments) => {
-  const from = `"${config.mail.name}" <${config.mail.auth.user}>`
-  if (typeof subject === 'object') {
-    return sendMail(Object.assign({ from }, subject))
+export default {
+  /**
+   * 配置邮件选项
+   * @param  {Object} options 邮件选项
+   * @return {Object}         配置后的对象
+   */
+  config (options) {
+    config = {
+      host: options.mail_server_hostname,
+      port: options.mail_server_port,
+      secure: options.mail_server_secure,
+      name: options.mail_server_name,
+      auth: {
+        user: options.mail_server_login,
+        pass: options.mail_server_password
+      },
+      connectionTimeout: 1000,
+      greetingTimeout: 1000,
+      socketTimeout: 2000,
+      debug: process.env.NODE_ENV === 'development'
+    }
+    transporter = nodemailer.createTransport(config)
+    return this
+  },
+
+  send (subject, html, to, cc, attachments) {
+    const from = `"${config.name}" <${config.auth.user}>`
+    if (typeof subject === 'object') {
+      return sendMessage(Object.assign({ from }, subject))
+    }
+    return sendMessage({ from, subject, html, to, cc, attachments })
   }
-  return sendMail({ from, subject, html, to, cc, attachments })
 }

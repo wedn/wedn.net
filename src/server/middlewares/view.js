@@ -5,7 +5,7 @@ import compose from 'koa-compose'
 import json from 'koa-json'
 import xtpl from 'koa-xtpl'
 
-export default config => {
+export default app => {
   const engines = []
 
   // JSON Format
@@ -20,9 +20,10 @@ export default config => {
       context: ctx,
       cookie: ctx.cookie,
       session: ctx.session,
-      options: ctx.options,
       request: ctx.request,
-      response: ctx.response
+      response: ctx.response,
+      config: app.config,
+      options: ctx.options
     }
     return next()
   })
@@ -33,9 +34,8 @@ export default config => {
     extname: 'html',
     commands: {
       url (scope, option, buffer) {
-        const pathname = path.posix.join(config.root, ...option.params)
-        // const pathname = path.posix.resolve(config.root, ...option.params)
-        return buffer.write(url.resolve(config.url, pathname))
+        const pathname = path.posix.join(app.config.root, ...option.params)
+        return buffer.write(url.resolve(app.config.options.site_url, pathname))
       },
       assets (scope, option, buffer) {
         return this.url(scope, option, buffer)

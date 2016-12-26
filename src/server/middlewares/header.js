@@ -1,4 +1,4 @@
-export default () => async (ctx, next) => {
+export default app => async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start

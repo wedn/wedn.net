@@ -1,4 +1,4 @@
-export default () => async (ctx, next) => {
+export default app => async (ctx, next) => {
   if (/[A-Z]/.test(ctx.request.url)) {
     ctx.status = 301
     ctx.redirect(ctx.request.url.toLowerCase())

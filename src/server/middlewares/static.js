@@ -7,21 +7,21 @@ import mount from 'koa-mount'
 import serve from 'koa-static'
 import favicon from 'koa-favicon'
 
-export default (options) => {
+export default app => {
   const statics = []
   const maxage = 7 * 24 * 60 * 60 * 1000
 
   // favicon
-  statics.push(favicon(options.paths.static + '/favicon.ico'))
+  statics.push(favicon(app.config.paths.static + '/favicon.ico'))
 
   // upload directory
-  statics.push(mount('/uploads', serve(options.paths.upload, { maxage })))
+  statics.push(mount('/uploads', serve(app.config.paths.upload, { maxage })))
 
   // // theme assets directory
-  // statics.push(mount('/assets', serve(options.paths.upload, { maxage })))
+  // statics.push(mount('/assets', serve(app.config.paths.upload, { maxage })))
 
   // static directory
-  statics.push(mount('/', serve(options.paths.static, { maxage })))
+  statics.push(mount('/', serve(app.config.paths.static, { maxage })))
 
   // client admin
   if (process.env.NODE_ENV === 'production') {

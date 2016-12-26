@@ -1,5 +1,13 @@
 import bootstrap from './app'
 
+process
+  .on('uncaughtException', error => {
+    console.log(error)
+  })
+  .on('unhandledRejection', (reason, p) => {
+    console.log(reason, p)
+  })
+
 // import Koa from 'koa'
 
 // const app = new Koa()

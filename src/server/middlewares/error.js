@@ -3,14 +3,6 @@ import http from 'http'
 
 import xtpl from 'node-xtemplate'
 
-// const timeout = async ctx => {
-//   try {
-//     ctx && !ctx.body && ctx.throw(408)
-//   } catch (error) {
-//     await handleError(error, ctx)
-//   }
-// }
-
 const handleError = async (error, ctx) => {
   const isDev = ctx.app.env === 'development'
   ctx.status = error.status || 500
@@ -52,7 +44,7 @@ const handleError = async (error, ctx) => {
   }
 }
 
-export default config => async (ctx, next) => {
+export default app => async (ctx, next) => {
   try {
     // // timeout
     // const timer = setTimeout(timeout.bind(ctx), 5)

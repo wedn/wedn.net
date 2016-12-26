@@ -1,10 +1,10 @@
+import querystring from 'querystring'
 import Router from 'koa-router'
 import uuid from 'uuid'
 
 import { User } from '../../models'
-import { isPassword, isEmail } from '../../libraries/validator'
-import { hash, encrypt, decrypt } from '../../libraries/encryptor'
-import { send } from '../../libraries/mailer'
+import validator from '../../libraries/validator'
+import encryptor from '../../libraries/encryptor'
 
 export const router = new Router({ prefix: '/account' })
 
@@ -24,11 +24,11 @@ router.get('logout', '/logout', async ctx => {
 router.get('activate', '/activate/:token', async ctx => {
   if (!ctx.session.user) {
     // 没有登录
-    return ctx.redirect('/account/login?redirect=' + ctx.url)
+    return ctx.redirect('/account/login?redirect=' + querystring.escape(ctx.url))
   }
   let { token } = ctx.params
   try {
-    token = decrypt(token)
+    token = encryptor.decrypt(token)
     const activateToken = await User.Meta.findOne({ where: { key: 'activate_token', value: token } })
     if (!activateToken) return ctx.throw(404)
     const user = await activateToken.getUser()
@@ -65,7 +65,7 @@ router.get('alias', '/', async ctx => {
  * GET /account/login
  */
 router.get('login', '/login', async ctx => {
-  ctx.state.model = { username: '', password: '' }
+  // ctx.state.model = { username: '', password: '' }
   await ctx.render('account/login')
 })
 
@@ -87,13 +87,13 @@ router.post('login_post', '/login', async ctx => {
 
   // 不需要校验用户名格式：有可能是邮箱或手机
   // // ### 1.1. 用户名格式是否正确
-  // if (!isUsername(username)) {
+  // if (!validator.isUsername(username)) {
   //   ctx.state.error = 'Username or Password error!'
   //   return await ctx.render('account/index')
   // }
 
   // ### 1.2. 密码格式是否正确
-  if (!isPassword(password)) {
+  if (!validator.isPassword(password)) {
     ctx.state.error = 'Username or Password error!'
     return await ctx.render('account/login')
   }
@@ -114,7 +114,7 @@ router.post('login_post', '/login', async ctx => {
  * GET /account/register
  */
 router.get('register', '/register', async ctx => {
-  ctx.state.model = { username: '', email: '', password: '' }
+  // ctx.state.model = { username: '', email: '', password: '' }
   await ctx.render('account/register')
 })
 
@@ -144,10 +144,10 @@ router.post('register_post', '/register', async ctx => {
     })
     user.addMeta(activateToken)
     const mailContent = await ctx.render('shared/mail/activate', {
-      activate_url: `${ctx.options.site_url}account/activate/${encrypt(activateToken.value)}`
+      activate_url: `account/activate/${encryptor.encrypt(activateToken.value)}`
     }, false)
     // TODO: 异常处理
-    await send(`Activate Account « ${ctx.options.site_name}`, mailContent, `"${user.nickname}" <${user.email}>`)
+    await ctx.sendMail(`Activate Account « ${ctx.options.site_name}`, mailContent, `"${user.nickname}" <${user.email}>`)
     // ### 2.1. Session
     ctx.session.user = user
     // 3. 响应客户端
@@ -175,7 +175,7 @@ router.post('reset_post', '/reset', async ctx => {
   const { username } = ctx.request.body
   ctx.state.model = { username }
 
-  if (!isEmail(username)) {
+  if (!validator.isEmail(username)) {
     ctx.state.error = 'Email not exist!'
     ctx.state.send = true
     return await ctx.render('account/reset')
@@ -204,11 +204,11 @@ router.post('reset_post', '/reset', async ctx => {
   }
 
   const mailContent = await ctx.render('shared/mail/reset-password', {
-    reset_url: `${ctx.options.site_url}account/reset/${encrypt(resetToken.value)}`
+    reset_url: `account/reset/${encryptor.encrypt(resetToken.value)}`
   }, false)
 
   try {
-    await send(`Reset Password « ${ctx.options.site_name}`, mailContent, `"${user.nickname}" <${user.email}>`)
+    await ctx.sendMail(`Reset Password « ${ctx.options.site_name}`, mailContent, `"${user.nickname}" <${user.email}>`)
     ctx.state.message = 'Please check your email for instructions.'
   } catch (e) {
     ctx.state.error = e.message
@@ -223,7 +223,7 @@ router.post('reset_post', '/reset', async ctx => {
 router.get('reset_token', '/reset/:token', async ctx => {
   let { token } = ctx.params
   try {
-    token = decrypt(token)
+    token = encryptor.decrypt(token)
     const resetToken = await User.Meta.findOne({ where: { key: 'password_reset_token', value: token } })
     if (!resetToken) return ctx.throw(404)
     await ctx.render('account/reset')
@@ -239,12 +239,12 @@ router.post('reset_token_post', '/reset/:token', async ctx => {
   let { token } = ctx.params
   const { password, confirm } = ctx.request.body
   try {
-    token = decrypt(token)
+    token = encryptor.decrypt(token)
     if (password !== confirm) {
       ctx.state.error = 'Confirm password!'
       return await ctx.render('account/reset')
     }
-    if (!isPassword(password)) {
+    if (!validator.isPassword(password)) {
       ctx.state.error = 'Password format error!'
       return await ctx.render('account/reset')
     }
@@ -254,7 +254,7 @@ router.post('reset_token_post', '/reset/:token', async ctx => {
     const user = await resetToken.getUser()
     if (!user) return ctx.throw(404)
     // 更新
-    user.password = await hash(password)
+    user.password = await encryptor.hash(password)
     await user.save()
     await resetToken.destroy()
     // user.removeMeta(resetToken)
