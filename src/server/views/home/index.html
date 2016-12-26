@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{options.site_lang}}">
+<html lang="{{ options.site_lang }}">
 
 <head>
-  <meta charset="{{options.site_charset}}">
+  <meta charset="{{ options.site_charset }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="{{options.site_description}}">
-  <meta name="author" content="{{options.site_author}}">
-  <title>{{title}} « {{options.site_name}}</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{options.site_favicon}}">
+  <meta name="description" content="{{ options.site_description }}">
+  <meta name="author" content="{{ options.site_author }}">
+  <title>{{ title }} « {{ options.site_name }}</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{{ options.site_favicon }}">
   <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/home.css">
 </head>
@@ -16,7 +16,7 @@
 <body>
   <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
     <div class="container">
-      <a class="navbar-brand" href="{{url('/')}}">{{options.site_name}}</a>
+      <a class="navbar-brand" href="{{url('/')}}">{{ options.site_name }}</a>
       <ul class="nav navbar-nav">
         <li class="nav-item active">
           <a class="nav-link" href="{{url('/')}}">Home<span class="sr-only">(current)</span></a>
@@ -42,7 +42,7 @@
     <h1>Bootstrap starter template</h1>
     <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
     {{#if (session.user)}}
-    <a class="btn btn-primary btn-lg" href="{{url('/account/logout')}}">Welcome {{session.user.nickname}}</a>
+    <a class="btn btn-primary btn-lg" href="{{url('/account/logout')}}">Welcome {{ session.user.nickname }} - {{ session.user.status }}</a>
     {{else}}
     <a class="btn btn-primary btn-lg" href="{{url('/account/login')}}">Getting started</a>
     {{/if}}

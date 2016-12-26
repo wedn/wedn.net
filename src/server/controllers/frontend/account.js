@@ -19,6 +19,31 @@ router.get('logout', '/logout', async ctx => {
 })
 
 /**
+ * GET /account/activate/:token
+ */
+router.get('activate', '/activate/:token', async ctx => {
+  if (!ctx.session.user) {
+    // 没有登录
+    return ctx.redirect('/account/login?redirect=' + ctx.url)
+  }
+  let { token } = ctx.params
+  try {
+    token = decrypt(token)
+    const activateToken = await User.Meta.findOne({ where: { key: 'activate_token', value: token } })
+    if (!activateToken) return ctx.throw(404)
+    const user = await activateToken.getUser()
+    if (!user || user.id !== ctx.session.user.id) return ctx.throw(404)
+    user.status = 'activated'
+    await user.save()
+    await activateToken.destroy()
+    ctx.session.user = user
+    await ctx.redirect('/')
+  } catch (e) {
+    return ctx.throw(404)
+  }
+})
+
+/**
  * Common action
  */
 router.use(async (ctx, next) => {
@@ -112,6 +137,17 @@ router.post('register_post', '/register', async ctx => {
   try {
     // ## 2. 持久化
     const user = await User.add(username, email, password)
+    // ### 2.0. 激活
+    const activateToken = await User.Meta.create({
+      key: 'activate_token',
+      value: uuid()
+    })
+    user.addMeta(activateToken)
+    const mailContent = await ctx.render('shared/mail/activate', {
+      activate_url: `${ctx.options.site_url}account/activate/${encrypt(activateToken.value)}`
+    }, false)
+    // TODO: 异常处理
+    await send(`Activate Account « ${ctx.options.site_name}`, mailContent, `"${user.nickname}" <${user.email}>`)
     // ### 2.1. Session
     ctx.session.user = user
     // 3. 响应客户端
@@ -227,7 +263,6 @@ router.post('reset_token_post', '/reset/:token', async ctx => {
     // ctx.redirect('/')
     ctx.redirect('/account/login')
   } catch (e) {
-    console.log(e)
     return ctx.throw(404)
   }
 })
