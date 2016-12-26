@@ -1,5 +1,4 @@
 /* eslint no-eval: 0 */
-import path from 'path'
 import nodemailer from 'nodemailer'
 
 import config from '../config'
