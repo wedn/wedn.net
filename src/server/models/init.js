@@ -1,11 +1,12 @@
 import pkg from '../../../package.json'
-import { hash } from '../libraries/encrypt'
+import { hash } from '../libraries/encryptor'
 
 export default async function init (db) {
   await db.models.Option.bulkCreate([
     { key: 'app_name', value: pkg.name },
     { key: 'app_version', value: pkg.version },
     { key: 'app_description', value: pkg.description },
+    { key: 'site_url', value: 'http://localhost:2080/' },
     { key: 'site_name', value: 'WEDN.NET' },
     { key: 'site_description', value: 'make IT better' },
     { key: 'site_favicon', value: '/favicon.ico' },
@@ -20,7 +21,7 @@ export default async function init (db) {
     username: 'zce',
     password: await hash('5love100'),
     nickname: 'iceStone',
-    email: 'zce@wedn.net',
+    email: 'ice@wedn.net',
     mobile: '13241087977',
     status: 'activated',
     role: 'administrator',

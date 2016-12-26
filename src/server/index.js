@@ -6,6 +6,7 @@ import bootstrap from './app'
 
 // app.listen(1080, err => err || console.log(`server running @ 1080`))
 
-// bootstrap
+// Bootstrap app
 bootstrap()
 
+import './demo'

@@ -1,50 +1,25 @@
-<!DOCTYPE html>
-<html lang="{{options.site_lang}}">
+{{extend ('./_layout.html')}}
 
-<head>
-  <meta charset="{{options.site_charset}}">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="{{options.site_description}}">
-  <meta name="author" content="{{options.site_author}}">
-  <title>Sign up « Account « {{options.site_name}}</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{options.site_favicon}}">
-  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/vendor/animate/animate.css">
-  <link rel="stylesheet" href="/css/account.css">
-</head>
+{{set (title = 'Sign up')}}
 
-<body>
-  <header class="header">
-    <h1><a class="title" href="/">WEDN.NET</a></h1>
-  </header>
-  <main class="container">
-    {{#if (error)}}
-    <div class="alert alert-danger alert-dismissible fade in" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <span>{{error}}</span>
-    </div>
-    {{/if}}
-    <form class="form-account{{error && ' shake animated'}}" action method="post" autocomplete="off">
-      <h2 class="heading">Sign up</h2>
+{{#block ('body')}}
+  <form class="form-account{{ error && ' shake animated' }}" action method="post" autocomplete="off">
+    <h2 class="heading">{{ title }}</h2>
+    <fieldset class="form-group top">
       <label for="username" class="sr-only">Username</label>
-      <input type="text" id="username" name="username" class="form-control top" placeholder="Username" required value="{{model.username}}" autofocus>
-      <label for="username" class="sr-only">Email</label>
-      <input type="email" id="email" name="email" class="form-control middle" placeholder="Email" required value="{{model.email}}">
+      <input type="text" id="username" name="username" class="form-control" placeholder="Username" required value="{{ model.username }}" autofocus>
+    </fieldset>
+    <fieldset class="form-group middle">
+      <label for="email" class="sr-only">Email</label>
+      <input type="email" id="email" name="email" class="form-control" placeholder="Email" required value="{{ model.email }}">
+    </fieldset>
+    <fieldset class="form-group bottom">
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" name="password" class="form-control bottom" placeholder="Password" required value="{{model.password}}">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Create an account</button>
-    </form>
-    <div class="footer">
-      Already have an account? <a href="/account/login">Sign in</a>
-    </div>
-  </main>
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/tether/js/tether.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script></script>
-</body>
-
-</html>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required value="{{ model.password }}">
+    </fieldset>
+    <button class="btn btn-primary btn-block" type="submit">Create an account</button>
+  </form>
+  <div class="footer">
+    Already have an account? <a href="/account/login">Sign in</a>
+  </div>
+{{/block}}

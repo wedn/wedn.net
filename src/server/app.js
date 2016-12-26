@@ -16,6 +16,12 @@ export default async parent => {
   // ## Init data
   Object.keys(options).length || await init(db)
   options = await db.models.Option.load()
+  // try {
+  //   Object.keys(options).length || await init(db)
+  //   options = await db.models.Option.load()
+  // } catch (e) {
+  //   console.log(e)
+  // }
 
   // ## Application instance
   const app = new Koa()

@@ -27,10 +27,24 @@ Comment.hasMany(CommentMeta, {
   constraints: false
 })
 
+CommentMeta.belongsTo(Comment, {
+  foreignKey: 'comment_id',
+  targetKey: 'id',
+  as: 'Comment',
+  constraints: false
+})
+
 Post.hasMany(PostMeta, {
   foreignKey: 'post_id',
   targetKey: 'id',
   as: 'Meta',
+  constraints: false
+})
+
+PostMeta.belongsTo(Post, {
+  foreignKey: 'post_id',
+  targetKey: 'id',
+  as: 'Post',
   constraints: false
 })
 
@@ -57,10 +71,24 @@ Term.hasMany(TermMeta, {
   constraints: false
 })
 
+TermMeta.belongsTo(Term, {
+  foreignKey: 'term_id',
+  targetKey: 'id',
+  as: 'Term',
+  constraints: false
+})
+
 User.hasMany(UserMeta, {
   foreignKey: 'user_id',
   targetKey: 'id',
   as: 'Meta',
+  constraints: false
+})
+
+UserMeta.belongsTo(User, {
+  foreignKey: 'user_id',
+  targetKey: 'id',
+  as: 'User',
   constraints: false
 })
 

@@ -1,0 +1,35 @@
+{{extend ('./_layout.html')}}
+
+{{set (title = 'Reset password')}}
+
+{{#block ('body')}}
+  {{#if (send)}}
+  <form class="form-account{{ error && ' shake animated' }}" action method="post" autocomplete="off">
+    <h2 class="heading">{{ title }}</h2>
+    <fieldset class="form-group">
+      <label for="username" class="sr-only">Email</label>
+      <input type="email" id="username" name="username" class="form-control" placeholder="Email" required value="{{ model.username }}" autofocus>
+    </fieldset>
+    <button class="btn btn-primary btn-block" type="submit">Reset password</button>
+  </form>
+  <div class="footer">
+    New to WEDN.NET? <a href="/account/register">Create an account</a>
+  </div>
+  {{else}}
+  <form class="form-account" action method="post" autocomplete="off">
+    <h2 class="heading">{{ title }}</h2>
+    <fieldset class="form-group top">
+      <label for="password" class="sr-only">New Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="New Password" required autofocus>
+    </fieldset>
+    <fieldset class="form-group bottom">
+      <label for="confirm" class="sr-only">Confirm Password</label>
+      <input type="password" id="confirm" name="confirm" class="form-control" placeholder="Confirm Password" required>
+    </fieldset>
+    <button class="btn btn-primary btn-block" type="submit">Reset password</button>
+  </form>
+  <div class="footer">
+    New to WEDN.NET? <a href="/account/register">Create an account</a>
+  </div>
+  {{/if}}
+{{/block}}

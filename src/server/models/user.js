@@ -1,6 +1,6 @@
 import db from './db'
 import validator from '../libraries/validator'
-import { hash, compare } from '../libraries/encrypt'
+import { hash, compare } from '../libraries/encryptor'
 
 const { slug, username, password, nickname, email, mobile } = db.validate
 

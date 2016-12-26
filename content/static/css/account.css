@@ -1,11 +1,88 @@
 body {
   background: #f3f3f4;
   color: #666;
-  font: normal .875rem 'RobotoDraft', 'Roboto', sans-serif;
+  font: normal 0.875rem 'RobotoDraft', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.container {
+  max-width: 22rem;
+}
+.header {
+  padding: 4.5rem 0 3.5rem;
+  text-align: center;
+  letter-spacing: .125rem;
+}
+.header .title {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 300;
+  color: #666;
+}
+.header .title:hover {
+  color: #555;
+  text-decoration: none;
+  text-shadow: 0 0 1rem #e0e0e0;
+}
+.form-account {
+  padding: 1.5rem 1.25rem;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #f8f8f9;
+  box-shadow: 0 0.125rem 0.375rem rgba(100, 100, 100, 0.2);
+}
+.form-account > .heading {
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+.form-account > .form-group {
+  margin-bottom: 1.25rem;
+}
+.form-account > .form-group > .form-control {
+  position: relative;
+  height: auto;
+  box-sizing: border-box;
+  padding: .625rem;
+  border-color: #e5e5e5;
+  font-size: 1rem;
+}
+.form-account > .form-group > .form-control:focus {
+  z-index: 2;
+  border-color: #66afe9;
+}
+.form-account > .form-group.top {
+  margin-bottom: -0.0625rem;
+}
+.form-account > .form-group.top > .form-control {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-account > .form-group.middle {
+  margin-bottom: -0.0625rem;
+}
+.form-account > .form-group.middle > .form-control {
+  border-radius: 0;
+}
+.form-account > .form-group.bottom {
+  margin-bottom: 1.25rem;
+}
+.form-account > .form-group.bottom > .form-control {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-account > .form-group.checkbox {
+  margin: -0.625rem 0.375rem 0.75rem;
+  font-weight: normal;
+}
+.form-account > .form-group.checkbox > label {
+  margin-bottom: 0;
+}
+.footer {
+  margin: 1.5rem auto;
+  padding: 1rem;
+  border: .0625rem solid #e9e9e9;
+  text-align: center;
+}
 /*.btn-primary {
   background-color: #1ab394;
   border-color: #1ab394;
@@ -24,85 +101,3 @@ body {
   border-color: #049275;
   color: #FFF;
 }*/
-
-.container {
-  max-width: 22rem;
-}
-
-.header {
-  padding: 4.5rem 0 3.5rem;
-  text-align: center;
-  letter-spacing: .125rem;
-}
-
-.header .title {
-  margin: 0;
-  font-size: 3rem;
-  font-weight: 300;
-  color: #666;
-}
-
-.header .title:hover {
-  color: #444;
-  text-decoration: none;
-}
-
-.form-account {
-  padding: 1.5rem 1.25rem;
-  margin: 0 auto;
-  overflow: hidden;
-  background-color: #fff;
-  /*border: .0625rem solid #eee;*/
-  box-shadow: 0 .125rem .375rem rgba(100, 100, 100, .2);
-}
-
-.form-account .heading {
-  margin-bottom: 1rem;
-  font-weight: 400;
-}
-
-.form-account .form-control {
-  /*position: relative;
-  height: auto;
-  box-sizing: border-box;*/
-  padding: .625rem;
-  font-size: 1rem;
-}
-
-.form-account .form-control:focus {
-  z-index: 2;
-}
-
-.form-account .form-control.top {
-  margin-bottom: -.0625rem;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-account .form-control.middle {
-  margin-bottom: -.0625rem;
-  border-radius: 0;
-}
-
-.form-account .form-control.bottom {
-  margin-bottom: 1.2rem;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.form-account .checkbox {
-  margin-top: -.625rem;
-  margin-bottom: 1.2rem;
-  font-weight: normal;
-}
-
-.form-account .checkbox label {
-  margin-bottom: 0;
-}
-
-.footer {
-  margin: 1.5rem auto;
-  padding: 1rem;
-  border: .0625rem solid #e9e9e9;
-  text-align: center;
-}

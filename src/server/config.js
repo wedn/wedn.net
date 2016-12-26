@@ -11,18 +11,20 @@ const config = {
     host: '127.0.0.1'
   },
 
+  logger: {
+    type: 'file',
+    filename: path.resolve(__dirname, '../../content/logs/wedn.net.log')
+  },
+
   // Email
   mail: {
-    transport: 'SMTP',
-    options: {
-      'host': 'smtp.exmail.qq.com',
-      'port': 25,
-      'secure': false,
-      'name': 'Hello Micua',
-      'auth': {
-        'user': 't1@wedn.net',
-        'pass': '2014@itcast'
-      }
+    'host': 'smtp.exmail.qq.com',
+    'port': 465,
+    'secure': true,
+    'name': 'WEDN.NET',
+    'auth': {
+      'user': 't1@wedn.net',
+      'pass': '2014@itcast'
     }
   },
 
@@ -59,7 +61,9 @@ const config = {
   },
 
   // Cookie keys (can not modify when application running)
-  keys: ['wedn.net', 'www.wedn.net'],
+  cookie: {
+    keys: ['wedn.net', 'www.wedn.net']
+  },
 
   // Session
   session: {
@@ -70,14 +74,17 @@ const config = {
     signed: true        // (boolean) signed or not (default true)
   },
 
-  // Salt rounds
-  salt_rounds: 8,
+  // Encrypt
+  encrypt: {
+    key: 'wedn.net',  // encrypt key
+    salt_rounds: 8    // Salt rounds
+  },
 
   set app (app) {
     this._app = app
     this._app.name = this.name
     this._app.version = this.version
-    this._app.keys = this.keys
+    this._app.keys = this.cookie.keys
   },
 
   get app () {
