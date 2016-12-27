@@ -3,6 +3,7 @@ const webpack = require('webpack')
 // const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const admin = require('./src/shared/wedn')
 
 // options
 const config = {
@@ -12,7 +13,7 @@ const config = {
     source: path.join(__dirname, 'src/client'),
     // static: path.join(__dirname, 'content/static'),
     output: path.join(__dirname, 'dist/client'),
-    publicPath: '/admin/',
+    publicPath: `/${admin.base}/`,
     assets: 'assets',
     index: path.join(__dirname, 'dist/client/index.html')
   },

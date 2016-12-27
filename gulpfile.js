@@ -50,9 +50,9 @@ gulp.task('build:client', callback => {
  */
 gulp.task('build:server', () => {
   process.env.BABEL_ENV = 'server'
-  return gulp.src('src/server/**/*.*')
+  return gulp.src(['src/server/**/*.*', 'src/shared/**/*.*'], { base: 'src' })
     .pipe(plugins.if('*.js', plugins.babel()))
-    .pipe(gulp.dest('dist/server'))
+    .pipe(gulp.dest('dist'))
 })
 
 /**

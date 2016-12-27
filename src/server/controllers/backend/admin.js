@@ -4,12 +4,14 @@ import querystring from 'querystring'
 
 import Router from 'koa-router'
 
-export const router = new Router({ prefix: '/admin' })
+import admin from '../../../shared/wedn'
+
+export const router = new Router({ prefix: `/${admin.base}` })
 
 /**
- * GET /admin/
+ * ALL /admin/
  */
-router.get('admin', '*', async ctx => {
+router.all('admin', '*', async ctx => {
   const { user } = ctx.session
   if (!user) {
     // 没有登录
@@ -18,6 +20,11 @@ router.get('admin', '*', async ctx => {
   if (user.role !== 'administrator') {
     return ctx.redirect('/')
   }
+  ctx.compress = false
   ctx.type = 'text/html'
-  ctx.body = fs.createReadStream(path.join(__dirname, '../../../client/index.html'))
+  if (ctx.app.env === 'production') {
+    ctx.body = fs.createReadStream(path.join(__dirname, '../../../client/index.html'))
+  } else {
+    ctx.body = `<h1>Hello ${user.nickname}</h1>`
+  }
 })

@@ -1,11 +1,13 @@
 import Router from 'koa-router'
-export const router = new Router({ prefix: '/(wedn|wp-admin|ghost)' })
+
+import admin from '../../../shared/wedn'
+
+export const router = new Router({ prefix: `/(${admin.alias})` })
 
 /**
- * GET /(wedn|wp-admin|ghost)/:path*
+ * ALL /${admin.base}/:path*
  */
-router.get('admin_alias', '/:path*', ctx => {
-  console.log(111)
+router.all('admin_alias', '/:path*', ctx => {
   ctx.status = 301
-  ctx.redirect(`/admin/${ctx.params.path || ''}`)
+  ctx.redirect(`/${admin.base}/${ctx.params.path || ''}`)
 })
