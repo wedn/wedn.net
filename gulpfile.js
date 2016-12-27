@@ -90,7 +90,7 @@ gulp.task('run:client', callback => {
 gulp.task('run:server', () => {
   process.env.BABEL_ENV = 'server'
   plugins.nodemon({
-    script: 'src/server',
+    script: 'src',
     exec: './node_modules/.bin/babel-node',
     watch: ['src/server']
     // stdout: false

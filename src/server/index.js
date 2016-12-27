@@ -1,20 +1,49 @@
-import bootstrap from './app'
+import Koa from 'koa'
+import mount from 'koa-mount'
 
-process
-  .on('uncaughtException', error => {
-    console.log(error)
-  })
-  .on('unhandledRejection', (reason, p) => {
-    console.log(reason, p)
-  })
+import config from './config'
+import middlewares from './middlewares'
+import { db, init } from './models'
+import mailer from './libraries/mailer'
 
-// import Koa from 'koa'
+export default async parent => {
+  // ## Sync to database
+  // db.afterBulkSync(() => {})
+  await db.sync({ force: false })
 
-// const app = new Koa()
+  // ## Load db option
+  let options = await db.models.Option.load()
 
-// app.listen(1080, err => err || console.log(`server running @ 1080`))
+  // ## Init data
+  Object.keys(options).length || await init(config)
+  options = await db.models.Option.load()
+  config.options = options
 
-// Bootstrap app
-bootstrap()
+  // ## Application instance
+  const app = new Koa()
 
-import './demo'
+  // ## Application config
+  app.name = config.name
+  app.version = config.version
+  app.keys = config.cookie.keys
+  app.config = config
+
+  // ## Email server config
+  mailer.config(options)
+  app.context.sendMail = mailer.send
+
+  // ## Load middlewares
+  app.use(middlewares(app))
+
+  // // ## Test response
+  // app.use(ctx => {
+  //   // throw new Error(12)
+  // })
+
+  // ## Mount to parent
+  if (parent) return parent.use(mount(config.root, app))
+
+  // ## Listen
+  app.listen(config.server, error => error || console.log(`server running @ ${options.site_url}`))
+  return app
+}
