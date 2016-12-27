@@ -1,3 +1,6 @@
+/**
+ * 账户中心模块控制器
+ */
 import querystring from 'querystring'
 import Router from 'koa-router'
 import uuid from 'uuid'
