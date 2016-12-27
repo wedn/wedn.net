@@ -1,5 +1,6 @@
 /**
  * 账户中心模块控制器
+ * https://github.com/crypto-utils/keygrip
  */
 import querystring from 'querystring'
 import Router from 'koa-router'

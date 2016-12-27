@@ -17,16 +17,6 @@ const config = {
     assets: 'assets',
     index: path.join(__dirname, 'dist/server/views/admin/index.html')
   },
-  server: {
-    port: process.env.PORT || 1080,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:2080/',
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  },
   sourceMap: { js: true, css: true }
 }
 
@@ -56,11 +46,11 @@ function styleLoader (type) {
 module.exports = {
   context: config.paths.root,
   entry: {
-    main: [path.join(config.paths.source, 'main.js')]
+    main: [path.join(config.paths.source, 'main.js'), 'webpack-hot-middleware/client']
   },
   output: {
     path: config.paths.output,
-    publicPath: isProd ? config.paths.publicPath : '/',
+    publicPath: config.paths.publicPath,
     filename: isProd ? assetPath('js', '[name].js?v=[chunkhash:6]') : '[name].js',
     chunkFilename: isProd ? assetPath('js', '[name].[chunkhash:6].js') : '[name].[chunkhash:6].js'
   },
@@ -138,30 +128,21 @@ module.exports = {
       'vue$': 'vue/dist/vue'
     }
   },
-  devServer: {
-    port: config.server.port,
-    proxy: config.server.proxy,
-    // outputPath: config.paths.output,
-    // publicPath: config.paths.publicPath,
-    contentBase: config.paths.output,
-    historyApiFallback: true,
-    // no default console
-    quiet: true,
-    inline: true,
-    hot: true
-  },
   devtool: '#eval-source-map', // 'eval-source-map',
   plugins: [
+    // new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(config.env),
-        ADMIN_BASE: JSON.stringify(isProd ? config.paths.publicPath : '/')
+        ADMIN_BASE: JSON.stringify(config.paths.publicPath)
       }
     }),
     new HtmlWebpackPlugin({
-      // title: 'WEDN.NET',
+      title: 'WEDN.NET',
       filename: isProd ? config.paths.index : 'index.html',
-      template: path.join(config.paths.source, 'index.ejs'),
+      template: path.join(config.paths.source, isProd ? 'index.ejs' : 'dev.ejs'),
       inject: false,
       minify: isProd ? {
         removeComments: true,
