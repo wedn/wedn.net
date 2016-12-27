@@ -159,9 +159,9 @@ module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
-      // title: 'WEDN.NET',
+      title: 'WEDN.NET',
       filename: isProd ? config.paths.index : 'index.html',
-      template: path.join(config.paths.source, 'index.ejs'),
+      template: path.join(config.paths.source, isProd ? 'index.ejs' : 'dev.ejs'),
       inject: false,
       minify: isProd ? {
         removeComments: true,
