@@ -15,7 +15,7 @@ const config = {
     output: path.join(__dirname, 'dist/client'),
     publicPath: `/${admin.base}/`,
     assets: 'assets',
-    index: path.join(__dirname, 'dist/client/index.html')
+    index: path.join(__dirname, 'dist/server/views/admin/index.html')
   },
   server: {
     port: process.env.PORT || 1080,
@@ -159,14 +159,17 @@ module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
-      title: 'WEDN.NET',
+      // title: 'WEDN.NET',
       filename: isProd ? config.paths.index : 'index.html',
       template: path.join(config.paths.source, 'index.ejs'),
       inject: false,
       minify: isProd ? {
         removeComments: true,
         collapseWhitespace: true,
-        removeAttributeQuotes: true
+        removeAttributeQuotes: true,
+        keepClosingSlash: true,
+        minifyCSS: true,
+        minifyJS: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       } : false

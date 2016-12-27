@@ -43,6 +43,9 @@ export default app => {
       },
       assets (scope, option, buffer) {
         return this.url(scope, option, buffer)
+      },
+      stringify (scope, option, buffer) {
+        return buffer.write(JSON.stringify(option.params[0]))
       }
     }
   }))

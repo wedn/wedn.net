@@ -1,5 +1,4 @@
 import Router from 'koa-router'
-
 import admin from '../../../shared/wedn'
 
 export const router = new Router({ prefix: `/(${admin.alias})` })

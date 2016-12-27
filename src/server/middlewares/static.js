@@ -23,10 +23,8 @@ export default app => {
   // static directory
   statics.push(mount('/', serve(app.config.paths.static, { maxage })))
 
-  // client admin
+  // node_modules directory
   if (app.env === 'production') {
-    statics.push(mount('/admin', serve(path.join(__dirname, '../../client'), { maxage })))
-  } else {
     statics.push(mount('/node_modules', serve(path.join(__dirname, '../../../node_modules'), { maxage })))
   }
 

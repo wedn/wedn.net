@@ -4,6 +4,7 @@
 import logger from 'koa-logger'
 
 export default app => {
-  if (app.env === 'development') return logger()
-  return (ctx, next) => next()
+  return logger()
+  // if (app.env === 'development') return logger()
+  // return (ctx, next) => next()
 }
