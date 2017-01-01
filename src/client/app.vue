@@ -26,8 +26,16 @@
 
     data () {
       return {
-        message: 'Hello Vue!'
+        options: {}
       }
+    },
+
+    created () {
+      this.$http.get('/api/v1/options')
+        .then(res => {
+          console.log(res.data)
+          this.options = res.data
+        })
     }
   }
 </script>

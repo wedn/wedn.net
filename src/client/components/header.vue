@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <h1 class="logo">
-      <router-link to="/">WEDN.NET</router-link>
+      <a href="/">WEDN.NET</a>
     </h1>
     <nav class="menu">
       <ul class="list">
@@ -39,6 +39,7 @@
     name: 'header',
 
     data () {
+      console.log(this.$root)
       return {
         menus: Vue.topbarMenus
       }

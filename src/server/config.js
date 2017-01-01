@@ -13,7 +13,7 @@ const config = {
   // ## Server
   // > Can be host & port (default), or socket
   server: {
-    port: process.env.PORT || '2080',
+    port: process.env.PORT || '1080',
     host: '127.0.0.1'
   },
 

@@ -1,7 +1,14 @@
 import Router from 'koa-router'
+
+import authorize from '../common/authorize'
 import admin from '../../../shared/wedn'
 
 export const router = new Router({ prefix: `/(${admin.alias})` })
+
+/**
+ * 权限验证
+ */
+router.use(authorize('administrator'))
 
 /**
  * ALL /${admin.base}/:path*

@@ -10,6 +10,7 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   base: process.env.ADMIN_BASE,
+  scrollBehavior: () => ({ y: 0 }),
   routes: routes
 })
 

@@ -18,9 +18,9 @@
   <div id="app"></div>
   <script>
     (function (global) {
-      global.user = {{stringify (session.user)}}
-      global.options = {{stringify (options)}}
-    })(this)
+      global.user = {{stringify (session.user)}};
+      global.options = {{stringify (options)}};
+    })(this);
   </script>
   <% for (key in htmlWebpackPlugin.files.chunks) { %>
   <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>"></script>

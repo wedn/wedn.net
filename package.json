@@ -47,6 +47,7 @@
     "koa-convert": "^1.2.0",
     "koa-favicon": "^2.0.0",
     "koa-json": "^2.0.2",
+    "koa-jwt": "^2.1.0",
     "koa-logger": "^2.0.0",
     "koa-mount": "^2.0.0",
     "koa-router": "^7.0.1",
@@ -105,6 +106,7 @@
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.1",
     "vue-template-compiler": "^2.1.7",
+    "vuex": "^2.1.1",
     "webpack": "^2.2.0-rc.2",
     "webpack-dev-server": "^2.2.0-rc.0"
   },

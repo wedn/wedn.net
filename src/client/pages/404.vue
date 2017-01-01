@@ -1,5 +1,9 @@
 <template>
-  <h1>{{ $t('not_found') }}</h1>
+  <div>
+    <h1>404</h1>
+    <h2>Not Found</h2>
+    <p>The page you requested was not found!</p>
+  </div>
 </template>
 
 <script>
@@ -9,9 +13,23 @@
 </script>
 
 <style scoped>
-  h1 {
-    height: 100%;
-    line-height: 100%;
-    text-align: center;
+  div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
+  h1 {
+    margin: 0;
+    font-size: 170px;
+    font-weight: 100;
+    line-height: 170px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 50px;
+    font-weight: 400;
+  }
+  p, pre { overflow: auto; color: #757575; }
 </style>
