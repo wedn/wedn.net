@@ -29,7 +29,7 @@ export default async function init (config) {
   await db.models.User.create({
     slug: 'zce',
     username: 'zce',
-    password: await encryptor.hash('5love100'),
+    password: await encryptor.hash('wanglei'),
     nickname: 'iceStone',
     email: 'ice@wedn.net',
     mobile: '13241087977',

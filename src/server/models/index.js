@@ -6,7 +6,7 @@
 
 // # Import Models
 import db from './db'
-import init from './init'
+import seed from './seed'
 
 import Comment from './comment'
 import CommentMeta from './comment-meta'
@@ -100,4 +100,4 @@ Term.Relation = TermRelation
 User.Meta = UserMeta
 
 // # Export
-export { db, init, Comment, Option, Post, Term, User }
+export { db, seed, Comment, Option, Post, Term, User }

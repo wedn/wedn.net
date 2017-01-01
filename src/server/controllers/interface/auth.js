@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { User } from '../../models'
+// import { User } from '../../models'
 
 export const router = new Router({ prefix: '/api/v1/auth' })
 

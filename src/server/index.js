@@ -3,8 +3,9 @@ import mount from 'koa-mount'
 
 import config from './config'
 import middlewares from './middlewares'
-import { db, init } from './models'
+import { db, seed } from './models'
 
+// # Export bootstrap
 export default async parent => {
   // ## Sync to database
   // db.afterBulkSync(() => {})
@@ -14,7 +15,7 @@ export default async parent => {
   let options = await db.models.Option.load()
 
   // ## Init data
-  Object.keys(options).length || await init(config)
+  Object.keys(options).length || await seed(config)
   options = await db.models.Option.load()
   config.options = options
 
@@ -22,11 +23,12 @@ export default async parent => {
   const app = new Koa()
 
   // ## Application config
+  // app.db = db
+  app.config = config
+  app.options = config.options
+  app.keys = config.cookie.keys
   app.name = config.name
   app.version = config.version
-  app.keys = config.cookie.keys
-  app.config = config
-  app.db = db
 
   // ## Load middlewares
   app.use(middlewares(app))
@@ -36,11 +38,19 @@ export default async parent => {
   //   // throw new Error(12)
   // })
 
-  // ## Mount to parent
-  if (parent) return parent.use(mount(config.root, app))
-
-  // ## Listen
-  app.listen(config.server, error => error || console.log(`server running @ ${options.site_url}`))
+  if (parent) {
+    // ### Mount to parent
+    if (parent instanceof Koa) {
+      // koa
+      parent.use(mount(config.root, app))
+    } else {
+      // express
+      parent.use(config.root, app.callback())
+    }
+  } else {
+    // ### Listen
+    app.listen(config.server, error => error || console.log(`server running @ ${options.site_url}`))
+  }
 
   return app
 }

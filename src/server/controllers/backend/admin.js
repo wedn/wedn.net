@@ -1,5 +1,4 @@
 import path from 'path'
-import querystring from 'querystring'
 
 import Router from 'koa-router'
 import serve from 'koa-static'

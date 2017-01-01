@@ -191,7 +191,7 @@ export default db.define('User', {
      * @param  {String}  password 明文密码
      * @return {Boolean}          是否匹配
      */
-    async comparePassword (password) {
+    async validPassword (password) {
       return encryptor.compare(password, this.password)
     }
   }

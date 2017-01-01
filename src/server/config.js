@@ -1,6 +1,8 @@
 import path from 'path'
 import pkg from '../../package.json'
 
+// # Config
+// > TODO: environment
 const config = {
   // ## App info
   name: pkg.name,
@@ -25,9 +27,9 @@ const config = {
   // ## Paths
   paths: {
     data: path.resolve(__dirname, '../../content/data/'),
-    plugin: path.resolve(__dirname, '../../content/plugins/'),
-    static: path.resolve(__dirname, '../../content/static/'),
     theme: path.resolve(__dirname, '../../content/themes/'),
+    static: path.resolve(__dirname, '../../content/static/'),
+    plugin: path.resolve(__dirname, '../../content/plugins/'),
     upload: path.resolve(__dirname, '../../content/uploads/')
   },
 
