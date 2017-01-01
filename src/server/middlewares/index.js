@@ -11,7 +11,9 @@ import serve from './static'
 import url from './url'
 import body from './body'
 import session from './session'
+import passport from './passport'
 import view from './view'
+import mailer from './mailer'
 import router from './router'
 
 export default app => {
@@ -44,8 +46,14 @@ export default app => {
   // 会话支持
   middlewares.push(session(app))
 
+  // 账户校验
+  middlewares.push(passport(app))
+
   // 视图模板引擎
   middlewares.push(view(app))
+
+  // 邮件系统
+  middlewares.push(mailer(app))
 
   // 自动化路由
   middlewares.push(router())

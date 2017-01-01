@@ -32,7 +32,7 @@ function sendMessage (message) {
     })
 }
 
-export default {
+const mailer = {
   /**
    * 配置邮件选项
    * @param  {Object} options 邮件选项
@@ -64,4 +64,11 @@ export default {
     }
     return sendMessage({ from, subject, html, to, cc, attachments })
   }
+}
+
+export default app => {
+  // ## Email server config
+  mailer.config(app.config.options)
+  app.context.sendMail = mailer.send
+  return (ctx, next) => next()
 }

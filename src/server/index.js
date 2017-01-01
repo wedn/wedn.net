@@ -4,7 +4,6 @@ import mount from 'koa-mount'
 import config from './config'
 import middlewares from './middlewares'
 import { db, init } from './models'
-import mailer from './libraries/mailer'
 
 export default async parent => {
   // ## Sync to database
@@ -27,10 +26,7 @@ export default async parent => {
   app.version = config.version
   app.keys = config.cookie.keys
   app.config = config
-
-  // ## Email server config
-  mailer.config(options)
-  app.context.sendMail = mailer.send
+  app.db = db
 
   // ## Load middlewares
   app.use(middlewares(app))
@@ -45,5 +41,6 @@ export default async parent => {
 
   // ## Listen
   app.listen(config.server, error => error || console.log(`server running @ ${options.site_url}`))
+
   return app
 }
