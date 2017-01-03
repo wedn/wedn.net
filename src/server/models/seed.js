@@ -8,7 +8,7 @@ export default async function init (config) {
     { key: 'app_version', value: config.version },
     { key: 'app_description', value: config.description },
     // Site config
-    { key: 'site_url', value: 'http://wedn.me/' },
+    { key: 'site_url', value: 'http://localhost:2080/' },
     { key: 'site_name', value: 'WEDN.NET' },
     { key: 'site_description', value: 'make IT better' },
     { key: 'site_favicon', value: '/favicon.ico' },

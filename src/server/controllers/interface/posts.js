@@ -1,6 +1,5 @@
 import Router from 'koa-router'
 
-// Create router and set pathname starts with
 export const router = new Router({ prefix: '/api/v1/post' })
 
 const storage = [

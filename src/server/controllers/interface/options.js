@@ -1,14 +1,14 @@
 import Router from 'koa-router'
+import passport from 'koa-passport'
 
-import authorize from '../common/authorize'
 import { Option } from '../../models'
 
 export const router = new Router({ prefix: '/api/v1/options' })
 
 /**
- * 权限验证
+ * Authenticate
  */
-router.use(authorize('administrator'))
+router.use(passport.authenticate('jwt', { session: false }))
 
 /**
  * GET /api/v1/options

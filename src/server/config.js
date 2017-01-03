@@ -15,7 +15,7 @@ const config = {
   // ## Server
   // > Can be host & port (default), or socket
   server: {
-    port: process.env.PORT || '1080',
+    port: process.env.PORT || '2080',
     host: '127.0.0.1'
   },
 
@@ -45,7 +45,7 @@ const config = {
   database: {
     database: 'wedn',
     dialect: 'sqlite',
-    // logging: false,
+    logging: false,
     pool: { max: 5, min: 0, idle: 10000 },
     storage: path.resolve(__dirname, '../../content/data/', 'wedn-dev.db')
   },
@@ -78,6 +78,13 @@ const config = {
   encrypt: {
     key: 'wedn.net',  // encrypt key
     salt_rounds: 8    // Salt rounds
+  },
+
+  // ## Json Web Token
+  jwt: {
+    secretOrKey: 'wedn.net',
+    issuer: 'account.wedn.net',
+    audience: 'wedn.net'
   }
 
   // ## getter & setter

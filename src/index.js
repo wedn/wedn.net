@@ -10,5 +10,3 @@ process
 
 // Bootstrap app
 bootstrap()
-
-import './demo'

@@ -2,9 +2,9 @@
  * 账户中心模块控制器
  */
 import querystring from 'querystring'
-import Router from 'koa-router'
-import passport from 'koa-passport'
 import uuid from 'uuid'
+import passport from 'koa-passport'
+import Router from 'koa-router'
 
 import encryptor from '../../libraries/encryptor'
 import validator from '../../libraries/validator'
@@ -13,25 +13,17 @@ import { User } from '../../models'
 export const router = new Router({ prefix: '/account' })
 
 /**
- * GET /account/logout
- */
-router.get('logout', '/logout', async ctx => {
-  ctx.logout()
-  ctx.redirect(router.url('login'))
-})
-
-/**
  * GET /account/activate/:token
  */
-router.get('activate', '/activate/:token', async ctx => {
-  if (!ctx.state.user) {
-    // 没有登录
+router.get('/activate/:token', async ctx => {
+  if (ctx.isUnauthenticated()) {
     return ctx.redirect('/account/login?redirect=' + querystring.escape(ctx.url))
   }
-  let { token } = ctx.params
   try {
-    token = encryptor.decrypt(token)
-    const activateToken = await User.Meta.findOne({ where: { key: 'activate_token', value: token } })
+    const token = encryptor.decrypt(ctx.params.token)
+    const activateToken = await User.Meta.findOne({
+      where: { key: 'activate_token', value: token }
+    })
     if (!activateToken) return ctx.throw(404)
     const user = await activateToken.getUser()
     if (!user || user.id !== ctx.state.user.id) return ctx.throw(404)
@@ -39,29 +31,41 @@ router.get('activate', '/activate/:token', async ctx => {
     await user.save()
     await activateToken.destroy()
     ctx.login(user)
-    await ctx.redirect('/')
+    ctx.redirect('/')
   } catch (e) {
     return ctx.throw(404)
   }
 })
 
 /**
+ * GET /account/logout
+ */
+router.get('/logout', async ctx => {
+  ctx.logout()
+  ctx.redirect('/account/login')
+})
+
+/**
  * Common action
  */
-router.use(async (ctx, next) => ctx.isUnauthenticated() ? next() : ctx.redirect(ctx.query.redirect ? ctx.query.redirect : '/'))
+router.use(async (ctx, next) => {
+  return ctx.isAuthenticated()
+    ? ctx.redirect(ctx.query.redirect ? ctx.query.redirect : '/')
+    : next()
+})
 
 /**
  * GET /account/
  */
-router.get('alias', '/', async ctx => {
+router.get('/', async ctx => {
   ctx.status = 301
-  ctx.redirect(router.url('login'))
+  ctx.redirect('/account/login')
 })
 
 /**
  * GET /account/login
  */
-router.get('login', '/login', async ctx => {
+router.get('/login', async ctx => {
   // ctx.state.model = { username: '', password: '' }
   await ctx.render('account/login')
 })
@@ -70,7 +74,7 @@ router.get('login', '/login', async ctx => {
  * POST /account/login
  * TODO: 错误提示消息问题
  */
-router.post('login_post', '/login', ctx => {
+router.post('/login', async ctx => {
   ctx.state.model = ctx.request.body
   return passport.authenticate('local', async (err, user, info) => {
     if (err) {
@@ -91,7 +95,7 @@ router.post('login_post', '/login', ctx => {
 /**
  * GET /account/register
  */
-router.get('register', '/register', async ctx => {
+router.get('/register', async ctx => {
   // ctx.state.model = { username: '', email: '', password: '' }
   await ctx.render('account/register')
 })
@@ -100,7 +104,7 @@ router.get('register', '/register', async ctx => {
  * POST /account/register
  * TODO: 错误提示消息问题
  */
-router.post('register_post', '/register', async ctx => {
+router.post('/register', async ctx => {
   // ## 0. 接收表单
   const { username, email, password } = ctx.request.body
 
@@ -140,7 +144,7 @@ router.post('register_post', '/register', async ctx => {
 /**
  * GET /account/reset
  */
-router.get('reset', '/reset', async ctx => {
+router.get('/reset', async ctx => {
   ctx.state.send = true
   await ctx.render('account/reset')
 })
@@ -148,7 +152,7 @@ router.get('reset', '/reset', async ctx => {
 /**
  * POST /account/reset
  */
-router.post('reset_post', '/reset', async ctx => {
+router.post('/reset', async ctx => {
   // ## 0. 接收表单
   const { username } = ctx.request.body
   ctx.state.model = { username }
@@ -201,7 +205,7 @@ router.post('reset_post', '/reset', async ctx => {
 /**
  * GET /account/reset/:token
  */
-router.get('reset_token', '/reset/:token', async ctx => {
+router.get('/reset/:token', async ctx => {
   let { token } = ctx.params
   try {
     token = encryptor.decrypt(token)
@@ -216,7 +220,7 @@ router.get('reset_token', '/reset/:token', async ctx => {
 /**
  * POST /account/reset/:token
  */
-router.post('reset_token_post', '/reset/:token', async ctx => {
+router.post('/reset/:token', async ctx => {
   let { token } = ctx.params
   const { password, confirm } = ctx.request.body
   try {

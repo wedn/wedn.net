@@ -1,7 +1,6 @@
 const gulp = require('gulp')
 const loadPlugins = require('gulp-load-plugins')
 const del = require('del')
-
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 
@@ -26,7 +25,7 @@ gulp.task('lint', () => {
 /**
  * Clean temp files
  */
-gulp.task('clean', [], del.bind(null, ['dist']))
+gulp.task('clean', ['lint'], del.bind(null, ['dist']))
 
 /**
  * Clean node_modules
@@ -50,7 +49,7 @@ gulp.task('build:client', callback => {
  */
 gulp.task('build:server', () => {
   process.env.BABEL_ENV = 'server'
-  return gulp.src(['src/server/**/*.*', 'src/shared/**/*.*'], { base: 'src' })
+  return gulp.src(['src/*.*', 'src/server/**/*.*', 'src/shared/**/*.*'], { base: 'src' })
     .pipe(plugins.if('*.js', plugins.babel()))
     .pipe(gulp.dest('dist'))
 })
@@ -68,8 +67,8 @@ gulp.task('run:client', callback => {
   // hot module replace
   webpackConfig.entry.main.unshift(
     // 不填写服务地址默认就是当前域
-    // 'webpack-dev-server/client?http://localhost:2080/',
-    'webpack-dev-server/client',
+    // 'webpack-dev-server/client?http://localhost:2081/',
+    'webpack-dev-server/client?/',
     'webpack/hot/dev-server'
   )
   webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin())
@@ -105,4 +104,4 @@ gulp.task('run:server', () => {
 /**
  * Run all
  */
-gulp.task('run:all', () => gulp.start('run:client', 'run:server'))
+gulp.task('run', () => gulp.start('run:client', 'run:server'))

@@ -1,4 +1,5 @@
 module.exports = {
-  base: 'wedn',
-  alias: 'admin|wp-admin|ghost'
+  base: '/wedn/',
+  alias: '/(admin|wp-admin|ghost)',
+  output: 'client'
 }
