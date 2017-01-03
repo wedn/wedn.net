@@ -17,98 +17,98 @@ export default [
     children: [
       {
         name: 'default',
-        path: '/',
+        path: '',
         meta: { requiresAuth: true },
         redirect: { name: 'dashboard' }
       },
       {
         name: 'dashboard',
-        path: '/dashboard',
+        path: 'dashboard',
         meta: { requiresAuth: true },
         component: () => System.import('../views/dashboard')
       },
       {
         name: 'posts',
-        path: '/posts/:type?',
+        path: 'posts/:type?',
         meta: { requiresAuth: true },
         component: () => System.import('../views/posts')
       },
       {
         name: 'media',
-        path: '/media',
+        path: 'media',
         meta: { requiresAuth: true },
         component: () => System.import('../views/media')
       },
       {
         name: 'users',
-        path: '/users',
+        path: 'users',
         meta: { requiresAuth: true },
         component: () => System.import('../views/users')
       },
       {
         name: 'comments',
-        path: '/comments',
+        path: 'comments',
         meta: { requiresAuth: true },
         component: () => System.import('../views/comments')
       },
       {
         name: 'themes',
-        path: '/themes',
+        path: 'themes',
         meta: { requiresAuth: true },
         component: () => System.import('../views/themes')
       },
       {
         name: 'plugins',
-        path: '/plugins',
+        path: 'plugins',
         meta: { requiresAuth: true },
         component: () => System.import('../views/plugins')
       },
       {
         name: 'tools',
-        path: '/tools',
+        path: 'tools',
         meta: { requiresAuth: true },
         component: () => System.import('../views/tools')
       },
       {
         name: 'options',
-        path: '/options',
+        path: 'options',
         meta: { requiresAuth: true },
         component: () => System.import('../views/options')
       },
       {
         name: 'about',
-        path: '/about',
+        path: 'about',
         meta: { requiresAuth: true },
         component: () => System.import('../views/about')
       },
       // ## demo views
       {
         name: 'demo',
-        path: '/demo',
+        path: 'demo',
         meta: { requiresAuth: false },
         component: () => System.import('../views/demo/demo')
       },
       {
         name: 'components',
-        path: '/components',
+        path: 'components',
         meta: { requiresAuth: false },
         component: () => System.import('../views/demo/components')
       },
       {
         name: 'vuex',
-        path: '/vuex',
+        path: 'vuex',
         meta: { requiresAuth: false },
         component: () => System.import('../views/demo/vuex')
       },
       {
         name: 'proxy',
-        path: '/demo/proxy',
+        path: 'demo/proxy',
         meta: { requiresAuth: false },
         component: () => System.import('../views/demo/proxy')
       },
       {
         name: 'parameter',
-        path: '/demo/:name',
+        path: 'demo/:name',
         meta: { requiresAuth: false },
         component: () => System.import('../views/demo/parameter')
       }
