@@ -1,5 +1,5 @@
 /**
- * 路由表
+ * 路由表配置
  */
 export default [
   {
@@ -13,7 +13,6 @@ export default [
     path: '/',
     meta: { requiresAuth: true },
     component: require('../views/main'),
-    // redirect: { name: 'dashboard' },
     children: [
       {
         name: 'default',

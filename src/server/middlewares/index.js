@@ -1,5 +1,5 @@
 /**
- * 整合常用中间件
+ * 整合全部中间件
  */
 import convert from 'koa-convert'
 import compose from 'koa-compose'
@@ -58,7 +58,7 @@ export default app => {
   middlewares.push(passport(app))
 
   // ## 自动化路由
-  middlewares.push(router())
+  middlewares.push(router(app))
 
   // ## 合并导出
   return compose(middlewares.map(item => {
@@ -67,3 +67,29 @@ export default app => {
     return item.constructor.name === 'Function' ? item : convert(item)
   }))
 }
+
+// 由于需要控制中间件顺序，所以不能自动加载
+// /**
+//  * 整合全部中间件
+//  */
+// import glob from 'glob'
+// import convert from 'koa-convert'
+// import compose from 'koa-compose'
+
+// export default app => {
+//   // ## 中间件列表
+//   const middlewares = glob
+//     .sync('./*.js', { cwd: __dirname, ignore: './index.js' })
+//     .map(require)
+//     .map(item => item.default(app)) // es6 module default
+
+//   // ## 选项注入
+//   app.context.options = app.options
+
+//   // ## 合并导出
+//   return compose(middlewares.map(item => {
+//     // ### 转换部分 Generator Function Middlewares
+//     // > 兼容 1.x Koa middleware
+//     return item.constructor.name === 'Function' ? item : convert(item)
+//   }))
+// }

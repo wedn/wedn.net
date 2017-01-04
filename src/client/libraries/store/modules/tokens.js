@@ -1,5 +1,6 @@
-import http from '../../resource'
-import storage from '../../storage'
+import { tokens } from '../../api'
+import { session as storage } from '../../storage'
+import { http } from '../../resource'
 
 /**
  * Initial state
@@ -10,7 +11,7 @@ const state = {
    * 客户端令牌
    * @type {String}
    */
-  token: storage.get('wedn-token')
+  token: null
 }
 
 /**
@@ -37,7 +38,11 @@ const mutations = {
    */
   CHANGE_TOKEN: (state, token) => {
     state.token = token
-    if (state.token) return storage.set('wedn-token', token)
+    if (state.token) {
+      http.headers.common['Authorization'] = `JWT ${token}`
+      return storage.set('wedn-token', token)
+    }
+    delete http.headers.common['Authorization']
     return storage.remove('wedn-token')
   }
 }
@@ -48,10 +53,17 @@ const mutations = {
  */
 const actions = {
   /**
+   * 从本地存储中初始化令牌
+   */
+  initToken: ({ commit }) => {
+    commit('CHANGE_TOKEN', storage.get('wedn-token'))
+  },
+
+  /**
    * 创建一个新的客户端令牌
    */
-  createToken: ({ commit }, payload) => {
-    return http.post('/api/v1/token', payload)
+  createToken ({ commit }, payload) {
+    return tokens.create(payload)
       .then(res => {
         if (res.data.error) throw new Error(res.data.message)
         commit('CHANGE_TOKEN', res.data.token)
@@ -67,8 +79,7 @@ const actions = {
    * 检查令牌是否可用
    */
   checkToken: ({ dispatch }, token) => {
-    console.log(token)
-    return http.post('/api/v1/token/check', { token: token })
+    return tokens.check({ token: token })
       .then(res => {
         const available = !(res.data && res.data.error)
         if (!available) dispatch('deleteToken')

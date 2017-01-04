@@ -5,12 +5,12 @@ import { ExtractJwt } from 'passport-jwt'
 
 import { User } from '../../models'
 
-export const router = new Router({ prefix: '/api/v1/token' })
+export const router = new Router({ prefix: '/api/v1/tokens' })
 
 /**
- * POST /api/v1/token
+ * POST /api/v1/tokens/create
  */
-router.post('/', async ctx => {
+router.post('/create', async ctx => {
   const { username, password } = ctx.request.body
   if (!username || !password) {
     ctx.status = 401
@@ -41,7 +41,7 @@ router.post('/', async ctx => {
 })
 
 /**
- * POST /api/v1/token/check
+ * POST /api/v1/tokens/check
  */
 router.post('/check', async ctx => {
   return passport.authenticate('jwt', { session: false }, async (err, user, info) => {
