@@ -4,21 +4,27 @@
  */
 import url from 'url'
 import path from 'path'
-import convert from 'koa-convert'
 import compose from 'koa-compose'
 import json from 'koa-json'
 import xtpl from 'koa-xtpl'
+import send from 'koa-send'
 
 export default app => {
   const engines = []
 
-  // JSON Format
-  engines.push(convert(json({
+  // ## JSON Format
+  engines.push(json({
     pretty: false,
     param: 'pretty'
-  })))
+  }))
 
-  // Global Template Data
+  // ## Send
+  engines.push((ctx, next) => {
+    ctx.send = (...args) => send(ctx, ...args)
+    return next()
+  })
+
+  // ## Global template data
   engines.push((ctx, next) => {
     ctx.state = {
       context: ctx,
@@ -32,7 +38,7 @@ export default app => {
     return next()
   })
 
-  // Template Engine
+  // ## Template engine
   engines.push(xtpl({
     root: path.join(__dirname, '../views/'),
     extname: 'html',

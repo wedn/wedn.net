@@ -11,7 +11,20 @@ const state = {
    * 客户端令牌
    * @type {String}
    */
-  token: null
+  token: null,
+  /**
+   * 当前登录用户
+   * @type {Object}
+   */
+  current_user: {
+    id: null,
+    slug: null,
+    avatar: null,
+    username: null,
+    nickname: null,
+    email: null,
+    mobile: null
+  }
 }
 
 /**
@@ -24,7 +37,13 @@ const getters = {
    * @param  {Object} state Vuex状态对象
    * @return {String}       客户端令牌
    */
-  token: state => state.token
+  token: state => state.token,
+  /**
+   * 获取当前登录用户
+   * @param  {Object} state Vuex状态对象
+   * @return {String}       当前登录用户
+   */
+  currentUser: state => state.current_user
 }
 
 /**
@@ -44,6 +63,19 @@ const mutations = {
     }
     delete http.headers.common['Authorization']
     return storage.remove('wedn-token')
+  },
+  /**
+   * 改变当前登录用户
+   * @param  {Object} state Vuex状态对象
+   */
+  CHANGE_USER: (state, user) => {
+    state.current_user.id = user.id
+    state.current_user.slug = user.slug
+    state.current_user.avatar = user.avatar
+    state.current_user.username = user.username
+    state.current_user.nickname = user.nickname
+    state.current_user.email = user.email
+    state.current_user.mobile = user.mobile
   }
 }
 
@@ -78,12 +110,21 @@ const actions = {
   /**
    * 检查令牌是否可用
    */
-  checkToken: ({ dispatch }, token) => {
+  checkToken: ({ commit, dispatch }, token) => {
     return tokens.check({ token: token })
       .then(res => {
         const available = !(res.data && res.data.error)
-        if (!available) dispatch('deleteToken')
+        if (available) {
+          commit('CHANGE_USER', res.data)
+        } else {
+          dispatch('deleteToken')
+        }
         return available
+      })
+      .catch(err => {
+        console.log(err)
+        dispatch('deleteToken')
+        return false
       })
   },
 

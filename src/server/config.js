@@ -27,10 +27,10 @@ const config = {
   // ## Paths
   paths: {
     data: path.resolve(__dirname, '../../content/data/'),
-    theme: path.resolve(__dirname, '../../content/themes/'),
+    themes: path.resolve(__dirname, '../../content/themes/'),
     static: path.resolve(__dirname, '../../content/static/'),
-    plugin: path.resolve(__dirname, '../../content/plugins/'),
-    upload: path.resolve(__dirname, '../../content/uploads/')
+    plugins: path.resolve(__dirname, '../../content/plugins/'),
+    uploads: path.resolve(__dirname, '../../content/uploads/')
   },
 
   // // ## Database
@@ -84,7 +84,8 @@ const config = {
   jwt: {
     secretOrKey: 'wedn.net',
     issuer: 'account.wedn.net',
-    audience: 'wedn.net'
+    audience: 'wedn.net',
+    expries: 2 * 60 * 60
   }
 
   // ## getter & setter

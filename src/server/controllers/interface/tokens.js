@@ -26,15 +26,16 @@ router.post('/create', async ctx => {
       ctx.body = { error: true, message: 'Incorrect username or password.' }
       return
     }
-    const { issuer, audience, secretOrKey } = ctx.app.config.jwt
+    const { issuer, audience, secretOrKey, expries } = ctx.config.jwt
     const token = jwt.sign({
       sub: user.slug,
       iss: issuer,
       aud: audience
-    }, secretOrKey, { expiresIn: 60 })
+    }, secretOrKey, { expiresIn: expries })
     ctx.body = { token: token }
   } catch (e) {
     // TODO: 异常处理
+    console.log(e)
     ctx.status = 500
     ctx.body = { error: true, message: e.message }
   }
@@ -53,8 +54,11 @@ router.post('/check', async ctx => {
     if (user) {
       // ctx.body = { message: 'Token 校验成功！' }
       ctx.body = {
+        id: user.id,
         slug: user.slug,
+        avatar: `${ctx.options.site_url}users/avatars/${user.slug}`,
         username: user.username,
+        nickname: user.nickname,
         email: user.email,
         mobile: user.mobile
       }

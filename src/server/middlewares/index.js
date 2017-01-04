@@ -21,7 +21,8 @@ export default app => {
   // ## 中间件列表
   const middlewares = []
 
-  // ## 选项注入
+  // ## 配置选项注入
+  app.context.config = app.config
   app.context.options = app.options
 
   // ## 开发模式时记录日志

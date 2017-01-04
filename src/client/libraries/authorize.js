@@ -10,7 +10,6 @@ router.beforeEach((to, from, next) => {
       console.log('Unauthorized')
       next({ name: 'login', query: { redirect: to.fullPath } })
     })
-    .catch(() => next({ name: 'login', query: { redirect: to.fullPath } }))
 })
 
 // import http from './resource'

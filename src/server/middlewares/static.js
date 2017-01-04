@@ -15,10 +15,10 @@ export default app => {
   statics.push(favicon(app.config.paths.static + '/favicon.ico'))
 
   // upload directory
-  statics.push(mount('/uploads', serve(app.config.paths.upload, { maxage })))
+  statics.push(mount('/uploads', serve(app.config.paths.uploads, { maxage })))
 
   // // theme assets directory
-  // statics.push(mount('/assets', serve(app.config.paths.upload, { maxage })))
+  // statics.push(mount('/assets', serve(app.config.paths.uploads, { maxage })))
 
   // static directory
   statics.push(mount('/', serve(app.config.paths.static, { maxage })))
