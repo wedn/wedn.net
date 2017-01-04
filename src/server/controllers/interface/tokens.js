@@ -14,16 +14,16 @@ router.post('/create', async ctx => {
   const { username, password } = ctx.request.body
   if (!username || !password) {
     ctx.status = 401
-    ctx.body = { error: true, message: '用户名或密码错误！' }
-    // ctx.body = { error: true, message: 'Incorrect username or password.' }
+    // ctx.body = { error: true, message: '用户名或密码错误！' }
+    ctx.body = { error: true, message: 'Incorrect username or password.' }
     return
   }
   try {
     const user = await User.getByUnique(username)
     if (!user || !await user.validPassword(password)) {
       ctx.status = 401
-      ctx.body = { error: true, message: '用户名或密码错误！' }
-      // ctx.body = { error: true, message: 'Incorrect username or password.' }
+      // ctx.body = { error: true, message: '用户名或密码错误！' }
+      ctx.body = { error: true, message: 'Incorrect username or password.' }
       return
     }
     const { issuer, audience, secretOrKey } = ctx.app.config.jwt
@@ -46,13 +46,21 @@ router.post('/create', async ctx => {
 router.post('/check', async ctx => {
   return passport.authenticate('jwt', { session: false }, async (err, user, info) => {
     if (err) {
-      ctx.body = { error: true, message: '出现错误，请稍后重试！' }
+      // ctx.body = { error: true, message: '出现错误，请稍后重试！' }
+      ctx.body = { error: true, message: 'Error occurred.' }
       return
     }
     if (user) {
-      ctx.body = { message: 'Token 校验成功！' }
+      // ctx.body = { message: 'Token 校验成功！' }
+      ctx.body = {
+        slug: user.slug,
+        username: user.username,
+        email: user.email,
+        mobile: user.mobile
+      }
       return
     }
-    ctx.body = { error: true, message: 'Token 校验失败，请重新获取！' }
+    // ctx.body = { error: true, message: 'Token 校验失败，请重新获取！' }
+    ctx.body = { error: true, message: 'Invalid token.' }
   })(ctx)
 })
