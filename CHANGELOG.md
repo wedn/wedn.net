@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## TODO
+
+- 规范API标准
+
 ## 2016-12-23 09:41:33
 
 - ORM => [Sequelize](http://docs.sequelizejs.com/en/v3/)

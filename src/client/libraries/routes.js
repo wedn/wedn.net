@@ -27,6 +27,12 @@ export default [
         component: () => System.import('../views/dashboard')
       },
       {
+        name: 'update',
+        path: 'update',
+        meta: { requiresAuth: true },
+        component: () => System.import('../views/update')
+      },
+      {
         name: 'posts',
         path: 'posts/:type?',
         meta: { requiresAuth: true },
