@@ -60,3 +60,13 @@ npm i -S glob handlebars koa@next koa-bodyparser@next koa-compose@next koa-compr
 - https://github.com/shellscape/koa-webpack
 - https://github.com/leecade/koa-webpack-middleware
 - https://github.com/minghe/koa-book
+
+## API Standards
+
+```json
+{
+  "status": 200 / 400 / 500,
+  "errors": [],
+  "data": {}
+}
+```

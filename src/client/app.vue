@@ -9,10 +9,12 @@
 </script>
 
 <style>
-  .app-enter-active, .app-leave-active {
-    transition: opacity .3s
+  .app-enter-active,
+  .app-leave-active {
+    transition: opacity .3s;
   }
-  .app-enter, .app-leave-active {
-    opacity: 0
+  .app-enter,
+  .app-leave-active {
+    opacity: 0;
   }
 </style>

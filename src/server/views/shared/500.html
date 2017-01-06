@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta content="env" content="{{env}}">
+    <meta content="env" content="{{ context.app.env }}">
     <title>Internal Server Error</title>
     <style>
       body { background-color: #e6e6e6; }
@@ -14,13 +14,13 @@
   </head>
   <body>
     <main id="error">
-      <h1>{{status}} Error</h1>
+      <h1>{{ context.status }} Error</h1>
       <p>Looks like something broke!</p>
-      {{#if (env)}}
+      {{#if (context.app.env === 'development')}}
       <h3>Message:</h3>
-      <pre><code>{{error}}</code></pre>
+      <pre><code>{{ error }}</code></pre>
       <h3>Stack:</h3>
-      <pre><code>{{stack}}</code></pre>
+      <pre><code>{{ error.stack }}</code></pre>
       {{/if}}
     </main>
   </body>

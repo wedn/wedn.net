@@ -23,7 +23,7 @@ export default app => {
   const localOptions = {
     usernameField: 'username',
     passwordField: 'password',
-    session: false
+    session: true
   }
   passport.use(new LocalStrategy(localOptions, async (username, password, done) => {
     try {
@@ -42,9 +42,8 @@ export default app => {
 
   const jwtOptions = {
     // 兼容 body 和 header
-    jwtFromRequest: ExtractJwt.versionOneCompatibility({
-      tokenBodyField: 'token'
-    }), // ExtractJwt.fromAuthHeader(),
+    // // ExtractJwt.fromAuthHeader(),
+    jwtFromRequest: ExtractJwt.versionOneCompatibility({ tokenBodyField: 'token' }),
     secretOrKey: app.config.jwt.secretOrKey,
     issuer: app.config.jwt.issuer,
     audience: app.config.jwt.audience
@@ -53,11 +52,22 @@ export default app => {
     try {
       const user = await User.getBySlug(payload.sub)
       if (user) return done(null, user)
-      return done(null, false, { message: '用户不存在！' })
+      return done(null, false)
     } catch (e) {
       return done(e)
     }
   }))
+  passport.jwt = (callback) => (ctx, next) => passport.authenticate('jwt', { session: false }, (err, user) => {
+    if (err) {
+      ctx.body = { status: ctx.status = 500, errors: ['Error occurred.'] }
+      return
+    }
+    if (!user) {
+      ctx.body = { status: ctx.status = 401, errors: ['Invalid token.'] }
+      return
+    }
+    return callback ? callback(ctx, next, user) : next()
+  })(ctx, next)
 
   // ## Middlewares
   const middlewares = []

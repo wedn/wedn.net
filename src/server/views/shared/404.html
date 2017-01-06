@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta content="env" content="{{env}}">
+  <meta content="env" content="{{ context.app.env }}">
   <title>Not Found</title>
   <style>
     body {
@@ -36,9 +36,10 @@
     <h1>404</h1>
     <h2>Not Found</h2>
     <p>The page you requested was not found!</p>
-    {{#if (env)}}
-    <p><strong>pathname: </strong><code>{{request.url}}</code></p>
+    {{#if (context.app.env === 'development')}}
+    <p><strong>pathname: </strong><code>{{ context.request.url }}</code></p>
     {{/if}}
+    <p><a href="/">← WEDN.NET</a></p>
   </div>
 </body>
 </html>
