@@ -43,7 +43,11 @@ export default app => {
   const jwtOptions = {
     // 兼容 body 和 header
     // // ExtractJwt.fromAuthHeader(),
-    jwtFromRequest: ExtractJwt.versionOneCompatibility({ tokenBodyField: 'token' }),
+    jwtFromRequest: ExtractJwt.versionOneCompatibility({
+      tokenBodyField: 'token',
+      tokenQueryParameterName: 'token',
+      authScheme: 'JWT'
+    }),
     secretOrKey: app.config.jwt.secretOrKey,
     issuer: app.config.jwt.issuer,
     audience: app.config.jwt.audience

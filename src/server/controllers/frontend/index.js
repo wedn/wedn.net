@@ -1,5 +1,8 @@
 import Router from 'koa-router'
 
+import { router as account } from './account'
+import { router as users } from './users'
+
 export const router = new Router()
 
 router.get('/', async ctx => {
@@ -17,3 +20,7 @@ router.get('/contact', async ctx => {
   Date.now() % 2 && ctx.throw(500)
   await ctx.render('home/index')
 })
+
+router.use('/account', account.routes(), account.allowedMethods())
+
+router.use('/users', users.routes(), users.allowedMethods())

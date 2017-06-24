@@ -10,7 +10,7 @@ import encryptor from '../../libraries/encryptor'
 import validator from '../../libraries/validator'
 import { User } from '../../models'
 
-export const router = new Router({ prefix: '/account' })
+export const router = new Router()
 
 /**
  * GET /account/activate/:token
@@ -251,4 +251,3 @@ router.post('/reset/:token', async ctx => {
     return ctx.throw(404)
   }
 })
-

@@ -18,7 +18,7 @@
 
 ## Clone it
 
-```bash
+```shell
 $ cd path/to/root
 $ git clone https://github.com/wedn/wedn.net.git --depth 1 --recursive
 $ cd wedn.net
@@ -26,7 +26,7 @@ $ cd wedn.net
 
 ## Install dependencies
 
-```bash
+```shell
 $ npm install
 # or
 $ yarn
@@ -34,7 +34,7 @@ $ yarn
 
 ## Usage
 
-```bash
+```shell
 # build for production with minification
 $ npm run build
 
@@ -48,9 +48,9 @@ $ npm run dev
 [MIT](LICENSE) &copy; [汪磊](http://github.com/zce) & [WEDN.NET](http://wedn.net)
 
 
-## NPM 
+## NPM
 
-```bash
+```shell
 npm i -S glob handlebars koa@next koa-bodyparser@next koa-compose@next koa-compress@next koa-convert koa-error koa-json@next koa-logger@next koa-mount@next koa-router@next koa-session koa-static@next koa-views@next lodash.merge
 ```
 

@@ -47,6 +47,9 @@ db.validate = {
   },
   mobile: input => {
     if (!validator.isMobile(input)) throw new Error(`Mobile '${input}' format error`)
+  },
+  ip: input => {
+    if (!validator.isIP(input)) throw new Error(`IP '${input}' format error`)
   }
 }
 

@@ -85,7 +85,7 @@ const config = {
     secretOrKey: 'wedn.net',
     issuer: 'account.wedn.net',
     audience: 'wedn.net',
-    expries: 2 * 60 * 60
+    expries: 3 * 30 * 24 * 60 * 60
   }
 
   // ## getter & setter

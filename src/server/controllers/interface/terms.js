@@ -1,9 +1,9 @@
 import Router from 'koa-router'
 import passport from 'koa-passport'
 
-import { Post } from '../../models'
+import { Term } from '../../models'
 
-export const router = new Router({ prefix: '/api/v1/posts' })
+export const router = new Router({ prefix: '/api/v1/terms' })
 
 /**
  * Authenticate
@@ -11,8 +11,8 @@ export const router = new Router({ prefix: '/api/v1/posts' })
 router.use(passport.jwt())
 
 /**
- * GET /api/v1/posts
+ * GET /api/v1/terms
  */
 router.get('/', async ctx => {
-  ctx.body = await Post.findAll()
+  ctx.body = await Term.findAll()
 })
