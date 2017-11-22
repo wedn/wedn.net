@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="env" content="{{context.app.env}}">
+  <title>{{response.message}}</title>
+  <style>
+    html {
+      height: 100%;
+      background: #f3f3f4;
+      color: #676a6c;
+      font-size: 14px;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 190px;
+      font-weight: 100;
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 50px;
+      font-weight: 200;
+    }
+
+    .description {
+      margin-bottom: 20px;
+      overflow: auto;
+      color: #757575;
+    }
+
+    .link {
+      color: #757575;
+      text-decoration: none;
+    }
+
+
+    .debug {
+      min-width: 400px;
+      max-width: 80%;
+      margin: 0 auto;
+      padding: 15px 20px;
+      border: 1px solid #c0c0c0;
+      border-radius: 4px;
+      background-color: #fff;
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .debug pre {
+      overflow: auto;
+    }
+
+    .debug h3 {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="title">{{response.status}}</h1>
+  <h2 class="subtitle">{{response.message}}</h2>
+  <p class="description">
+    {{#equal error.status 404}}
+    The page you requested was not found!
+    {{else}}
+    Looks like something broke!
+    {{/equal}}
+  </p>
+  {{!-- TODO: Site name & home link --}}
+  <p><a class="link" href="/">&larr; WEDN.NET</a></p>
+  {{#equal context.app.env 'development'}}
+  <div class="debug">
+    {{#equal error.status 404}}
+    <span>Pathname: </span>
+    <code>{{request.url}}</code> {{else}}
+    <h3>Message:</h3>
+    <pre><code>{{error}}</code></pre>
+    <h3>Stack:</h3>
+    <pre><code>{{error.stack}}</code></pre> {{/equal}}
+  </div>
+  {{/equal}}
+</body>
+
+</html>

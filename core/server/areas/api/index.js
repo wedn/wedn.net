@@ -1,0 +1,11 @@
+// module dependencies
+const Koa = require('koa')
+const routes = require('./routes')
+
+// admin app
+const app = new Koa()
+
+// routes
+app.use(routes)
+
+module.exports = app

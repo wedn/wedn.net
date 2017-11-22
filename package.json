@@ -1,0 +1,53 @@
+{
+  "name": "wedn.net",
+  "version": "0.1.0",
+  "description": "wedn.net site",
+  "keywords": [
+    "node",
+    "nodejs",
+    "wedn",
+    "wedn.net",
+    "zce"
+  ],
+  "homepage": "https://github.com/wedn/wedn.net#readme",
+  "bugs": {
+    "url": "https://github.com/wedn/wedn.net/issues"
+  },
+  "license": "MIT",
+  "author": "zce <w@zce.me> (https://zce.me/)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wedn/wedn.net.git"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon .",
+    "lint": "standard --fix",
+    "test": "echo \"No test cases\"",
+    "start": "cross-env NODE_ENV=production node ."
+  },
+  "dependencies": {
+    "debug": "^3.1.0",
+    "front-matter": "^2.3.0",
+    "glob": "^7.1.2",
+    "handlebars": "^4.0.11",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^4.0.0",
+    "koa-compress": "^2.0.0",
+    "koa-favicon": "^2.0.0",
+    "koa-logger": "^3.1.0",
+    "koa-mount": "^3.0.0",
+    "koa-router": "^7.3.0",
+    "koa-session": "^5.5.0",
+    "koa-static": "^4.0.2",
+    "log4js": "^2.3.12",
+    "mongoose": "^4.13.4",
+    "mz": "^2.7.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.1",
+    "nodemon": "^1.12.1",
+    "standard": "^10.0.3"
+  }
+}
