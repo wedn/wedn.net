@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Schema.Types
 
 const schema = new mongoose.Schema({
-  slug: { type: String },
+  slug: { type: String, unique: true, lowercase: true, trim: true },
   name: { type: String },
   // enum: ['blog_tag', 'blog_category', 'course_tag', 'course_category']
   taxonomy: { type: String, default: 'tag' },

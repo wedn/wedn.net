@@ -1,11 +1,31 @@
-// module dependencies
+/**
+ * module dependencies
+ */
+
 const Koa = require('koa')
 const routes = require('./routes')
+const middlewares = require('./middlewares')
 
-// admin app
+/**
+ * create api app
+ */
+
 const app = new Koa()
 
-// routes
+/**
+ * load app middlewares
+ */
+
+app.use(middlewares)
+
+/**
+ * load app routes
+ */
+
 app.use(routes)
+
+/**
+ * export api app
+ */
 
 module.exports = app

@@ -29,9 +29,9 @@ module.exports = {
 
   // ## Database
   database: {
-    uri: 'mongodb://localhost/test',
+    uri: 'mongodb://localhost/wedn-dev',
     // http://mongoosejs.com/docs/connections.html#options
-    options: { useMongoClient: true }
+    options: { useMongoClient: true, poolSize: 10 }
   },
 
   // ## Logger
@@ -64,14 +64,14 @@ module.exports = {
   // ## Encrypt
   encrypt: {
     key: 'wedn.net',  // encrypt key
-    salt_rounds: 8    // Salt rounds
+    saltRounds: 8    // Salt rounds
   },
 
   // ## Json Web Token
   jwt: {
-    secretOrKey: 'wedn.net',
-    issuer: 'account.wedn.net',
-    audience: 'wedn.net',
+    secret: 'https://wedn.net',
+    issuer: 'https://account.wedn.net',
+    audience: 'https://wedn.net',
     expries: 30 * 24 * 60 * 60
   }
 }

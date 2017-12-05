@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Mixed, ObjectId } = mongoose.Schema.Types
 
 const schema = new mongoose.Schema({
-  slug: { type: String },
+  slug: { type: String, unique: true, lowercase: true, trim: true },
   title: { type: String },
   excerpt: { type: String },
   content: { type: Mixed },

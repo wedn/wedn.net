@@ -32,6 +32,8 @@ $ yarn start
 - https://gist.github.com/lancejpollard/1398757
 - http://mobilesite.github.io/2017/04/29/develop-backend-service-with-koa2/
 - https://github.com/koajs
+- https://blog.risingstack.com/node-hero-node-js-authentication-passport-js/
+- https://zhuanlan.zhihu.com/p/25506654
 
 ## Contributing
 

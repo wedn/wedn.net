@@ -5,6 +5,7 @@ const schema = new mongoose.Schema({
   token: { type: String },
   ip: { type: String },
   agent: { type: String },
+  expries: { type: Date },
   user: { type: ObjectId, ref: 'User' }
 })
 

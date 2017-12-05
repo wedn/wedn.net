@@ -1,3 +1,7 @@
+/**
+ * Deprecated
+ * use schema options instead
+ */
 module.exports = (schema, options) => {
   // Add fields to schema
   schema.add({

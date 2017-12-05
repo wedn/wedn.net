@@ -1,13 +1,13 @@
-const { Post } = require('../../../models')
+const { Comment } = require('../../../models')
 
 exports.index = async ctx => {
-  const posts = await Post.find()
-  ctx.body = posts
+  const comments = await Comment.find()
+  ctx.body = comments
 }
 
 exports.create = async ctx => {
-  const post = new Post(ctx.request.body)
-  const saved = await post.save()
+  const comment = new Comment(ctx.request.body)
+  const saved = await comment.save()
   ctx.body = saved
 }
 

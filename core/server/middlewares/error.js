@@ -2,7 +2,7 @@
  * Error handler
  * https://github.com/koajs/error
  */
-const { STATUS_CODES } = require('http')
+// const { STATUS_CODES } = require('http')
 
 const handleError = async (error, ctx) => {
   ctx.status = error.status || 500
@@ -25,9 +25,10 @@ const handleError = async (error, ctx) => {
     case 'json':
       ctx.type = 'application/json'
       if (ctx.app.env === 'development' || error.expose) {
-        ctx.body = { status: ctx.status, errors: [ error.message ] }
+        ctx.body = { status: ctx.status, errors: [ error.message ], stacks: [ error.stack ] }
       } else {
-        ctx.body = { status: ctx.status, errors: [ STATUS_CODES[ctx.status] ] }
+        // ctx.body = { status: ctx.status, errors: [ STATUS_CODES[ctx.status] ] }
+        ctx.body = { status: ctx.status, errors: [ ctx.message ] }
       }
       break
 
@@ -36,7 +37,8 @@ const handleError = async (error, ctx) => {
       if (ctx.app.env === 'development' || error.expose) {
         ctx.body = error.message
       } else {
-        ctx.body = STATUS_CODES[ctx.status]
+        // ctx.body = STATUS_CODES[ctx.status]
+        ctx.body = ctx.message
       }
       break
   }
