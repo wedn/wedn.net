@@ -32,15 +32,15 @@ mongoose.connect(uri, options).on('error', console.error)
 
 /**
  * Schema options
- * http://mongoosejs.com/docs/guide.html
+ * http://mongoosejs.com/docs/guide.html#options
  */
 
 mongoose.plugin(schema => {
   schema.set('id', true)
   schema.set('_id', false)
-  schema.set('timestamps', {})
-  schema.set('strict', true)
+  schema.set('timestamps', { createdAt: 'created_at', updatedAt: 'updated_at' })
   schema.set('validateBeforeSave', true)
+  schema.set('strict', true)
 })
 
 /**

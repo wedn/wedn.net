@@ -1,6 +1,8 @@
 /**
- * module dependencies
+ * Authentication controller
+ * @todo SSO
  */
+
 const jwt = require('jsonwebtoken')
 const assert = require('http-assert')
 
@@ -8,9 +10,9 @@ const { User, Token } = require('../../../models')
 const config = require('../../../config')
 
 /**
+ * POST /auth/token
  * Generate new token
  */
-
 exports.token = async (body, params) => {
   const { username, password } = body
   // You must send the username and the password.
@@ -41,9 +43,9 @@ exports.token = async (body, params) => {
 }
 
 /**
+ * POST /auth/revoke
  * Revoke exist token
  */
-
 exports.revoke = async body => {
   const { token } = body
   assert(token, 400, 'Missing required parameter: token')

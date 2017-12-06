@@ -21,7 +21,7 @@
     "url": "git+https://github.com/wedn/wedn.net.git"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon .",
+    "dev": "cross-env NODE_ENV=development DEBUG=wedn:* nodemon .",
     "lint": "standard --fix",
     "test": "ava",
     "start": "cross-env NODE_ENV=production node ."
@@ -47,6 +47,7 @@
     "koa-router": "^7.3.0",
     "koa-session": "^5.5.0",
     "koa-static": "^4.0.2",
+    "lodash": "^4.17.4",
     "log4js": "^2.3.12",
     "mongoose": "^4.13.4",
     "mz": "^2.7.0",
