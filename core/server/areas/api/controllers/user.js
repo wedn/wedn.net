@@ -4,32 +4,44 @@
 
 const debug = require('debug')('wedn:api:controller:user')
 const _ = require('lodash')
+const createError = require('http-errors')
 const { User } = require('../../../models')
+
+const allowedFields = ['slug', 'username', 'email', 'mobile', 'nickname', 'avatar', 'status', 'roles', 'meta']
+
+const getSelect = fields => {
+  fields = Array.isArray(fields) ? fields : fields.split(',')
+  return ['id'].concat(fields.filter(f => allowedFields.includes(f)))
+}
 
 /**
  * GET /users
  * @param  {Object} params 参数
  * @param  {Object} header 响应头
  * @return {Array}         输出数据
+ *
+ * @todo include, filter
  */
 exports.index = async (params, header) => {
   let {
     limit = 20,
     page = 1,
     order = 'created_at desc',
-    fields = 'slug,username,email,mobile,nickname,avatar,status,roles,meta',
+    fields = allowedFields,
     include,
     filter
   } = params
 
+  // normalize params
   limit = parseInt(limit)
   page = parseInt(page)
 
-  debug({ limit, page, order, include, fields, filter })
+  debug('query params: %o', { limit, page, order, include, fields, filter })
 
+  // query params
   const [ orderField, orderType = 'desc' ] = order.split(' ')
   const skip = (page - 1) * limit
-  const select = ['id'].concat(fields.split(','))
+  const select = getSelect(fields)
 
   const count = await User.count()
 
@@ -61,7 +73,16 @@ exports.new = async params => {
  * @return {Object}      输出数据
  */
 exports.create = async body => {
-  return User.create(body)
+  const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
+
+  try {
+    const entity = await User.create({ slug, username, email, mobile, password, nickname, avatar, status, roles, meta })
+  } catch (e) {
+    console.dir(e)
+    throw createError(400, e)
+  }
+
+  return _.pick(entity, allowedFields)
 }
 
 /**
@@ -70,8 +91,16 @@ exports.create = async body => {
  * @return {Object}        输出数据
  */
 exports.show = async params => {
-  const { id } = params
-  return User.findById(id)
+  const {
+    id,
+    fields = allowedFields
+  } = params
+
+  const select = getSelect(fields)
+
+  const entity = await User.findById(id).select(select)
+
+  return _.pick(entity, select)
 }
 
 /**
@@ -80,8 +109,7 @@ exports.show = async params => {
  * @return {Object}        输出数据
  */
 exports.edit = async params => {
-  const { id } = params
-  return User.findById(id)
+  return {}
 }
 
 /**
@@ -92,7 +120,9 @@ exports.edit = async params => {
  */
 exports.update = async (body, params) => {
   const { id } = params
-  return User.findByIdAndUpdate(id, body)
+  const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
+  const entity = await User.findByIdAndUpdate(id, { slug, username, email, mobile, password, nickname, avatar, status, roles, meta })
+  return _.pick(entity, allowedFields)
 }
 
 /**

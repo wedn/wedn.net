@@ -1,5 +1,6 @@
 /**
  * Wrap api action method
+ * @todo reorder parameters
  */
 
 const wrap = action => async ctx => {
@@ -25,8 +26,18 @@ const wrap = action => async ctx => {
   // invoke action
   const result = await action(body, params, header)
 
-  header = header || params
+  // response status
+  switch (ctx.method) {
+    case 'POST':
+      ctx.status = 201
+      break
+    case 'DELETE':
+      ctx.status = 204
+      break
+  }
+
   // response header
+  header = header || params
   for (const key in header) {
     ctx.set('X-' + key, header[key])
   }
