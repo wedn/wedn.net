@@ -9,6 +9,6 @@ middlewares.push(bodyParser())
 
 // middlewares.push(authenticate())
 
-middlewares.push(authorize())
+// middlewares.push(authorize())
 
 module.exports = compose(middlewares)

@@ -3,6 +3,7 @@
  */
 
 const Koa = require('koa')
+
 const routes = require('./routes')
 const middlewares = require('./middlewares')
 

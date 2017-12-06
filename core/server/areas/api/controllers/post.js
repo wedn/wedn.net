@@ -1,28 +1,73 @@
+/**
+ * Posts resource controller
+ */
+
 const { Post } = require('../../../models')
 
-exports.index = async ctx => {
-  const posts = await Post.find()
-  ctx.body = posts
+/**
+ * GET /posts
+ * @param  {Object} params 参数
+ * @return {Array}         输出数据
+ */
+exports.index = async params => {
+  return Post.find()
 }
 
-exports.create = async ctx => {
-  const post = new Post(ctx.request.body)
-  const saved = await post.save()
-  ctx.body = saved
+/**
+ * GET /posts/new
+ * @param  {Object} params 参数
+ * @return {Object}        输出数据
+ */
+exports.new = async params => {
+  return {}
 }
 
-exports.show = async ctx => {
-
+/**
+ * POST /posts
+ * @param  {Object} body 输入数据
+ * @return {Object}      输出数据
+ */
+exports.create = async body => {
+  return Post.create(body)
 }
 
-exports.edit = async ctx => {
-
+/**
+ * GET /posts/:id
+ * @param  {Object} params 参数
+ * @return {Object}        输出数据
+ */
+exports.show = async params => {
+  const { id } = params
+  return Post.findById(id)
 }
 
-exports.update = async ctx => {
-
+/**
+ * GET /posts/:id/edit
+ * @param  {Object} params 参数
+ * @return {Object}        输出数据
+ */
+exports.edit = async params => {
+  const { id } = params
+  return Post.findById(id)
 }
 
-exports.destroy = async ctx => {
+/**
+ * PUT /posts/:id
+ * @param  {Object} body   输入数据
+ * @param  {Object} params 参数
+ * @return {Object}        输出数据
+ */
+exports.update = async (body, params) => {
+  const { id } = params
+  return Post.findByIdAndUpdate(id, body)
+}
 
+/**
+ * DELETE /posts/:id
+ * @param  {Object} params 参数
+ * @return {Object}        输出数据
+ */
+exports.destroy = async params => {
+  const { id } = params
+  return Post.findByIdAndRemove(id)
 }
