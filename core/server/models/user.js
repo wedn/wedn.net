@@ -13,13 +13,13 @@ const schema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  mobile: { type: String, required: true, unique: true },
+  mobile: { type: String, unique: true, sparse: true },
   password: { type: String, required: true },
   nickname: { type: String, required: true },
   avatar: { type: String, required: true },
   status: { type: String, required: true, default: 'unactivated', enum: ['unactivated', 'activated', 'forbidden'] },
   // enum: ['subscriber', 'contributor', 'author', 'editor', 'administrator']
-  roles: [{ type: String, default: 'subscriber' }],
+  roles: [{ type: String }],
   posts: [{ type: ObjectId, ref: 'Post' }],
   comments: [{ type: ObjectId, ref: 'Comment' }],
   tokens: [{ type: ObjectId, ref: 'Token' }],
@@ -60,7 +60,7 @@ schema.pre('validate', async function (next) {
   this.username = this.username.toLowerCase()
   this.slug = this.slug || slug(this.username)
   this.email = this.email.toLowerCase()
-  this.avatar = `https://gravatar.com/avatar/${encryptor.md5(this.email)}?size=48`
+  this.avatar = this.avatar || `https://gravatar.com/avatar/${encryptor.md5(this.email)}?size=48`
   this.password = await encryptor.hash(this.password)
   next()
 })

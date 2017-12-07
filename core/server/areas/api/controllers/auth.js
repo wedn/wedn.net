@@ -1,6 +1,10 @@
 /**
  * Authentication controller
  * @todo SSO
+ * http://www.jianshu.com/p/5ac8a0e1e5a8
+ * https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+ * https://solidgeargroup.com/refresh-token-autenticacion-jwt-implementacion-nodejs?lang=es
+ * https://github.com/oauthjs/node-oauth2-server
  */
 
 const jwt = require('jsonwebtoken')
@@ -31,13 +35,7 @@ exports.token = async (body, params) => {
 
   const expriesAt = Date.now() + expries * 1000
 
-  await Token.create({
-    token: token,
-    ip: params.ip,
-    agent: params.userAgent,
-    expries: new Date(expriesAt),
-    user: user
-  })
+  await Token.create({ token: token, ip: params.ip, agent: params.userAgent, expries: new Date(expriesAt), user: user })
 
   return { type: 'Bearer', token: token, expries: expriesAt }
 }

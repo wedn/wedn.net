@@ -1,5 +1,7 @@
 /**
- * module dependencies
+ * Api app routes
+ * http://guides.rubyonrails.org/routing.html
+ * http://restfulrouting.com/
  */
 
 const Router = require('koa-router')
@@ -8,16 +10,30 @@ const compose = require('koa-compose')
 const wrap = require('./wrap')
 
 /**
+ * Utils functions
+ */
+
+const loadController = path => wrap(require(path))
+
+const mapResource = (name, controller) => {
+  router.get(`/${name}`, controller.index)
+  router.get(`/${name}/new`, controller.new)
+  router.post(`/${name}`, controller.create)
+  router.get(`/${name}/:id`, controller.show)
+  router.get(`/${name}/:id/edit`, controller.edit)
+  router.put(`/${name}/:id`, controller.update)
+  router.delete(`/${name}/:id`, controller.destroy)
+}
+
+/**
  * load all controllers
  */
 
-const load = path => wrap(require(path))
-
-const postController = load('../controllers/post')
-const termController = load('../controllers/term')
-const userController = load('../controllers/user')
-const commentController = load('../controllers/comment')
-const authController = load('../controllers/auth')
+const postController = loadController('../controllers/post')
+const termController = loadController('../controllers/term')
+const userController = loadController('../controllers/user')
+const commentController = loadController('../controllers/comment')
+const authController = loadController('../controllers/auth')
 
 /**
  * create router for app
@@ -29,40 +45,16 @@ const router = new Router()
  * map router rules
  */
 // posts
-router.get('/posts', postController.index)
-router.get('/posts/new', postController.new)
-router.post('/posts', postController.create)
-router.get('/posts/:id', postController.show)
-router.get('/posts/:id/edit', postController.edit)
-router.put('/posts/:id', postController.update)
-router.delete('/posts/:id', postController.destroy)
+mapResource('posts', postController)
 
 // terms
-router.get('/terms', termController.index)
-router.get('/terms/new', termController.new)
-router.post('/terms', termController.create)
-router.get('/terms/:id', termController.show)
-router.get('/terms/:id/edit', termController.edit)
-router.put('/terms/:id', termController.update)
-router.delete('/terms/:id', termController.destroy)
+mapResource('terms', termController)
 
 // users
-router.get('/users', userController.index)
-router.get('/users/new', userController.new)
-router.post('/users', userController.create)
-router.get('/users/:id', userController.show)
-router.get('/users/:id/edit', userController.edit)
-router.put('/users/:id', userController.update)
-router.delete('/users/:id', userController.destroy)
+mapResource('users', userController)
 
 // comments
-router.get('/comments', commentController.index)
-router.get('/comments/new', commentController.new)
-router.post('/comments', commentController.create)
-router.get('/comments/:id', commentController.show)
-router.get('/comments/:id/edit', commentController.edit)
-router.put('/comments/:id', commentController.update)
-router.delete('/comments/:id', commentController.destroy)
+mapResource('comments', commentController)
 
 // authentication
 router.post('/auth/token', authController.token)
@@ -76,6 +68,3 @@ module.exports = compose([
   router.routes(),
   router.allowedMethods()
 ])
-
-// http://guides.rubyonrails.org/routing.html
-// http://restfulrouting.com/

@@ -1,36 +1,37 @@
 /**
  * Users resource controller
+ * pick es6 https://gist.github.com/bisubus/2da8af7e801ffd813fab7ac221aa7afc
  */
 
 const debug = require('debug')('wedn:api:controller:user')
 const _ = require('lodash')
+const assert = require('http-assert')
 const createError = require('http-errors')
 const { User } = require('../../../models')
 
-const allowedFields = ['slug', 'username', 'email', 'mobile', 'nickname', 'avatar', 'status', 'roles', 'meta']
+// allowed fields
+const allowedFields = ['id', 'slug', 'username', 'email', 'mobile', 'nickname', 'avatar', 'status', 'created_at', 'updated_at', 'roles', 'meta']
 
+/**
+ * Utils functions
+ */
+
+// fields to select
 const getSelect = fields => {
+  if (fields === 'all') return allowedFields
   fields = Array.isArray(fields) ? fields : fields.split(',')
-  return ['id'].concat(fields.filter(f => allowedFields.includes(f)))
+  return fields.filter(f => allowedFields.includes(f))
 }
 
 /**
  * GET /users
- * @param  {Object} params 参数
- * @param  {Object} header 响应头
- * @return {Array}         输出数据
+ * @param  {Object} params input parameters
+ * @return {Array}         output data
  *
  * @todo include, filter
  */
-exports.index = async (params, header) => {
-  let {
-    limit = 20,
-    page = 1,
-    order = 'created_at desc',
-    fields = allowedFields,
-    include,
-    filter
-  } = params
+exports.index = async params => {
+  let { limit = 20, page = 1, order = 'created_at', fields = allowedFields, include, filter } = params
 
   // normalize params
   limit = parseInt(limit)
@@ -39,29 +40,24 @@ exports.index = async (params, header) => {
   debug('query params: %o', { limit, page, order, include, fields, filter })
 
   // query params
-  const [ orderField, orderType = 'desc' ] = order.split(' ')
+  const [ sortField, sortType = 'desc' ] = order.split(' ')
   const skip = (page - 1) * limit
   const select = getSelect(fields)
 
-  const count = await User.count()
+  // exec query
+  const total = await User.count()
+  const entities = await User.find().sort({ [sortField]: sortType }).skip(skip).limit(limit).select(select)
 
-  header['Total-Count'] = count
-  header['Total-Pages'] = Math.ceil(count / limit)
-
-  const entities = await User.find()
-    .sort({ [orderField]: orderType })
-    .skip(skip)
-    .limit(limit)
-    .select(select)
-    .exec()
-
-  return entities.map(item => _.pick(item, select))
+  return {
+    meta: { page, total, limit },
+    data: entities.map(item => _.pick(item, allowedFields))
+  }
 }
 
 /**
  * GET /users/new
- * @param  {Object} params 参数
- * @return {Object}        输出数据
+ * @param  {Object} params input parameters
+ * @return {Object}        output data
  */
 exports.new = async params => {
   return {}
@@ -69,44 +65,62 @@ exports.new = async params => {
 
 /**
  * POST /users
- * @param  {Object} body 输入数据
- * @return {Object}      输出数据
+ * @param  {Object} body input data
+ * @return {Object}      output data
  */
 exports.create = async body => {
-  const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
+  let { slug, username, email, mobile, password, nickname, avatar, status, roles = ['subscriber'], meta } = body
+  console.log(JSON.stringify(body, null, 2))
+
+  // params validate
+  assert(username, 400, 'Missing required parameter: username.')
+  assert(email, 400, 'Missing required parameter: email.')
+  assert(password, 400, 'Missing required parameter: password.')
+
+  // exists validate
+  const usernameExists = await User.findOne({ username })
+  assert(!usernameExists, 422, 'The username has already existed.')
+
+  const emailExists = await User.findOne({ email })
+  assert(!emailExists, 422, 'The email has already existed.')
+
+  if (mobile) {
+    const mobileExists = await User.findOne({ mobile })
+    assert(!mobileExists, 422, 'The mobile has already existed.')
+  }
+
+  // roles
+  if (typeof roles === 'string') {
+    roles = roles.split(',')
+  }
 
   try {
     const entity = await User.create({ slug, username, email, mobile, password, nickname, avatar, status, roles, meta })
+    return { status: 201, data: _.pick(entity, allowedFields) }
   } catch (e) {
-    console.dir(e)
-    throw createError(400, e)
+    throw createError(422, e)
   }
-
-  return _.pick(entity, allowedFields)
 }
 
 /**
  * GET /users/:id
- * @param  {Object} params 参数
- * @return {Object}        输出数据
+ * @param  {Object} params input parameters
+ * @return {Object}        output data
  */
 exports.show = async params => {
-  const {
-    id,
-    fields = allowedFields
-  } = params
+  const { id, fields = allowedFields } = params
 
-  const select = getSelect(fields)
+  const entity = await User.findById(id).select(getSelect(fields))
 
-  const entity = await User.findById(id).select(select)
+  assert(entity, 404, 'This user does not exist.')
 
-  return _.pick(entity, select)
+  return { data: _.pick(entity, allowedFields) }
 }
 
 /**
  * GET /users/:id/edit
- * @param  {Object} params 参数
- * @return {Object}        输出数据
+ * @param  {Object} params input parameters
+ * @return {Object}        output data
  */
 exports.edit = async params => {
   return {}
@@ -114,23 +128,23 @@ exports.edit = async params => {
 
 /**
  * PUT /users/:id
- * @param  {Object} body   输入数据
- * @param  {Object} params 参数
- * @return {Object}        输出数据
+ * @param  {Object} body   input data
+ * @param  {Object} params input parameters
+ * @return {Object}        output data
  */
 exports.update = async (body, params) => {
   const { id } = params
   const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
   const entity = await User.findByIdAndUpdate(id, { slug, username, email, mobile, password, nickname, avatar, status, roles, meta })
-  return _.pick(entity, allowedFields)
+  return { data: _.pick(entity, allowedFields) }
 }
 
 /**
  * DELETE /users/:id
- * @param  {Object} params 参数
- * @return {Object}        输出数据
+ * @param  {Object} params input parameters
+ * @return {Object}        output data
  */
 exports.destroy = async params => {
   const { id } = params
-  return User.findByIdAndRemove(id)
+  return { status: 204, data: User.findByIdAndRemove(id) }
 }
