@@ -16,13 +16,14 @@ const wrap = require('./wrap')
 const loadController = path => wrap(require(path))
 
 const mapResource = (name, controller) => {
-  router.get(`/${name}`, controller.index)
-  router.get(`/${name}/new`, controller.new)
-  router.post(`/${name}`, controller.create)
-  router.get(`/${name}/:id`, controller.show)
-  router.get(`/${name}/:id/edit`, controller.edit)
-  router.put(`/${name}/:id`, controller.update)
-  router.delete(`/${name}/:id`, controller.destroy)
+  router.get(`${name}`, `/${name}`, controller.index)
+  router.get(`${name}-new`, `/${name}/new`, controller.new)
+  router.post(`${name}-create`, `/${name}`, controller.create)
+  router.get(`${name}-show`, `/${name}/:id`, controller.show)
+  router.get(`${name}-edit`, `/${name}/:id/edit`, controller.edit)
+  router.put(`${name}-update`, `/${name}/:id`, controller.update)
+  router.patch(`${name}-update`, `/${name}/:id`, controller.update)
+  router.delete(`${name}-destroy`, `/${name}/:id`, controller.destroy)
 }
 
 /**

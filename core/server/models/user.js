@@ -1,7 +1,15 @@
+/**
+ * User model
+ *
+ * References:
+ * - http://devsmash.com/blog/password-authentication-with-mongoose-and-bcrypt
+ * - http://devsmash.com/blog/implementing-max-login-attempts-with-mongoose
+ */
+
 const slug = require('slug')
 const mongoose = require('mongoose')
 
-const encryptor = require('../utils/encryptor')
+const { cryptor, validator } = require('../utils')
 
 const { ObjectId } = mongoose.Schema.Types
 
@@ -36,18 +44,28 @@ const schema = new mongoose.Schema({
  */
 
 schema.loadClass(class {
-  static findByUnique (unique, callback) {
+  /**
+   * Find user by username or email or mobile
+   * @param  {String}  unique username or email or mobile
+   * @return {Promise}        Promise with resulting user entiry
+   */
+  static async findByUnique (unique) {
     let prop = 'username'
-    if (Number.isInteger(parseInt(unique))) {
-      prop = 'mobile'
-    } else if (unique.includes('@')) {
+    if (validator.isEmail(unique)) {
       prop = 'email'
+    } else if (validator.isMobile(unique)) {
+      prop = 'mobile'
     }
-    return this.findOne({ [prop]: unique }, callback)
+    return this.findOne({ [prop]: unique })
   }
 
-  comparePassword (password) {
-    return encryptor.compare(password, this.password)
+  /**
+   * Compare user password
+   * @param  {String}  plain Plain password string
+   * @return {Promise}       Promise with resulting password matched
+   */
+  async comparePassword (plain) {
+    return cryptor.compare(plain, this.password)
   }
 })
 
@@ -56,13 +74,21 @@ schema.loadClass(class {
  */
 
 schema.pre('validate', async function (next) {
-  this.nickname = this.nickname || this.username
-  this.username = this.username.toLowerCase()
-  this.slug = this.slug || slug(this.username)
-  this.email = this.email.toLowerCase()
-  this.avatar = this.avatar || `https://gravatar.com/avatar/${encryptor.md5(this.email)}?size=48`
-  this.password = await encryptor.hash(this.password)
   next()
+})
+
+schema.pre('save', async function (next) {
+  if (!this.avatar) {
+    this.avatar = `https://gravatar.com/avatar/${cryptor.md5(this.email)}?size=48`
+  }
+  if (this.isModified('password')) {
+    this.password = cryptor.hash(this.password)
+  }
+})
+
+schema.post('save', function(error, doc, next) {
+  if (error.name !== 'MongoError' || error.code !== 11000) return next(error)
+  next(new Error('There was a duplicate key error'))
 })
 
 /**

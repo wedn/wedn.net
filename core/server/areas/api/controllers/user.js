@@ -1,6 +1,9 @@
 /**
  * Users resource controller
- * pick es6 https://gist.github.com/bisubus/2da8af7e801ffd813fab7ac221aa7afc
+ *
+ * References:
+ * - https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
+ * - pick es6 https://gist.github.com/bisubus/2da8af7e801ffd813fab7ac221aa7afc
  */
 
 const debug = require('debug')('wedn:api:controller:user')
@@ -70,24 +73,11 @@ exports.new = async params => {
  */
 exports.create = async body => {
   let { slug, username, email, mobile, password, nickname, avatar, status, roles = ['subscriber'], meta } = body
-  console.log(JSON.stringify(body, null, 2))
 
   // params validate
   assert(username, 400, 'Missing required parameter: username.')
   assert(email, 400, 'Missing required parameter: email.')
   assert(password, 400, 'Missing required parameter: password.')
-
-  // exists validate
-  const usernameExists = await User.findOne({ username })
-  assert(!usernameExists, 422, 'The username has already existed.')
-
-  const emailExists = await User.findOne({ email })
-  assert(!emailExists, 422, 'The email has already existed.')
-
-  if (mobile) {
-    const mobileExists = await User.findOne({ mobile })
-    assert(!mobileExists, 422, 'The mobile has already existed.')
-  }
 
   // roles
   if (typeof roles === 'string') {
@@ -109,11 +99,8 @@ exports.create = async body => {
  */
 exports.show = async params => {
   const { id, fields = allowedFields } = params
-
   const entity = await User.findById(id).select(getSelect(fields))
-
   assert(entity, 404, 'This user does not exist.')
-
   return { data: _.pick(entity, allowedFields) }
 }
 
@@ -135,7 +122,39 @@ exports.edit = async params => {
 exports.update = async (body, params) => {
   const { id } = params
   const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
-  const entity = await User.findByIdAndUpdate(id, { slug, username, email, mobile, password, nickname, avatar, status, roles, meta })
+
+  // find exist user
+  const exist = await User.findById(id)
+  assert(exist, 404, 'This user does not exist.')
+
+  // patch user info
+
+  // exists validate
+  if (slug && slug !== exist.slug) {
+    const slugExists = await User.findOne({ slug, id: { $ne: exist.id } })
+    assert(!slugExists, 422, 'The slug has already existed.')
+    exist.slug = slug
+  }
+
+  if (username && username !== exist.username) {
+    const usernameExists = await User.findOne({ username, id: { $ne: exist.id } })
+    assert(!usernameExists, 422, 'The username has already existed.')
+    exist.username = username
+  }
+
+  if (email && email !== exist.email) {
+    const emailExists = await User.findOne({ email, id: { $ne: exist.id } })
+    assert(!emailExists, 422, 'The email has already existed.')
+    exist.email = email
+  }
+
+  if (mobile && mobile !== exist.mobile) {
+    const mobileExists = await User.findOne({ mobile, id: { $ne: exist.id } })
+    assert(!mobileExists, 422, 'The mobile has already existed.')
+    exist.mobile = mobile
+  }
+
+  const entity = await exist.save()
   return { data: _.pick(entity, allowedFields) }
 }
 

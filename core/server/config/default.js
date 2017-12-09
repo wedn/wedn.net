@@ -63,8 +63,8 @@ module.exports = {
 
   // ## Encrypt
   encrypt: {
-    key: 'wedn.net',  // encrypt key
-    saltRounds: 8    // Salt rounds
+    secret: 'wedn.net',  // encrypt secret
+    saltRounds: 8        // Salt rounds
   },
 
   // ## Json Web Token

@@ -3,7 +3,7 @@
  * @todo SSO
  * http://www.jianshu.com/p/5ac8a0e1e5a8
  * https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
- * https://solidgeargroup.com/refresh-token-autenticacion-jwt-implementacion-nodejs?lang=es
+ * https://solidgeargroup.com/refresh-token-autenticacion-jwt-implementacion-nodejs
  * https://github.com/oauthjs/node-oauth2-server
  */
 
@@ -37,7 +37,7 @@ exports.token = async (body, params) => {
 
   await Token.create({ token: token, ip: params.ip, agent: params.userAgent, expries: new Date(expriesAt), user: user })
 
-  return { type: 'Bearer', token: token, expries: expriesAt }
+  return { data: { type: 'Bearer', token: token, expries: expriesAt } }
 }
 
 /**
@@ -50,5 +50,5 @@ exports.revoke = async body => {
 
   const res = await Token.findOneAndRemove({ token })
   assert(res, 404, 'Token does not exist')
-  return { token: token }
+  return { data: { token: token } }
 }

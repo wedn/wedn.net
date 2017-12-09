@@ -26,7 +26,7 @@ log4js.configure({
   },
   categories: {
     default: { appenders: ['stdout'], level: 'all' },
-    access: { appenders: ['dateFile'], level: 'auto' },
+    access: { appenders: ['dateFile'], level: 'all' },
     error: { appenders: ['file'], level: 'info' }
   }
 })

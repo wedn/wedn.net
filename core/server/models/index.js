@@ -6,6 +6,7 @@
  * - http://mongoosejs.com/docs/guide.html#options
  * - http://mongoosejs.com/docs/advanced_schemas.html
  */
+
 const glob = require('glob')
 const mongoose = require('mongoose')
 
@@ -25,22 +26,13 @@ mongoose.Promise = global.Promise
 mongoose.connect(uri, options).on('error', console.error)
 
 /**
- * Use plugins
+ * Load & use plugins
  */
 
-// mongoose.plugin(require('./plugins/timestamp'))
-
-/**
- * Schema options
- * http://mongoosejs.com/docs/guide.html#options
- */
-
-mongoose.plugin(schema => {
-  schema.set('id', true)
-  schema.set('_id', false)
-  schema.set('timestamps', { createdAt: 'created_at', updatedAt: 'updated_at' })
-  schema.set('validateBeforeSave', true)
-  schema.set('strict', true)
+glob.sync('./plugins/*.js', { cwd: __dirname }).forEach(item => {
+  const plugin = require(item)
+  if (typeof plugin !== 'function') return
+  mongoose.plugin(plugin)
 })
 
 /**

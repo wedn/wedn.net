@@ -6,7 +6,7 @@ const compose = require('koa-compose')
 // load all of the middlewares
 const logger = require('./logger')
 const header = require('./header')
-const error = require('./error')
+// const error = require('./error')
 // const compress = require('./compress')
 // const serve = require('./static')
 // const url = require('./url')
@@ -29,8 +29,8 @@ module.exports = app => {
   // custom response headers
   middlewares.push(header(app))
 
-  // error handler
-  middlewares.push(error(app))
+  // // error handler
+  // middlewares.push(error(app))
 
   // // compress output
   // middlewares.push(compress(app))
