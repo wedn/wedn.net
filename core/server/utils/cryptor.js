@@ -1,7 +1,7 @@
 /**
- * Encrytor
+ * Cryptor
  *
- * References:
+ * @see
  * - http://blog.fens.me/nodejs-crypto/
  * - http://lmcw.cn/?id=14
  */

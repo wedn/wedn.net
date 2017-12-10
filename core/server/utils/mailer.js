@@ -1,37 +1,66 @@
+/**
+ * Mailer
+ * 
+ * @see
+ * - https://nodemailer.com/
+ */
+
+const assert = require('assert')
 const nodemailer = require('nodemailer')
 
 const config = require('../config')
-const transporter = nodemailer.createTransport(config.mail)
 
-const sendMessage = message => {
-  if (!(message && message.subject && message.html && message.from && message.to)) {
-    throw new Error('邮件信息不完整')
-  }
+// /**
+//  * Email 
+//  */
+// class Email {
+//   /**
+//    * Email constructor
+//    * @param {Object} message Email message
+//    */
+//   constructor (message) {
+//     if (typeof message !== 'object') {
+//       throw new TypeError(`Expected a object, got ${typeof input}`)
+//     }
 
-  Object.assign(message, { generateTextFromHTML: true, encoding: 'base64' })
+//     // const { from, to, cc, bcc, subject, text, html, attachments } = message
+    
+//     assert(message.from, 'Missing required option: from.')
+//     assert(message.to, 'Missing required option: to.')
+//     assert(message.subject, 'Missing required option: subject.')
+//     assert(message.text || message.html, 'Missing required option: text or html.')
 
-  return transporter.sendMail(message)
-    .catch(error => {
-      if (error.code === 'ECONNECTION' && error.syscall === 'getaddrinfo') {
-        throw new Error(error.message + '\n未检测到网络（公网）连接，请确认网络正常然后重试')
-      }
-      if (error.code === 'ETIMEDOUT' && error.command === 'CONN') {
-        throw new Error(error.message + '\n网络（公网）连接超时，请确认网络正常然后重试')
-      }
-      if (error.responseCode === 550) {
-        throw new Error(error.message + '\n收件人错误（不存在邮箱）')
-      }
-      if (error.responseCode === 598) {
-        throw new Error(error.message + '\n邮件中包含违禁词，发送失败')
-      }
-      throw error
-    })
-}
+//     this.message = Object.assign({}, message)
+//     this.transporter = nodemailer.createTransport(config.mail)
+//   }
 
-exports.send = (subject, html, to, cc, attachments) => {
-  const from = `"${config.mail.name}" <${config.mail.auth.user}>`
-  if (typeof subject === 'object') {
-    return sendMessage(Object.assign({ from }, subject))
-  }
-  return sendMessage({ from, subject, html, to, cc, attachments })
-}
+//   /**
+//    * Send this email
+//    */
+//   send () {
+//     return this.transporter.sendMail(this.message)
+//       // .catch(error => {
+//       //   if (error.code === 'ECONNECTION' && error.syscall === 'getaddrinfo') {
+//       //     throw new Error(error.message + '\n未检测到网络（公网）连接，请确认网络正常然后重试')
+//       //   }
+//       //   if (error.code === 'ETIMEDOUT' && error.command === 'CONN') {
+//       //     throw new Error(error.message + '\n网络（公网）连接超时，请确认网络正常然后重试')
+//       //   }
+//       //   if (error.responseCode === 550) {
+//       //     throw new Error(error.message + '\n收件人错误（不存在邮箱）')
+//       //   }
+//       //   if (error.responseCode === 598) {
+//       //     throw new Error(error.message + '\n邮件中包含违禁词，发送失败')
+//       //   }
+//       //   throw error
+//       // })
+//   }
+// }
+
+// exports.send = (to, subject, html, attachments, cc, bcc) => {
+//   const from = `"${config.mail.name}" <${config.mail.auth.user}>`
+//   const email = typeof to === 'string' 
+//     ? new Email(Object.assign({ from }, to))
+//     : new Email({ from, to, cc, bcc, subject, html, attachments })
+//   return email.send()
+// }

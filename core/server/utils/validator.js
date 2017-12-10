@@ -1,3 +1,10 @@
+/**
+ * Validator
+ * 
+ * @see
+ * - https://github.com/chriso/validator.js
+ */
+
 const validator = require('validator')
 
 module.exports = Object.assign({}, validator, {

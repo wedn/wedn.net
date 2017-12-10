@@ -27,12 +27,25 @@ $ yarn install # or `npm i`
 $ yarn start
 ```
 
-## Links
+## References
 
-- https://gist.github.com/lancejpollard/1398757
-- http://mobilesite.github.io/2017/04/29/develop-backend-service-with-koa2/
 - https://github.com/koajs
+- https://gist.github.com/lancejpollard/1398757
+- https://www.oschina.net/translate/project-guidelines-for-javascript-projects
+- http://mobilesite.github.io/2017/04/29/develop-backend-service-with-koa2/
+- https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
 - https://blog.risingstack.com/node-hero-node-js-authentication-passport-js/
+- https://blog.risingstack.com/node-hero-node-js-project-structure-tutorial/
+- https://blog.risingstack.com/node-js-project-structure-tutorial-node-js-at-scale/
+- https://blog.risingstack.com/javascript-clean-coding-best-practices-node-js-at-scale/
+- http://www.zcfy.cc/article/advanced-node-js-project-structure-tutorial-risingstack-2501.html
+- http://www.zcfy.cc/article/the-10-most-important-node-js-articles-of-2016-risingstack-2201.html
+- https://code.google.com/archive/p/jsdoc-toolkit/wikis/TagReference.wiki
+
+# Packages
+
+- [joi](https://www.npmjs.com/package/joi)
+- [winston](https://www.npmjs.com/package/winston)
 
 ## Contributing
 
@@ -47,7 +60,7 @@ $ yarn start
 
 ## License
 
-[MIT](LICENSE) &copy; 汪磊(https://zce.me/) &amp; WEDN.NET(https://wedn.net)
+[MIT](LICENSE) &copy; [汪磊](https://zce.me/) &amp; [WEDN.NET](https://wedn.net)
 
 
 
