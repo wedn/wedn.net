@@ -1,7 +1,7 @@
 const path = require('path')
 const pkg = require('../../../package.json')
 
-const rootDir = path.join(__dirname, '../../')
+const rootDir = path.join(__dirname, '../../..')
 
 const paths = {
   data: path.join(rootDir, 'content', 'data'),
@@ -40,8 +40,9 @@ module.exports = {
 
   // ## Logger
   logger: {
-    verbose: path.join(paths.logs, 'access.log'),
-    error: path.join(paths.logs, 'error.log')
+    level: 'debug',
+    error: path.join(paths.logs, 'error.log'),
+    access: path.join(paths.logs, 'access.log'),
   },
 
   // ## Storage
