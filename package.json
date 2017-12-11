@@ -21,9 +21,9 @@
     "url": "git+https://github.com/wedn/wedn.net.git"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development DEBUG=wedn:* nodemon .",
     "lint": "standard --fix",
     "test": "ava",
+    "dev": "cross-env NODE_ENV=development DEBUG=wedn:* nodemon .",
     "start": "cross-env NODE_ENV=production node ."
   },
   "dependencies": {

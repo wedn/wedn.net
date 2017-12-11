@@ -32,6 +32,7 @@
 - https://blog.risingstack.com/10-best-practices-for-writing-node-js-rest-apis/
 - https://zhuanlan.zhihu.com/p/25506654
 - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+- [RESTful API 设计最佳实践](http://blog.jobbole.com/41233/)
 
   const pagination = {
     // the current page number

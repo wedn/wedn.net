@@ -2,6 +2,7 @@
  * Cryptor
  *
  * @see
+ * - https://github.com/dcodeIO/bcrypt.js
  * - http://blog.fens.me/nodejs-crypto/
  * - http://lmcw.cn/?id=14
  */
@@ -34,7 +35,7 @@ exports.compare = (plain, hash) => bcrypt.compare(plain, hash)
  * @return {String}       Hash string
  */
 exports.encrypt = plain => {
-  const cipher = crypto.createCipher('aes-256-cbc', secret)
+  const cipher = crypto.createCipher('aes192', secret)
   return cipher.update(plain, 'binary', 'hex') + cipher.final('hex')
 }
 
@@ -44,7 +45,7 @@ exports.encrypt = plain => {
  * @return {String}       Plain string
  */
 exports.decrypt = hash => {
-  const decipher = crypto.createDecipher('aes-256-cbc', secret)
+  const decipher = crypto.createDecipher('aes192', secret)
   return decipher.update(hash, 'hex', 'binary') + decipher.final('binary')
 }
 

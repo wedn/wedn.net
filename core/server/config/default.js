@@ -1,6 +1,17 @@
 const path = require('path')
 const pkg = require('../../../package.json')
 
+const rootDir = path.join(__dirname, '../../')
+
+const paths = {
+  data: path.join(rootDir, 'content', 'data'),
+  locales: path.join(rootDir, 'content', 'locales'),
+  logs: path.join(rootDir, 'content', 'logs'),
+  themes: path.join(rootDir, 'content', 'themes'),
+  plugins: path.join(rootDir, 'content', 'plugins'),
+  uploads: path.join(rootDir, 'content', 'uploads')
+}
+
 module.exports = {
   // ## App info
   pkg: {
@@ -18,14 +29,7 @@ module.exports = {
   },
 
   // ## Paths
-  paths: {
-    data: path.resolve(__dirname, '../../content/data/'),
-    locales: path.resolve(__dirname, '../../content/locales/'),
-    logs: path.resolve(__dirname, '../../content/logs/'),
-    themes: path.resolve(__dirname, '../../content/themes/'),
-    plugins: path.resolve(__dirname, '../../content/plugins/'),
-    uploads: path.resolve(__dirname, '../../content/uploads/')
-  },
+  paths: paths,
 
   // ## Database
   database: {
@@ -35,7 +39,10 @@ module.exports = {
   },
 
   // ## Logger
-  logger: {},
+  logger: {
+    verbose: path.join(paths.logs, 'access.log'),
+    error: path.join(paths.logs, 'error.log')
+  },
 
   // ## Storage
   storage: {},

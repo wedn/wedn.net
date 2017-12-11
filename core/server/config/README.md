@@ -1,1 +1,0 @@
-https://github.com/RisingStack/multi-process-nodejs-example/blob/master/config
