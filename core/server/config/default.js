@@ -38,6 +38,19 @@ module.exports = {
     options: { useMongoClient: true, poolSize: 10 }
   },
 
+  // ## Mail
+  // > https://nodemailer.com/smtp/#examples
+  mail: {
+    name: 'WEDN.NET',
+    host: 'smtp.exmail.qq.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'service@wedn.net',
+      pass: 'RFh8JbcWt8y*'
+    }
+  },
+
   // ## Logger
   logger: {
     level: 'debug',

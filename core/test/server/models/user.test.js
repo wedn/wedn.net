@@ -1,7 +1,7 @@
 const test = require('ava')
 const { User } = require('../../../server/models')
 
-test(t => {
+test('server/models/user', t => {
   t.pass('User model test')
 })
 
