@@ -6,8 +6,7 @@
  * - pick es6 https://gist.github.com/bisubus/2da8af7e801ffd813fab7ac221aa7afc
  */
 
-const debug = require('debug')('wedn:api:controller:user')
-const _ = require('lodash')
+const { pick } = require('lodash')
 const assert = require('http-assert')
 const createError = require('http-errors')
 const { User } = require('../../../models')
@@ -40,8 +39,6 @@ exports.index = async params => {
   limit = parseInt(limit)
   page = parseInt(page)
 
-  debug('query params: %o', { limit, page, order, include, fields, filter })
-
   // query params
   const [ sortField, sortType = 'desc' ] = order.split(' ')
   const skip = (page - 1) * limit
@@ -53,7 +50,7 @@ exports.index = async params => {
 
   return {
     meta: { page, total, limit },
-    data: entities.map(item => _.pick(item, allowedFields))
+    data: entities.map(item => pick(item, allowedFields))
   }
 }
 
@@ -86,7 +83,7 @@ exports.create = async body => {
 
   try {
     const entity = await User.create({ slug, username, email, mobile, password, nickname, avatar, status, roles, meta })
-    return { status: 201, data: _.pick(entity, allowedFields) }
+    return { status: 201, data: pick(entity, allowedFields) }
   } catch (e) {
     throw createError(422, e)
   }
@@ -101,7 +98,7 @@ exports.show = async params => {
   const { id, fields = allowedFields } = params
   const entity = await User.findById(id).select(getSelect(fields))
   assert(entity, 404, 'This user does not exist.')
-  return { data: _.pick(entity, allowedFields) }
+  return { data: pick(entity, allowedFields) }
 }
 
 /**
@@ -155,7 +152,7 @@ exports.update = async (body, params) => {
   }
 
   const entity = await exist.save()
-  return { data: _.pick(entity, allowedFields) }
+  return { data: pick(entity, allowedFields) }
 }
 
 /**

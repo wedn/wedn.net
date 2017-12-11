@@ -1,7 +1,7 @@
 /**
  * Models
  *
- * References
+ * @see
  * - http://mongoosejs.com/docs/guide.html
  * - http://mongoosejs.com/docs/guide.html#options
  * - http://mongoosejs.com/docs/advanced_schemas.html

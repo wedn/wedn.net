@@ -53,7 +53,7 @@ module.exports = {
 
   // ## Logger
   logger: {
-    level: 'debug',
+    level: 'info',
     error: path.join(paths.logs, 'error.log'),
     access: path.join(paths.logs, 'access.log'),
   },

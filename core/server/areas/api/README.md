@@ -33,6 +33,7 @@
 - https://zhuanlan.zhihu.com/p/25506654
 - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 - [RESTful API 设计最佳实践](http://blog.jobbole.com/41233/)
+- [请求参数校验](https://github.com/koajs/joi-router)
 
   const pagination = {
     // the current page number
