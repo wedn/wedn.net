@@ -1,23 +1,26 @@
+/**
+ * Comment model
+ */
+
 const mongoose = require('mongoose')
-const { ObjectId } = mongoose.Schema.Types
+const { Mixed, ObjectId } = mongoose.Schema.Types
 
 const schema = new mongoose.Schema({
   author: {
-    name: { type: String },
-    email: { type: String },
-    url: { type: String },
-    agent: { type: String },
-    ip: { type: String }
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    url: { type: String, required: true },
+    agent: { type: String, required: true },
+    ip: { type: String, required: true }
   },
-  content: { type: String },
+  content: { type: Mixed },
   status: { type: String, default: 'held', enum: ['held', 'approved', 'spammed', 'trashed'] },
   post: { type: ObjectId, ref: 'Post' },
   user: { type: ObjectId, ref: 'User' },
   parent: { type: ObjectId, ref: 'Comment' },
-  meta: {
-    likes: { type: Number, default: 0 },
-    dislikes: { type: Number, default: 0 }
-  }
+  children: [{ type: ObjectId, ref: 'Comment' }],
+  // likes dislikes
+  meta: { type: Mixed }
 })
 
 schema.loadClass(class {})

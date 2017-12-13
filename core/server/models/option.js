@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const { Mixed } = mongoose.Schema.Types
 
 const schema = new mongoose.Schema({
   key: { type: String, unique: true },
-  value: { type: String },
+  value: { type: Mixed },
   enabled: { type: Boolean, default: true }
 })
 

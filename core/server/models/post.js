@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
   title: { type: String },
   excerpt: { type: String },
   content: { type: Mixed },
-  // enum: ['blog', 'page', 'course', 'video']
+  // blog page course video
   type: { type: String, default: 'blog' },
   status: { type: String, default: 'drafted', enum: ['inherit', 'drafted', 'published', 'trashed'] },
   comment: { type: String, default: 'opened', enum: ['opened', 'closed'] },
@@ -14,14 +14,9 @@ const schema = new mongoose.Schema({
   terms: [{ type: ObjectId, ref: 'Term' }],
   comments: [{ type: ObjectId, ref: 'Comment' }],
   parent: { type: ObjectId, ref: 'Post' },
-  meta: {
-    comments: { type: Number, default: 0 },
-    views: { type: Number, default: 0 },
-    votes: { type: Number, default: 0 },
-    favs: { type: Number, default: 0 },
-    likes: { type: Number, default: 0 },
-    dislikes: { type: Number, default: 0 }
-  }
+  children: [{ type: ObjectId, ref: 'Post' }],
+  // comments views votes favs likes dislikes
+  meta: { type: Mixed }
 })
 
 schema.loadClass(class {})

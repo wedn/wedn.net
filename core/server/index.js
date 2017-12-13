@@ -9,10 +9,19 @@ process.on('unhandledRejection', (reason, p) => console.log(reason, p))
 const debug = require('debug')('wedn:server')
 const mount = require('koa-mount')
 const app = require('./app')
+const models = require('./models')
 const config = require('./config')
 
 module.exports = async rootApp => {
   debug('Begin start server...')
+
+  try {
+    debug('Begin connect database...')
+    await models.connect(config.database)
+    debug('Connect database done.')
+  } catch (e) {
+    debug('Connect database error: %o', e)
+  }
 
   // has no parent app
   if (!rootApp) {

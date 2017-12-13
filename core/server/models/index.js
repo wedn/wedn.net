@@ -10,20 +10,11 @@
 const glob = require('glob')
 const mongoose = require('mongoose')
 
-const config = require('../config')
-const { uri, options } = config.database
-
 /**
  * Use native Promise
  */
 
 mongoose.Promise = global.Promise
-
-/**
- * Connect mongodb server
- */
-
-mongoose.connect(uri, options).on('error', console.error)
 
 /**
  * Load & use plugins
@@ -50,3 +41,9 @@ glob.sync('./*.js', { cwd: __dirname }).forEach(path => {
  */
 
 exports.mongoose = mongoose
+
+/**
+ * Export connect mongodb server method
+ */
+
+exports.connect = ({ uri, options }) => mongoose.connect(uri, options)

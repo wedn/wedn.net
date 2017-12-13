@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 
 const { cryptor, validator } = require('../utils')
 
-const { ObjectId } = mongoose.Schema.Types
+const { Mixed, ObjectId } = mongoose.Schema.Types
 
 /**
  * Model schema
@@ -24,19 +24,14 @@ const schema = new mongoose.Schema({
   mobile: { type: String, unique: true, sparse: true },
   password: { type: String, required: true },
   nickname: { type: String, required: true },
-  avatar: { type: String, required: true },
   status: { type: String, required: true, default: 'unactivated', enum: ['unactivated', 'activated', 'forbidden'] },
-  // enum: ['subscriber', 'contributor', 'author', 'editor', 'administrator']
+  // subscriber contributor author editor administrator
   roles: [{ type: String }],
+  tokens: [{ type: String }],
   posts: [{ type: ObjectId, ref: 'Post' }],
   comments: [{ type: ObjectId, ref: 'Comment' }],
-  tokens: [{ type: ObjectId, ref: 'Token' }],
-  meta: {
-    url: { type: String },
-    bio: { type: String },
-    cover: { type: String },
-    location: { type: String }
-  }
+  // avatar url bio cover location
+  meta: { type: Mixed }
 })
 
 /**
@@ -78,12 +73,13 @@ schema.pre('validate', async function (next) {
 })
 
 schema.pre('save', async function (next) {
-  if (!this.avatar) {
-    this.avatar = `https://gravatar.com/avatar/${cryptor.md5(this.email)}?size=48`
+  if (!this.meta.avatar) {
+    this.meta.avatar = `https://gravatar.com/avatar/${cryptor.md5(this.email)}?size=48`
   }
   if (this.isModified('password')) {
     this.password = cryptor.hash(this.password)
   }
+  next()
 })
 
 schema.post('save', function(error, doc, next) {

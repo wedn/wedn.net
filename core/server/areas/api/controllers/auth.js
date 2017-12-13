@@ -13,7 +13,7 @@
 const jwt = require('jsonwebtoken')
 const assert = require('http-assert')
 
-const { User, Token } = require('../../../models')
+const { User } = require('../../../models')
 const config = require('../../../config')
 
 /**
@@ -38,7 +38,8 @@ exports.token = async (body, params) => {
 
   const expriesAt = Date.now() + expries * 1000
 
-  await Token.create({ token: token, ip: params.ip, agent: params.userAgent, expries: new Date(expriesAt), user: user })
+  user.tokens.push(token)
+  await user.save()
 
   return { data: { type: 'Bearer', token: token, expries: expriesAt } }
 }
@@ -51,7 +52,6 @@ exports.revoke = async body => {
   const { token } = body
   assert(token, 400, 'Missing required parameter: token')
 
-  const res = await Token.findOneAndRemove({ token })
-  assert(res, 404, 'Token does not exist')
+  assert(false, 404, 'Token does not exist')
   return { data: { token: token } }
 }
