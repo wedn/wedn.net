@@ -10,38 +10,32 @@ const { pick } = require('lodash')
 const assert = require('http-assert')
 const createError = require('http-errors')
 const { User } = require('../../../models')
-const utils = require('./utils')
 
 // alloweds
 const allowedFields = ['id', 'slug', 'username', 'email', 'mobile', 'nickname', 'avatar', 'status', 'created_at', 'updated_at', 'roles', 'meta']
-const allowedInclude = []
+const allowedInclude = ['posts']
 
 /**
  * GET /users
- * @param  {Object} options input parameters
- * @return {Array}          output data
  *
  * @todo include, filter
  */
-exports.index = async options => {
-  const { page, limit, skip, sort, fields, include, filter } = utils.getParams(options, allowedFields, allowedInclude)
+exports.index = async ctx => {
+  console.log(ctx.parameters)
+  const { filter, fields, options, include } = ctx.parameters
 
-  // exec query
+  // // exec query
   const total = await User.count(filter)
-  const entities = await User.find(filter).sort(sort).skip(skip).limit(limit).select(fields)
+  const entities = await User.find(filter, fields, options).populate(include)
 
-  return {
-    meta: { page, total, limit },
-    data: entities.map(item => pick(item, allowedFields))
-  }
+  ctx.state.pagination = { page: options.page, limit: options.limit, total }
+  ctx.state.data = entities.map(item => pick(item, allowedFields.concat(allowedInclude)))
 }
 
 /**
  * GET /users/new
- * @param  {Object} options input parameters
- * @return {Object}         output data
  */
-exports.new = async options => {
+exports.new = async ctx => {
   return {}
 }
 
@@ -50,7 +44,7 @@ exports.new = async options => {
  * @param  {Object} body input data
  * @return {Object}      output data
  */
-exports.create = async body => {
+exports.create = async ctx => {
   let { slug, username, email, mobile, password, nickname, avatar, status, roles = ['subscriber'], meta } = body
 
   // params validate
@@ -76,7 +70,7 @@ exports.create = async body => {
  * @param  {Object} options input parameters
  * @return {Object}         output data
  */
-exports.show = async options => {
+exports.show = async ctx => {
   const { id, fields = allowedFields } = options
   const entity = await User.findById(id).select(getSelect(fields))
   assert(entity, 404, 'This user does not exist.')
@@ -88,7 +82,7 @@ exports.show = async options => {
  * @param  {Object} options input parameters
  * @return {Object}         output data
  */
-exports.edit = async options => {
+exports.edit = async ctx => {
   return {}
 }
 
@@ -98,7 +92,7 @@ exports.edit = async options => {
  * @param  {Object} options input parameters
  * @return {Object}         output data
  */
-exports.update = async (body, options) => {
+exports.update = async ctx => {
   const { id } = options
   const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
 
@@ -142,7 +136,7 @@ exports.update = async (body, options) => {
  * @param  {Object} options input parameters
  * @return {Object}         output data
  */
-exports.destroy = async options => {
+exports.destroy = async ctx => {
   const { id } = options
   return { status: 204, data: User.findByIdAndRemove(id) }
 }

@@ -7,13 +7,19 @@
 const Router = require('koa-router')
 const compose = require('koa-compose')
 
-const wrap = require('./wrap')
+/**
+ * load all controllers
+ */
+
+const postController = require('../controllers/post')
+const termController = require('../controllers/term')
+const userController = require('../controllers/user')
+const commentController = require('../controllers/comment')
+const authController = require('../controllers/auth')
 
 /**
  * Utils functions
  */
-
-const loadController = path => wrap(require(path))
 
 const mapResource = (name, controller) => {
   router.get(`${name}`, `/${name}`, controller.index)
@@ -25,16 +31,6 @@ const mapResource = (name, controller) => {
   router.patch(`${name}-update`, `/${name}/:id`, controller.update)
   router.delete(`${name}-destroy`, `/${name}/:id`, controller.destroy)
 }
-
-/**
- * load all controllers
- */
-
-const postController = loadController('../controllers/post')
-const termController = loadController('../controllers/term')
-const userController = loadController('../controllers/user')
-const commentController = loadController('../controllers/comment')
-const authController = loadController('../controllers/auth')
 
 /**
  * create router for app
