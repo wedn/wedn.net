@@ -8,7 +8,6 @@ const handleError = async (error, ctx) => {
 
   ctx.type = 'application/json'
   if (ctx.app.env === 'development' || error.expose) {
-    console.log(error.errors)
     const errors = error.errors
       ? error.errors
       : [ error ]

@@ -1,7 +1,7 @@
 /**
  * Users resource controller
  *
- * References:
+ * @see
  * - https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
  * - pick es6 https://gist.github.com/bisubus/2da8af7e801ffd813fab7ac221aa7afc
  */
@@ -10,43 +10,25 @@ const { pick } = require('lodash')
 const assert = require('http-assert')
 const createError = require('http-errors')
 const { User } = require('../../../models')
+const utils = require('./utils')
 
-// allowed fields
+// alloweds
 const allowedFields = ['id', 'slug', 'username', 'email', 'mobile', 'nickname', 'avatar', 'status', 'created_at', 'updated_at', 'roles', 'meta']
-
-/**
- * Utils functions
- */
-
-// fields to select
-const getSelect = fields => {
-  if (fields === 'all') return allowedFields
-  fields = Array.isArray(fields) ? fields : fields.split(',')
-  return fields.filter(f => allowedFields.includes(f))
-}
+const allowedInclude = []
 
 /**
  * GET /users
- * @param  {Object} params input parameters
- * @return {Array}         output data
+ * @param  {Object} options input parameters
+ * @return {Array}          output data
  *
  * @todo include, filter
  */
-exports.index = async params => {
-  let { limit = 20, page = 1, order = 'created_at', fields = allowedFields, include, filter } = params
-
-  // normalize params
-  limit = parseInt(limit)
-  page = parseInt(page)
-
-  // query params
-  const [ sortField, sortType = 'desc' ] = order.split(' ')
-  const skip = (page - 1) * limit
-  const select = getSelect(fields)
+exports.index = async options => {
+  const { page, limit, skip, sort, fields, include, filter } = utils.getParams(options, allowedFields, allowedInclude)
 
   // exec query
-  const total = await User.count()
-  const entities = await User.find().sort({ [sortField]: sortType }).skip(skip).limit(limit).select(select)
+  const total = await User.count(filter)
+  const entities = await User.find(filter).sort(sort).skip(skip).limit(limit).select(fields)
 
   return {
     meta: { page, total, limit },
@@ -56,10 +38,10 @@ exports.index = async params => {
 
 /**
  * GET /users/new
- * @param  {Object} params input parameters
- * @return {Object}        output data
+ * @param  {Object} options input parameters
+ * @return {Object}         output data
  */
-exports.new = async params => {
+exports.new = async options => {
   return {}
 }
 
@@ -91,11 +73,11 @@ exports.create = async body => {
 
 /**
  * GET /users/:id
- * @param  {Object} params input parameters
- * @return {Object}        output data
+ * @param  {Object} options input parameters
+ * @return {Object}         output data
  */
-exports.show = async params => {
-  const { id, fields = allowedFields } = params
+exports.show = async options => {
+  const { id, fields = allowedFields } = options
   const entity = await User.findById(id).select(getSelect(fields))
   assert(entity, 404, 'This user does not exist.')
   return { data: pick(entity, allowedFields) }
@@ -103,21 +85,21 @@ exports.show = async params => {
 
 /**
  * GET /users/:id/edit
- * @param  {Object} params input parameters
- * @return {Object}        output data
+ * @param  {Object} options input parameters
+ * @return {Object}         output data
  */
-exports.edit = async params => {
+exports.edit = async options => {
   return {}
 }
 
 /**
  * PUT /users/:id
- * @param  {Object} body   input data
- * @param  {Object} params input parameters
- * @return {Object}        output data
+ * @param  {Object} body    input data
+ * @param  {Object} options input parameters
+ * @return {Object}         output data
  */
-exports.update = async (body, params) => {
-  const { id } = params
+exports.update = async (body, options) => {
+  const { id } = options
   const { slug, username, email, mobile, password, nickname, avatar, status, roles, meta } = body
 
   // find exist user
@@ -157,10 +139,10 @@ exports.update = async (body, params) => {
 
 /**
  * DELETE /users/:id
- * @param  {Object} params input parameters
- * @return {Object}        output data
+ * @param  {Object} options input parameters
+ * @return {Object}         output data
  */
-exports.destroy = async params => {
-  const { id } = params
+exports.destroy = async options => {
+  const { id } = options
   return { status: 204, data: User.findByIdAndRemove(id) }
 }

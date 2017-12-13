@@ -54,6 +54,7 @@ const respond = (ctx, { status = 200, meta = null, data = null }) => {
     debug('pagination info: %o', { page, prev, next, pages, total, limit })
 
     // links
+    // https://en.wikipedia.org/wiki/HATEOAS
     const links = []
     page !== 1 && links.push(`<${getPageLink(ctx, 1)}>, rel=first`)
     prev > 0 && links.push(`<${getPageLink(ctx, prev)}>, rel=prev`)

@@ -34,6 +34,8 @@
 - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 - [RESTful API 设计最佳实践](http://blog.jobbole.com/41233/)
 - [请求参数校验](https://github.com/koajs/joi-router)
+- [Browse API Parameter Design](https://github.com/TryGhost/Ghost/issues/5463)
+- [RESTful API 设计指南](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
 
   const pagination = {
     // the current page number

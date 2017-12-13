@@ -1,10 +1,13 @@
 /**
  * Authentication controller
+ *
  * @todo SSO
- * http://www.jianshu.com/p/5ac8a0e1e5a8
- * https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
- * https://solidgeargroup.com/refresh-token-autenticacion-jwt-implementacion-nodejs
- * https://github.com/oauthjs/node-oauth2-server
+ * @see
+ * - http://www.jianshu.com/p/5ac8a0e1e5a8
+ * - https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+ * - https://solidgeargroup.com/refresh-token-autenticacion-jwt-implementacion-nodejs
+ * - https://github.com/oauthjs/node-oauth2-server
+ * - http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html
  */
 
 const jwt = require('jsonwebtoken')
