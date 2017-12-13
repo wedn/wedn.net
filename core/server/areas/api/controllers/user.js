@@ -21,7 +21,6 @@ const allowedInclude = ['posts']
  * @todo include, filter
  */
 exports.index = async ctx => {
-  console.log(ctx.parameters)
   const { filter, fields, options, include } = ctx.parameters
 
   // // exec query
