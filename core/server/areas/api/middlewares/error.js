@@ -1,4 +1,9 @@
+/**
+ * Error handler middleware
+ */
+
 const { STATUS_CODES } = require('http')
+const debug = require('debug')('wedn:api:middleware:error')
 
 const handleError = async (error, ctx) => {
   ctx.status = error.status || 500
@@ -8,13 +13,13 @@ const handleError = async (error, ctx) => {
 
   ctx.type = 'application/json'
   if (ctx.app.env === 'development' || error.expose) {
-    const errors = error.errors
-      ? error.errors
-      : [ error ]
+    const errors = error.errors ? error.errors : [ error ]
     ctx.body = { errors, stack: error.stack }
   } else {
     ctx.body = { errors: [ STATUS_CODES[ctx.status] ] }
   }
+
+  // debug(error)
 }
 
 module.exports = () => async (ctx, next) => {

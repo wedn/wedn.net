@@ -1,6 +1,10 @@
 /**
+ * Authorize request
+ *
+ * @todo !!!
  * requiresAuth
  */
+
 const jwt = require('koa-jwt')
 const config = require('../../../config')
 const { User, Token } = require('../../../models')

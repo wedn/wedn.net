@@ -1,5 +1,7 @@
 /**
  * Wrap api action method
+ *
+ * @deprecated
  * @todo reorder parameters
  */
 

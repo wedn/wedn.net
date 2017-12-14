@@ -1,11 +1,11 @@
 /**
- * module dependencies
+ * Api app
  */
 
 const Koa = require('koa')
 
-const routes = require('./routes')
 const middlewares = require('./middlewares')
+const routes = require('./routes')
 
 /**
  * create api app

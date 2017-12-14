@@ -62,3 +62,37 @@
   //   headers.push(name)
   // }
   // ctx.set('Access-Control-Expose-Headers', headers.join(', '))
+
+/**
+ * Prepare context
+ */
+
+module.exports = () => async (ctx, next) => {
+
+}
+
+
+
+/**
+ * Parse query params
+ *
+ * @deprecated
+ * @see
+ * - https://github.com/pbatey/query-to-mongo
+ */
+
+const debug = require('debug')('wedn:api:middleware:query')
+const q2m = require('query-to-mongo')
+
+module.exports = () => async (ctx, next) => {
+  const query = q2m(ctx.querystring)
+  debug('query params: %o', query)
+  ctx.q2m = query
+  await next()
+}
+
+
+// http://huang-jerryc.com/2015/03/29/%E5%9F%BA%E4%BA%8ERESTful-API-%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6/
+
+ * - https://www.npmjs.com/package/joi
+ * - https://www.npmjs.com/package/ajv
