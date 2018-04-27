@@ -9,9 +9,9 @@ const schema = require('./schema')
 const router = new Router()
 
 // map router rules
-router.get('/graphql', graphqlKoa({ schema }))
-router.post('/graphql', bodyParser(), graphqlKoa({ schema }))
-router.get('/graphiql', graphiqlKoa({ endpointURL: '/api/v2/graphql' }))
+router.get('/', graphqlKoa({ schema }))
+router.post('/', bodyParser(), graphqlKoa({ schema }))
+router.get('/', graphiqlKoa({ endpointURL: '/api/graphql' }))
 
 // export router routes
 module.exports = compose([

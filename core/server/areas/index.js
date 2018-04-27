@@ -16,7 +16,7 @@ const graphqlArea = require('./graphql')
 module.exports = compose([
   mount('/admin', adminArea),
   mount('/api/v1', apiArea),
-  mount('/api/v2', graphqlArea)
+  mount('/api/graphql', graphqlArea)
 ])
 
 // vhost sln
